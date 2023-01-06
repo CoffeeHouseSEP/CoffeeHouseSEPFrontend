@@ -1,0 +1,24 @@
+name: development CI/CD work-flow
+
+env:
+  NEXT_PUBLIC_SECRET_JWT_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_JWT_KEY }}
+  NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
+
+on:
+  pull_request:
+    branches: [develop]
+
+jobs:
+  build-develop:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - name: install packages
+        run: npm install
+      - name: build next
+        run: npm run build
