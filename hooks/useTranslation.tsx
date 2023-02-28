@@ -17,6 +17,7 @@ export const useTranslationFunction = () => {
   const { language } = useSelector(ShareStoreSelector)
 
   const getTranslate = (key: string) => {
+    if (key.trim() === '') return ''
     if (language[key]) return language[key]
     return `Error translation: ${key}!`
   }

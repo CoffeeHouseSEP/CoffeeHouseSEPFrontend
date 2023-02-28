@@ -6,6 +6,8 @@ export const apiRoute = {
     changeStatus: 'user/change-status-user',
     addNewUser: 'user/add-new-user',
     updateUser: 'user/update-user',
+    userConfig: 'user/get-notification-config',
+    userNotification: 'user/get-notifications-user',
   },
   auth: {
     login: '/auth/login',
@@ -21,6 +23,7 @@ export const apiRoute = {
     updateGeneralSettings: 'settings/update-general-settings',
     updateAccountSettings: 'settings/update-account-settings',
     getGeneralSettings: 'settings/get-general-settings',
+    updateAvatar: 'settings/update-avatar',
   },
   permissions: {
     updatePermission: 'permission/update-permission',
@@ -57,7 +60,18 @@ export const apiRoute = {
   },
   paths: {
     getPathList: 'paths/get-path-list',
+    getPathDetail: 'paths/get-path-detail',
     addNewPath: 'paths/add-new-path',
     deletePath: 'paths/delete-path',
+    getAccessPath: 'paths/get-path-access',
+    updatePath: 'paths/update-path',
+  },
+  navbar: {
+    getNavbarDetailName: 'navbar/get-navbar-detail-name',
+  },
+  table: {
+    getIgnoreFieldPath: 'table/get-ignore-field-path',
+    getIgnoreFieldUser: 'table/get-ignore-field-user',
+    getIgnoreFieldPermission: 'table/get-ignore-field-permission',
   },
 }
