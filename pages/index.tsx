@@ -1,8 +1,7 @@
-import { Home } from '@/modules'
 import type { NextPage } from 'next'
 
-const IndexPage: NextPage = () => {
-  return <Home />
+const Dashboard: NextPage = () => {
+  return <>index</>
 }
 
-export default IndexPage
+export default Dashboard

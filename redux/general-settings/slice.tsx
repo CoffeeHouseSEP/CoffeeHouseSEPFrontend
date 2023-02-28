@@ -1,9 +1,11 @@
-import { GeneralSettingsStoreTypes } from '@/types'
+import { DefaultUser } from '@/inventory'
+import { GeneralSettingsStoreTypes, UserResponseSuccess } from '@/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: GeneralSettingsStoreTypes = {
-  darkTheme: false,
+  darkTheme: 'dark',
   languageKey: 'en',
+  accountInfo: DefaultUser,
 }
 
 const GeneralSettingsSlice = createSlice({
@@ -13,10 +15,14 @@ const GeneralSettingsSlice = createSlice({
     setGeneralSettings: (state, action: PayloadAction<Partial<GeneralSettingsStoreTypes>>) => {
       Object.assign(state, { ...state, ...action.payload })
     },
+    setUserInfo: (state, action: PayloadAction<UserResponseSuccess>) => {
+      Object.assign(state, { ...state, accountInfo: { ...state.accountInfo, ...action.payload } })
+    },
     resetGeneralSettings: () => initialState,
   },
 })
 
-export const { resetGeneralSettings, setGeneralSettings } = GeneralSettingsSlice.actions
+export const { resetGeneralSettings, setGeneralSettings, setUserInfo } =
+  GeneralSettingsSlice.actions
 
 export default GeneralSettingsSlice

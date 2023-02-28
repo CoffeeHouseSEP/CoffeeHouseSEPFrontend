@@ -1,6 +1,5 @@
 export interface ShareStoreTypes {
-  settingsLoading: boolean
-  languageLoading: boolean
+  loading: number
   breakPoint: number
   language: {
     [key: string]: string

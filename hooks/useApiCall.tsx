@@ -1,29 +1,34 @@
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
+import { setIsLoggedIn } from '@/redux/authentication'
+import { setLoading as setLoadingRedux } from '@/redux/share-store'
 import { CommonResponseType } from '@/types'
 import { AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { useDispatch } from 'react-redux'
 
 export const useApiCall = <T, E>({
   callApi,
   handleError,
   handleSuccess,
+  preventLoadingGlobal,
 }: {
   callApi: () => Promise<AxiosResponse<any, any>>
   handleError?: (status: number, message: string) => void
   handleSuccess?: (message: string, data: T) => void
+  preventLoadingGlobal?: boolean
 }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [data, setData] = useState<CommonResponseType<T>>()
   const [error, setError] = useState<CommonResponseType<E>>()
   const [letCall, setLetCall] = useState<boolean>(false)
 
-  // const dispatch = useDispatch()
-
-  const [, , removeCookie] = useCookies([TOKEN_AUTHENTICATION])
+  const dispatch = useDispatch()
 
   const router = useRouter()
+
+  const [, , removeCookie] = useCookies([TOKEN_AUTHENTICATION])
 
   const getData = async () => {
     try {
@@ -46,16 +51,18 @@ export const useApiCall = <T, E>({
         }
         if (statusCode === 401) {
           removeCookie(TOKEN_AUTHENTICATION)
-
-          router.push('/login')
+          dispatch(setIsLoggedIn(false))
         }
-        // if (statusCode === 403) {
-
-        // }
+        if (statusCode === 403) {
+          router.push('/403')
+        }
       }
     } finally {
       setLoading(false)
       setLetCall(false)
+      if (!preventLoadingGlobal) {
+        dispatch(setLoadingRedux(false))
+      }
     }
   }
 
@@ -63,6 +70,7 @@ export const useApiCall = <T, E>({
     if (letCall) {
       setLoading(true)
       getData()
+      if (!preventLoadingGlobal) dispatch(setLoadingRedux(true))
     }
   }, [letCall])
 
