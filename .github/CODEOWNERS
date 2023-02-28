@@ -4,11 +4,11 @@
 
 # These owners will be the default owners for everything in the repo.
 
-*       @ericchentch
+*       @megatroll215
 
 # config for pr
 
-.github/* @ericchentch
+.github/* @megatroll215
 
 # Order is important. The last matching pattern has the most precedence.
 
