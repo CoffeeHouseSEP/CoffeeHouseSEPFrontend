@@ -1,7 +1,13 @@
+import Home from '@/modules/home/Home'
 import type { NextPage } from 'next'
 
 const Dashboard: NextPage = () => {
-  return <>index abc</>
+  return (
+    <>
+      {' '}
+      <Home />{' '}
+    </>
+  )
 }
 
 export default Dashboard

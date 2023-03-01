@@ -37,7 +37,7 @@
       }
     ],
     "react/require-default-props": "off",
-    "prettier/prettier": ["error", { "singleQuote": true, "semi": false }],
+    "prettier/prettier": ["error", { "singleQuote": true, "semi": false, "endOfLine": "auto" }],
     "import/prefer-default-export": "off",
     "import/export": 0,
     "no-console": "error",
