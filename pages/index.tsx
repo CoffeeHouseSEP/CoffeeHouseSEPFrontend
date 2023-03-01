@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 
 const Dashboard: NextPage = () => {
-  return <>index</>
+  return <>index abc</>
 }
 
 export default Dashboard
