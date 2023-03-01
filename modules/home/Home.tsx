@@ -51,6 +51,7 @@ export default function Home() {
           </div>
         </div>
       </header>
+
       <Carousel infiniteLoop autoPlay showArrows={false} showStatus={false}>
         <div>
           <a href="https://activation.highlandscoffee.com.vn/">
@@ -215,9 +216,6 @@ export default function Home() {
           </Grid>
         </Grid>
       </div>
-      <footer>
-        <div>bc</div>
-      </footer>
     </>
   )
 }

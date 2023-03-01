@@ -100,9 +100,6 @@ Poster
   object-fit: cover;
   position: relative;
 }
-.poster a img {
-  margin-top: -40px;
-}
 .info {
   position: absolute;
   font-size: 2rem;

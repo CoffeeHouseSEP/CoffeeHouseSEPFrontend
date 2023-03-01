@@ -144,7 +144,9 @@ nav {
 .nav__menu-list.active {
   right: 0;
 }
-
+.carousel .thumbs-wrapper {
+  margin: 0 !important;
+}
 .item-menu:hover {
   color: #fff;
   background-color: #882106;
