@@ -136,6 +136,7 @@ Poster
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 100;
+  margin-left: -30px;
 }
 .news {
   margin-top: 20px;
@@ -180,4 +181,51 @@ Poster
   .languageTop ul {
     margin-right: 40px;
   }
+}
+/* footer */
+.footer {
+  background: #53382c;
+    padding: 18px 0;
+    padding-bottom: 25px;
+}
+.wrapper1{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  padding: 0 15px;
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
+.vntbutton {
+  margin-bottom: 20px;
+  display: block;
+    font-size: 20px;
+    line-height: 28px;
+    text-transform: uppercase;
+    padding: 11px 15px;
+    background: #b22830;
+    text-align: Center;
+    color: #ffffff;
+}
+@media (min-width: 992px){
+  .vntbutton {
+      display: none!important;
+  }
+  }
+  @media (max-width: 991px){
+    .buttons {
+      display: block;
+      font-size: 20px;
+      line-height: 28px;
+      text-transform: uppercase;
+      padding: 11px 15px;
+      background: #b22830;
+      text-align: Center;
+      color: #ffffff;
+    }
+.wrapper1 {
+    display: block;
+    text-align: center;
+}
 }

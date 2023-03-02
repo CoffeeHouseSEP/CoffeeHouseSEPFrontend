@@ -153,6 +153,9 @@ nav {
   transition: all 0.3s linear;
   cursor: pointer;
 }
+.thumbs-wrapper {
+  display: none;
+}
 .item-menu {
   font-size: 14px;
   line-height: 25px;
