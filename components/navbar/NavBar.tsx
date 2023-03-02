@@ -7,8 +7,8 @@ const MENU_LIST = [
   { text: 'TIN TỨC', href: '#' },
   { text: 'CỘNG ĐỒNG', href: '/2' },
   { text: 'VỀ CHÚNG TÔI', href: '/3' },
-  { text: 'NGHỀ NGHIỆP', href: '/4' },
   { text: 'MUA NGAY', href: '/5' },
+  { text: 'ĐĂNG NHẬP', href: '/login' },
 ]
 const Navbar = () => {
   const [navActive, setNavActive] = useState<any | null>(null)
