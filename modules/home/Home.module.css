@@ -56,6 +56,7 @@
   list-style: none;
   margin: 5px;
   cursor: pointer;
+  margin-top: 25px;
 }
 .login {
   transform: translateX(120%) translateY(-100%);

@@ -6,16 +6,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAmbulance } from '@fortawesome/free-solid-svg-icons'
 import Navbar from '@/components/navbar/NavBar'
 import { Col, Row } from 'react-bootstrap'
+import classNames from 'classnames/bind'
 import styles from './Home.module.css'
 
+const cx = classNames.bind(styles)
 export default function Home() {
   return (
     <>
-      <header className={styles.header}>
-        <div className={styles.wrapper}>
-          <div className={styles.logo}>
+      <header className={cx('header')}>
+        <div className={cx('wrapper')}>
+          <div className={cx('logo')}>
             <Image
-              className={styles.imagelogo}
+              className={cx('imagelogo')}
               width={110}
               height={85}
               src="/asset/logo.png"
@@ -23,16 +25,16 @@ export default function Home() {
             />
           </div>
           <div className="headertools">
-            <div className={styles.rowTools}>
-              <div className={styles.searchTop}>
+            <div className={cx('rowTools')}>
+              <div className={cx('searchTop')}>
                 <form>
-                  <input className="text_search" placeholder="Search..." />
+                  <input className="text_search" placeholder="Từ khóa ..." />
                   <button type="submit">
                     <Image src="/asset/i-search.svg" height={15} width={15} alt="" />
                   </button>
                 </form>
               </div>
-              <div className={styles.languageTop}>
+              <div className={cx('languageTop')}>
                 <ul>
                   <li>
                     <a href="#">
@@ -99,7 +101,7 @@ export default function Home() {
           </a>
         </div>
       </Carousel>
-      <div className={styles.poster}>
+      <div className={cx('poster')}>
         <a href="https://activation.highlandscoffee.com.vn/">
           <div style={{ width: '100%', height: '485px', position: 'relative', aspectRatio: '1/1' }}>
             <Image layout="fill" objectFit="cover" src="/asset/poster.png" />
@@ -111,11 +113,11 @@ export default function Home() {
           </div>
         </a>
       </div>
-      <div className={styles.contact}>
+      <div className={cx('contact')}>
         <Row>
           <Col xs={12} md={6}>
             <div className="position-relative">
-              <div className={styles.info}> QUÁN MỚI </div>
+              <div className={cx('info')}> QUÁN MỚI </div>
               <div
                 style={{ width: '100%', height: '459px', position: 'relative', aspectRatio: '1/1' }}
               >
@@ -127,9 +129,9 @@ export default function Home() {
                 showArrows={false}
                 showStatus={false}
                 showIndicators={false}
-                className={styles.info1}
+                className={cx('info1')}
               >
-                <div className={styles.location}>
+                <div className={cx('location')}>
                   <h1 className="fs-4">HÀM CÁ MẬP</h1>
                   <h3 className="fs-6 w-75">
                     Tầng 4, 1-3-5 Đinh Tiên Hoàng, Phường Hàng Trống, Quận Hoàn Kiếm, Hà Nội
@@ -139,7 +141,7 @@ export default function Home() {
                     <FontAwesomeIcon icon={faAmbulance} style={{ fontSize: 15, color: 'orange' }} />
                   </h3>
                 </div>
-                <div className={styles.location}>
+                <div className={cx('location')}>
                   <h1 className="fs-4">HÀM CÁ SẤU</h1>
                   <h3 className="fs-6 w-75">
                     Tầng 5, 1-3-5 Đinh Tiên Hoàng, Phường Hàng Trống, Quận Hoàn Kiếm, Hà Nội
@@ -149,7 +151,7 @@ export default function Home() {
                     <FontAwesomeIcon icon={faAmbulance} style={{ fontSize: 15, color: 'orange' }} />
                   </h3>
                 </div>
-                <div className={styles.location}>
+                <div className={cx('location')}>
                   <h1 className="fs-4">HÀM CÁ VOI</h1>
                   <h3 className="fs-6 w-75">
                     Tầng 6, 1-3-5 Đinh Tiên Hoàng, Phường Hàng Trống, Quận Hoàn Kiếm, Hà Nội
@@ -166,15 +168,15 @@ export default function Home() {
             </div>
           </Col>
           <Col xs={12} md={6}>
-            <div className={styles.container}>
+            <div className={cx('container')}>
               <div
                 style={{ width: '100%', height: '459px', position: 'relative', aspectRatio: '1/1' }}
               >
                 <Image layout="fill" objectFit="cover" src="/asset/News_Banner.jpg" />
               </div>
-              <div className={styles.somenews}>
-                <h1 className={styles.newsmost}> TIN MỚI NHẤT</h1>
-                <Row container className={styles.news}>
+              <div className={cx('somenews')}>
+                <h1 className={cx('newsmost')}> TIN MỚI NHẤT</h1>
+                <Row container className={cx('news')}>
                   <Col xs={6} md={4}>
                     <Image src="/asset/tet1.jpg" width={120} height={80} alt="Tet1" />
                   </Col>
@@ -183,7 +185,7 @@ export default function Home() {
                     <h5>28/12/2022</h5>
                   </Col>
                 </Row>
-                <Row container className={styles.news}>
+                <Row container className={cx('news')}>
                   <Col xs={6} md={4}>
                     <Image src="/asset/tet2.jpg" width={120} height={80} alt="Tet1" />
                   </Col>
@@ -192,7 +194,7 @@ export default function Home() {
                     <h5>28/12/2022</h5>
                   </Col>
                 </Row>
-                <Row container className={styles.news}>
+                <Row container className={cx('news')}>
                   <Col xs={6} md={4}>
                     <Image src="/asset/tet3.jpg" width={120} height={80} alt="Tet1" />
                   </Col>
@@ -206,11 +208,11 @@ export default function Home() {
           </Col>
         </Row>
       </div>
-      <div className={styles.footer}>
-        <div className={styles.wrapper1}>
-          <div className={styles.vntbutton}>
+      <div className={cx('footer')}>
+        <div className={cx('wrapper1')}>
+          <div className={cx('vntbutton')}>
             <div className="button-wrap">
-              <div className={styles.buttons}>
+              <div className={cx('buttons')}>
                 <a
                   href="https://www.highlandscoffee.com.vn/vn/he-thong-cua-hang.html"
                   className="btn-mm text-decoration-none"
