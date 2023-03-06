@@ -1,5 +1,3 @@
-import Footer from '@/components/layout/Footer/Footer'
-import Header from '@/components/layout/Header/Header'
 import { useFetch } from '@/hooks/useFetch'
 import classNames from 'classnames/bind'
 import { useEffect, useState } from 'react'
@@ -14,7 +12,7 @@ function Posts() {
   useEffect(() => {
     if (loading) return
     setFollowers(data[page])
-  }, [loading, page])
+  }, [loading, page, data])
 
   const nextPage = () => {
     setPage((oldPage) => {
@@ -41,7 +39,6 @@ function Posts() {
 
   return (
     <main>
-      <Header />
       <div className={cx('section-title')}>
         <h1>{loading ? 'loading...' : 'TRÁCH NHIỆM CỘNG ĐỒNG'}</h1>
         <div className={cx('underline')} />
@@ -75,7 +72,6 @@ function Posts() {
           </div>
         )}
       </section>
-      <Footer />
     </main>
   )
 }

@@ -1,5 +1,3 @@
-import Footer from '@/components/layout/Footer/Footer'
-import Header from '@/components/layout/Header/Header'
 import { useFetch } from '@/hooks/useFetch'
 import classNames from 'classnames/bind'
 import { useEffect, useState } from 'react'
@@ -41,7 +39,6 @@ function News() {
 
   return (
     <main>
-      <Header />
       <div className={cx('section-title')}>
         <h1>{loading ? 'loading...' : 'TIN TỨC'}</h1>
         <div className={cx('underline')} />
@@ -75,7 +72,6 @@ function News() {
           </div>
         )}
       </section>
-      <Footer />
     </main>
   )
 }
