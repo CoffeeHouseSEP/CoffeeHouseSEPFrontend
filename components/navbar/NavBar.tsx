@@ -4,8 +4,8 @@ import NavItem from './NavItem/NavItem'
 const MENU_LIST = [
   { text: 'QUÁN CÀ PHÊ', href: '#' },
   { text: 'THỰC ĐƠN', href: '#' },
-  { text: 'TIN TỨC', href: '#' },
-  { text: 'CỘNG ĐỒNG', href: '/2' },
+  { text: 'TIN TỨC', href: '/news' },
+  { text: 'CỘNG ĐỒNG', href: '/posts' },
   { text: 'VỀ CHÚNG TÔI', href: '/3' },
   { text: 'MUA NGAY', href: '/5' },
   { text: 'ĐĂNG NHẬP', href: '/login' },

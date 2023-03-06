@@ -4,56 +4,17 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loa
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import the icons you need
 import { faAmbulance } from '@fortawesome/free-solid-svg-icons'
-import Navbar from '@/components/navbar/NavBar'
 import { Col, Row } from 'react-bootstrap'
+import Footer from '@/components/layout/Footer/Footer'
 import classNames from 'classnames/bind'
+import Header from '@/components/layout/Header/Header'
 import styles from './Home.module.css'
 
 const cx = classNames.bind(styles)
 export default function Home() {
   return (
     <>
-      <header className={cx('header')}>
-        <div className={cx('wrapper')}>
-          <div className={cx('logo')}>
-            <Image
-              className={cx('imagelogo')}
-              width={110}
-              height={85}
-              src="/asset/logo.png"
-              alt=""
-            />
-          </div>
-          <div className="headertools">
-            <div className={cx('rowTools')}>
-              <div className={cx('searchTop')}>
-                <form>
-                  <input className="text_search" placeholder="Từ khóa ..." />
-                  <button type="submit">
-                    <Image src="/asset/i-search.svg" height={15} width={15} alt="" />
-                  </button>
-                </form>
-              </div>
-              <div className={cx('languageTop')}>
-                <ul>
-                  <li>
-                    <a href="#">
-                      <Image src="/asset/flag-vn.jpg" width={33} height={25} alt="EN" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <Image src="/asset/flag-en.jpg" height={25} width={33} alt="VN" />
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <Navbar />
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <Carousel infiniteLoop autoPlay showArrows={false} showStatus={false}>
         <div>
           <a href="https://activation.highlandscoffee.com.vn/">
@@ -101,18 +62,26 @@ export default function Home() {
           </a>
         </div>
       </Carousel>
-      <div className={cx('poster')}>
-        <a href="https://activation.highlandscoffee.com.vn/">
-          <div style={{ width: '100%', height: '485px', position: 'relative', aspectRatio: '1/1' }}>
-            <Image layout="fill" objectFit="cover" src="/asset/poster.png" />
-          </div>
-        </a>
-        <a href="https://activation.highlandscoffee.com.vn/">
-          <div style={{ width: '100%', height: '485px', position: 'relative', aspectRatio: '1/1' }}>
-            <Image layout="fill" objectFit="cover" src="/asset/poster2.png" />
-          </div>
-        </a>
-      </div>
+      <Row className={cx('poster')}>
+        <Col xs={12}>
+          <a href="https://activation.highlandscoffee.com.vn/">
+            <div
+              style={{ width: '100%', height: '485px', position: 'relative', aspectRatio: '1/1' }}
+            >
+              <Image layout="fill" objectFit="cover" src="/asset/poster.png" />
+            </div>
+          </a>
+        </Col>
+        <Col xs={12}>
+          <a href="https://activation.highlandscoffee.com.vn/">
+            <div
+              style={{ width: '100%', height: '485px', position: 'relative', aspectRatio: '1/1' }}
+            >
+              <Image layout="fill" objectFit="cover" src="/asset/poster2.png" />
+            </div>
+          </a>
+        </Col>
+      </Row>
       <div className={cx('contact')}>
         <Row>
           <Col xs={12} md={6}>
@@ -208,41 +177,7 @@ export default function Home() {
           </Col>
         </Row>
       </div>
-      <div className={cx('footer')}>
-        <div className={cx('wrapper1')}>
-          <div className={cx('vntbutton')}>
-            <div className="button-wrap">
-              <div className={cx('buttons')}>
-                <a
-                  href="https://www.highlandscoffee.com.vn/vn/he-thong-cua-hang.html"
-                  className="btn-mm text-decoration-none"
-                >
-                  <span className="fa-map-marker">VIEW MAP</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="copyRight text-white">© 2018 Highlands Coffee. All rights reserved</div>
-          <div className="linkFooter">
-            <a href="" className="text-decoration-none">
-              <span className="fa-paper-plane-o text-white text-decoration-none">
-                Đăng ký để nhận bản tin
-              </span>
-            </a>
-          </div>
-          <div className="linkFooter mb">
-            <a
-              href="mailto:customerservice@highlandscoffee.com.vn"
-              className="text-decoration-none"
-            >
-              <span className="fa-envelope-o text-white">
-                customerservice@highlandscoffee.com.vn
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
+      <Footer />
     </>
   )
 }
