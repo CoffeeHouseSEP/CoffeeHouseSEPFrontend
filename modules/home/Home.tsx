@@ -13,7 +13,7 @@ import styles from './Home.module.css'
 const cx = classNames.bind(styles)
 export default function Home() {
   return (
-    <>
+    <div className={cx('containerfull')}>
       <Header />
       <Carousel infiniteLoop autoPlay showArrows={false} showStatus={false}>
         <div>
@@ -178,6 +178,6 @@ export default function Home() {
         </Row>
       </div>
       <Footer />
-    </>
+    </div>
   )
 }

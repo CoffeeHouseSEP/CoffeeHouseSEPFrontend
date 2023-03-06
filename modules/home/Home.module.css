@@ -1,3 +1,6 @@
+.containerfull {
+  overflow-x: hidden;
+}
 .header {
   border-top: solid 10px #53382c;
   background: #b22830;
@@ -129,6 +132,7 @@ Poster
   text-align: justify;
   text-justify: inter-word;
 }
+
 .container {
   height: 100%;
   position: relative;

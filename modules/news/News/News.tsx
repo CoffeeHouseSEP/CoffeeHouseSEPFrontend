@@ -59,7 +59,7 @@ function News() {
                 <button
                   type="button"
                   key={index + 1}
-                  className={cx(`page-btn ${index === page ? 'active-btn' : null}`)}
+                  className={(cx(index === page ? 'active-btn' : ''), 'page-btn')}
                   onClick={() => handlePage(index)}
                 >
                   1

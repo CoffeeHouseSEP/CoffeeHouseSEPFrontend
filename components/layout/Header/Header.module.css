@@ -3,6 +3,7 @@
   background: #b22830;
   position: relative;
   scroll-behavior: none;
+  width: 100%;
 }
 .wrapper {
   display: flex;

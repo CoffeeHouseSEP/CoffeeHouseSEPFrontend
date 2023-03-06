@@ -6,8 +6,8 @@ const MENU_LIST = [
   { text: 'THỰC ĐƠN', href: '#' },
   { text: 'TIN TỨC', href: '/news' },
   { text: 'CỘNG ĐỒNG', href: '/posts' },
-  { text: 'VỀ CHÚNG TÔI', href: '/3' },
-  { text: 'MUA NGAY', href: '/5' },
+  { text: 'VỀ CHÚNG TÔI', href: '/aboutus' },
+  { text: 'MUA NGAY', href: '/shopping' },
   { text: 'ĐĂNG NHẬP', href: '/login' },
 ]
 const Navbar = () => {
@@ -22,16 +22,9 @@ const Navbar = () => {
           <div />
           <p style={{ color: '#fff', fontSize: '11px', textAlign: 'center' }}>Menu</p>
         </div>
-        <div className={`${navActive ? 'active' : ''} nav__menu-list`}>
+        <div className="nav__menu-list">
           {MENU_LIST.map((menu, idx) => (
-            <div
-              className="item-menu"
-              onClick={() => {
-                setActiveIdx(idx)
-                setNavActive(false)
-              }}
-              key={menu.text}
-            >
+            <div className="item-menu" onClick={() => setActiveIdx(idx)} key={menu.text}>
               <NavItem active={activeIdx === idx} {...menu} />
             </div>
           ))}
