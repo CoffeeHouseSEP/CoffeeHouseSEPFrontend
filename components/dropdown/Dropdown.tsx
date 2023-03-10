@@ -16,6 +16,7 @@ interface IDropdown<T> {
   color?: ColorType
   onClick: Function
   zIndex?: number
+  isCloseSelect?: boolean
 }
 
 export const Dropdown = <T,>({
@@ -26,6 +27,7 @@ export const Dropdown = <T,>({
   styleType,
   onClick,
   zIndex,
+  isCloseSelect,
 }: IDropdown<T>) => {
   const [open, setOpen] = useState(false)
   const divRef = useRef<HTMLDivElement>(null)
@@ -85,6 +87,9 @@ export const Dropdown = <T,>({
             onMouseOut={() => setHoverItem(undefined)}
             onMouseDown={() => {
               onClick(item.value)
+              if (isCloseSelect) {
+                setOpen(false)
+              }
             }}
             onBlur={() => {}}
             key={item.value?.toString()}

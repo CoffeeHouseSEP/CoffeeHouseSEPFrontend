@@ -1,4 +1,4 @@
-import { blue, purple, green, yellow, red, cyan, pink, gray } from './colors'
+import { blue, cyan, gray, green, pink, purple, red, yellow } from './colors'
 
 export const LightThemeValue = {
   colors: {
@@ -21,6 +21,11 @@ export const LightThemeValue = {
     ...cyan,
     ...pink,
     ...gray,
+
+    // highland-color
+    redHighland: '#b22830',
+    brownHoverHighLand: '#333333',
+    orangeHighLand: '#f1bc7a',
 
     // misc
     textLight: 'rgba(236, 237, 238, 0.2)',

@@ -1,16 +1,16 @@
 import {
-  blueDark,
-  greenDark,
-  purpleDark,
-  yellowDark,
-  redDark,
-  cyanDark,
-  pinkDark,
-  grayDark,
-  gray,
   blue,
+  blueDark,
   cyan,
+  cyanDark,
+  gray,
+  grayDark,
+  greenDark,
   pink,
+  pinkDark,
+  purpleDark,
+  redDark,
+  yellowDark,
 } from './colors'
 
 export const DarkThemeValue = {
@@ -26,6 +26,11 @@ export const DarkThemeValue = {
     backgroundSelectedTab: 'rgb(13, 17, 23)',
     backgroundModal: 'rgb(22, 27, 34)',
     backgroundReopen: 'rgb(33, 38, 45)',
+
+    // highland-color
+    redHighland: '#b22830',
+    brownHoverHighLand: '#333333',
+    orangeHighLand: '#f1bc7a',
 
     ...blueDark,
     ...purpleDark,

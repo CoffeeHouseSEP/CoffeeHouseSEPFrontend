@@ -1,7 +1,14 @@
-import type { NextPage } from 'next'
+import { EndUserLayout } from '@/components'
+import { HomeContainer } from '@/modules'
+import { ReactElement } from 'react'
+import { NextPageWithLayout } from './_app'
 
-const Dashboard: NextPage = () => {
-  return <>index</>
+const HomePage: NextPageWithLayout = () => {
+  return <HomeContainer />
 }
 
-export default Dashboard
+HomePage.getLayout = function getLayout(page: ReactElement) {
+  return <EndUserLayout>{page}</EndUserLayout>
+}
+
+export default HomePage
