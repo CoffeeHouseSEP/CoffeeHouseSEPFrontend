@@ -91,6 +91,9 @@
   padding: 10rem 0;
   transition: left 1.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
+.relogin {
+  display: none;
+}
 .signin-form {
   width: 60rem;
   height: 100%;
@@ -124,7 +127,9 @@
 .social-media {
   display: flex;
 }
-
+.redirect {
+  display: none;
+}
 .social-media i {
   width: 4rem;
   height: 4rem;
@@ -151,6 +156,7 @@
 
 .input-group {
   position: relative;
+  margin-top: 1.5rem;
 }
 
 .input-group input {
@@ -219,4 +225,99 @@
 }
 .register {
   margin-top: 100px;
+}
+@media (max-width: 767px) {
+  .banner {
+    display: none;
+  }
+  .green-bg {
+    display: none;
+  }
+  .signup-form {
+    visibility: hidden;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10rem 0;
+    transition: left 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .change1 {
+    visibility: inherit;
+  }
+  .change2 {
+    visibility: hidden;
+  }
+  .signup-form p {
+    font-size: 1rem;
+  }
+  .signup-form h1 {
+    font-size: 1.5rem;
+  }
+  .signin-form {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10rem 0;
+    transition: left 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .signin-form p {
+    font-size: 1rem;
+  }
+  .signin-form h1 {
+    font-size: 1.5rem;
+  }
+  .input-group {
+    margin-top: 1rem;
+    width: 15rem;
+    background-color: #ddd;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+  }
+  .input-group input {
+    width: 100%;
+    background-color: #ddd;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    outline: none;
+  }
+  .signin-form button {
+    width: 15rem;
+    height: 4rem;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    color: #fff;
+    margin-top: -1rem;
+  }
+  .redirect {
+    cursor: pointer;
+    display: block;
+    text-decoration: underline;
+  }
+  .relogin {
+    display: block;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+@media (min-width: 768px) {
+}
+@media (min-width: 768px) and (max-width: 1023px) {
 }

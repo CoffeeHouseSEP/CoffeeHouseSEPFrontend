@@ -3,7 +3,7 @@ import NavItem from './NavItem/NavItem'
 
 const MENU_LIST = [
   { text: 'QUÁN CÀ PHÊ', href: '#' },
-  { text: 'THỰC ĐƠN', href: '#' },
+  { text: 'THỰC ĐƠN', href: '/menu' },
   { text: 'TIN TỨC', href: '#' },
   { text: 'CỘNG ĐỒNG', href: '/2' },
   { text: 'VỀ CHÚNG TÔI', href: '/3' },
