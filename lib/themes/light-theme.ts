@@ -24,7 +24,7 @@ export const LightThemeValue = {
 
     // highland-color
     redHighland: '#b22830',
-    brownHoverHighLand: '#333333',
+    brownHoverHighLand: '#882106',
     orangeHighLand: '#f1bc7a',
 
     // misc

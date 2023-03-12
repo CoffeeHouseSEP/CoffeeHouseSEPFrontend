@@ -29,7 +29,7 @@ export const DarkThemeValue = {
 
     // highland-color
     redHighland: '#b22830',
-    brownHoverHighLand: '#333333',
+    brownHoverHighLand: '#882106',
     orangeHighLand: '#f1bc7a',
 
     ...blueDark,

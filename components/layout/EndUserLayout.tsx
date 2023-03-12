@@ -1,3 +1,4 @@
+import FooterEndUser from '../footer/FooterEndUser'
 import { NavBarEndUser } from '../navbar'
 
 interface IEndUserLayout {
@@ -9,6 +10,7 @@ export const EndUserLayout = ({ children }: IEndUserLayout) => {
     <>
       <NavBarEndUser />
       <div style={{ marginTop: 122 }}>{children}</div>
+      <FooterEndUser />
     </>
   )
 }

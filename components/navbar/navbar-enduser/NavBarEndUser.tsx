@@ -3,6 +3,7 @@ import { themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { OptionsType } from '@/types'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
@@ -38,13 +39,23 @@ export const NavBarEndUser = () => {
         justifyContent: 'center',
         alignItems: 'center',
         padding: '0px 20px',
+        zIndex: '1000',
       }}
     >
       <div style={{ height: '100%', width: 1280, display: 'flex', gap: 50 }}>
         <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-          <div style={{ height: '80%', aspectRatio: '4 / 3', position: 'relative' }}>
-            <Image src="/logo/HL_cream_logo.png" layout="fill" />
-          </div>
+          <Link href="/">
+            <div
+              style={{
+                height: '80%',
+                aspectRatio: '4 / 3',
+                position: 'relative',
+                cursor: 'pointer',
+              }}
+            >
+              <Image src="/logo/HL_cream_logo.png" layout="fill" />
+            </div>
+          </Link>
         </div>
         <div
           style={{
@@ -79,7 +90,7 @@ export const NavBarEndUser = () => {
                   height: '100%',
                   backgroundColor: themeValue[darkTheme].colors.background,
                 }}
-                placeholder="search"
+                placeholder="Tìm kiếm..."
               />
               <div
                 style={{

@@ -65,7 +65,7 @@ export const Dropdown = <T,>({
             handleOpen()
           }
         }}
-        style={{ display: 'flex', alignItems: 'center' }}
+        style={{ display: 'flex', alignItems: 'center', color: '#fff' }}
       >
         {button}
         <MdArrowDropDown />

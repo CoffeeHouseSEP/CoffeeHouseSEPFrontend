@@ -39,13 +39,29 @@ export const Menu = () => {
 
   const menuList: MenuItem[] = [
     {
-      label: 'Quan ca phe',
-      link: 'stores',
+      label: 'QUÁN CÀ PHÊ',
+      link: '/stores',
     },
     {
-      label: 'Thuc don',
+      label: 'THỰC ĐƠN',
       menu: <GridCategory setHover={setMenuHover} list={cateItem} />,
-      link: 'stores',
+      link: '/menu',
+    },
+    {
+      label: 'TIN TỨC',
+      link: '/news',
+    },
+    {
+      label: 'VỀ CHÚNG TÔI',
+      link: '/aboutus',
+    },
+    {
+      label: 'MUA NGAY',
+      link: '/shopping',
+    },
+    {
+      label: 'ĐĂNG NHẬP',
+      link: '/login',
     },
   ]
 
@@ -60,6 +76,8 @@ export const Menu = () => {
       alignItems: 'center',
       padding: '0px 10px',
       zIndex: 2,
+      color: '#fff',
+      cursor: 'pointer',
     }
   }
 
@@ -75,6 +93,7 @@ export const Menu = () => {
                 setMenuHover(item.label)
               }}
               onMouseLeave={() => setHover('')}
+              onClick={() => router.push(item.link)}
             >
               {item.label}
             </div>
