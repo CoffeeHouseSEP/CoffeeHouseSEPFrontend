@@ -1,5 +1,11 @@
 import { FeedBackFromTravelers, HighlightData, RecommendedDataType } from './MockDataType'
 
+type RecommendedDataTypeStore = {
+  id: string
+  title: string
+  address: string
+  name: string
+}
 export const highlightData: HighlightData[] = [
   {
     imageUrl:
@@ -110,55 +116,44 @@ export const highlightData: HighlightData[] = [
     tab: 'Đà Nẵng',
   },
 ]
-
+export const cityStore: RecommendedDataTypeStore[] = [
+  {
+    id: '1',
+    title: 'HÀM CÁ MẬP',
+    name: 'Tầng 3, 1-3-5 Đinh Tiên Hoàng, Phường Hàng Trống, Quận Hoàn Kiếm, Hà Nội',
+    address: 'Tìm đường',
+  },
+  {
+    id: '1',
+    title: 'HÀM CÁ SẤU',
+    name: '721 Huỳnh Tấn Phát, Phường Phú Thuận, Quận 7, Tp. Hồ Chí Minh',
+    address: 'Tìm đường',
+  },
+  {
+    id: '1',
+    title: 'HÀM CÁ TO',
+    name: '721 Huỳnh Tấn Phát, Phường Phú Thuận, Quận 7, Tp. Hồ Chí Minh',
+    address: 'Tìm đường',
+  },
+]
 export const cityData: RecommendedDataType[] = [
   {
     id: '1',
-    imageUrl: 'https://pix6.agoda.net/geo/city/13170/1_13170_02.jpg?ca=6&ce=1&s=345x345&ar=1x1',
+    imageUrl: '/asset/Love1.png',
     name: 'Hồ Chí Minh',
-    properties: '11,919',
+    properties: '32',
   },
   {
     id: '2',
-    imageUrl: 'https://pix6.agoda.net/geo/city/2758/1_2758_02.jpg?ca=6&ce=1&s=345x345&ar=1x1',
+    imageUrl: '/asset/Love2.png',
     name: 'Hà Nội',
-    properties: '7,922',
+    properties: '45',
   },
   {
     id: '3',
-    imageUrl: 'https://pix6.agoda.net/geo/city/15932/1_15932_02.jpg?ca=6&ce=1&s=345x345&ar=1x1',
+    imageUrl: '/asset/Love.png',
     name: 'Đà Lạt',
-    properties: '4,170',
-  },
-  {
-    id: '4',
-    imageUrl: 'https://pix6.agoda.net/geo/city/17190/1_17190_02.jpg?ca=6&ce=1&s=345x345&ar=1x1',
-    name: 'Vũng Tàu',
-    properties: '4,942',
-  },
-  {
-    id: '5',
-    imageUrl: 'https://pix6.agoda.net/geo/city/16440/1_16440_02.jpg?ca=6&ce=1&s=345x345&ar=1x1',
-    name: 'Đà Nẵng',
-    properties: '4,685',
-  },
-  {
-    id: '6',
-    imageUrl: 'https://pix6.agoda.net/geo/city/2679/1_2679_02.jpg?ca=6&ce=1&s=345x345&ar=1x1',
-    name: 'Nha Trang',
-    properties: '3,394',
-  },
-  {
-    id: '7',
-    imageUrl: 'https://pix6.agoda.net/geo/city/17188/1_17188_02.jpg?ca=6&ce=1&s=345x345&ar=1x1',
-    name: 'Phú Quốc Island',
-    properties: '1,619',
-  },
-  {
-    id: '8',
-    imageUrl: 'https://pix6.agoda.net/geo/city/16264/1_16264_02.jpg?ca=6&ce=1&s=345x345&ar=1x1',
-    name: 'Phan Thiết',
-    properties: '913',
+    properties: '23',
   },
 ]
 export const recomendData: RecommendedDataType[] = [

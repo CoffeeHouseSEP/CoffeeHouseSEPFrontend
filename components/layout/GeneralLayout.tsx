@@ -18,7 +18,7 @@ export const GeneralLayout = ({ children }: { children: React.ReactNode }) => {
     if (isDark) {
       if (darkTheme === 'light') dispatch(setGeneralSettings({ darkTheme: 'dark' }))
     } else if (darkTheme === 'dark') dispatch(setGeneralSettings({ darkTheme: 'light' }))
-  }, [isDark])
+  }, [isDark, dispatch, darkTheme])
 
   return (
     <>

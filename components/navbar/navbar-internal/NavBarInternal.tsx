@@ -7,7 +7,7 @@ import React from 'react'
 import { HiMenuAlt2 } from 'react-icons/hi'
 import { RiNotificationBadgeFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
-import { Search } from '../search'
+import { Search } from '../../search'
 
 interface INavbarInternal {
   setOpenSideBar: React.MouseEventHandler<HTMLDivElement>

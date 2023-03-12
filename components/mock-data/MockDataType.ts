@@ -4,6 +4,12 @@ export type RecommendedDataType = {
   name: string
   properties: string
 }
+export type RecommendedDataTypeStore = {
+  id: string
+  title: string
+  address: string
+  name: string
+}
 
 export type FeedBackFromTravelers = {
   id: string
