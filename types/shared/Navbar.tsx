@@ -11,7 +11,7 @@ export interface CategoryItem {
   status: number
 }
 export interface NewItem {
-  newsId: number
+  newsId: string
   title: string
   content: string
   createBy: string

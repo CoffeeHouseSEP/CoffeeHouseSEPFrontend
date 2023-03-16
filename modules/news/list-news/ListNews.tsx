@@ -8,7 +8,7 @@ import NewsItem from './NewItem'
 
 export default function ListNews() {
   const [page, setPage] = useState<number>(1)
-  const pageSize = '10'
+  const pageSize = '6'
   const [newList, setNewList] = useState<NewItem[]>([])
   const news = useApiCall<CommonListResultType<NewItem>, String>({
     callApi: () =>
@@ -23,7 +23,7 @@ export default function ListNews() {
   const { loading, setLetCall } = news
   useEffect(() => {
     setLetCall(true)
-  }, [])
+  }, [page])
   return (
     <div>
       <div style={{ textAlign: 'center', margin: '10rem 0 4rem 0' }}>
@@ -46,6 +46,7 @@ export default function ListNews() {
         total={news.data?.result?.totalRows || 0}
         onChange={(number) => setPage(number)}
         page={page}
+        pageSize={6}
         paginationStyle={{
           marginTop: 20,
           marginBottom: 20,

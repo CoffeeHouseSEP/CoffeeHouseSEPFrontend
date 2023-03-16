@@ -49,7 +49,7 @@ export const Menu = () => {
     },
     {
       label: 'TIN TỨC',
-      link: '/news',
+      link: '/news/listnews',
     },
     {
       label: 'VỀ CHÚNG TÔI',

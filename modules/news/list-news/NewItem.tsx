@@ -8,14 +8,14 @@ interface IPropNews {
   list: NewItem[]
 }
 export default function NewsItem({ list }: IPropNews) {
-  const [isHover, setIsHover] = useState<number>()
-  const handleMouseEnter = (id: number) => {
+  const [isHover, setIsHover] = useState<string>()
+  const handleMouseEnter = (id: string) => {
     setIsHover(id)
   }
   const router = useRouter()
 
   const handleMouseLeave = () => {
-    setIsHover(-1)
+    setIsHover('-1')
   }
   return (
     <>
