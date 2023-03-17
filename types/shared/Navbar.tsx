@@ -19,3 +19,14 @@ export interface NewItem {
   status: number
   createByName: string
 }
+export interface GoodsItem {
+  id: number
+  goodsId: string
+  name: string
+  code: string
+  applyPrice: number
+  description: string
+  status: number
+  categoryId: number
+  innerPrice: number
+}

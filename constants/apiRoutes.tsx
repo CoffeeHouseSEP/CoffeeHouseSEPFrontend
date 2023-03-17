@@ -5,4 +5,7 @@ export const apiRoute = {
   new: {
     getListNews: '/news/get-list-news',
   },
+  goods: {
+    getListGoods: '/goods/get-list-goods',
+  },
 }
