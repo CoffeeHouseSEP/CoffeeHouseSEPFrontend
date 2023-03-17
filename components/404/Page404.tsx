@@ -3,9 +3,7 @@ import { themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { ShareStoreSelector } from '@/redux/share-store'
 import Image from 'next/image'
-import { ReactElement } from 'react'
 import { useSelector } from 'react-redux'
-import { EndUserLayout } from '../layout'
 
 const Page404 = () => {
   const { darkTheme } = useSelector(GeneralSettingsSelector)
@@ -45,10 +43,6 @@ const Page404 = () => {
       </div>
     </div>
   )
-}
-
-Page404.getLayout = function getLayout(page: ReactElement) {
-  return <EndUserLayout>{page}</EndUserLayout>
 }
 
 export default Page404
