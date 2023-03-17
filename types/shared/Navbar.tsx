@@ -10,6 +10,15 @@ export interface CategoryItem {
   description: string
   status: number
 }
+export interface NewItem {
+  newsId: string
+  title: string
+  content: string
+  createBy: string
+  createdDate: string
+  status: number
+  createByName: string
+}
 export interface GoodsItem {
   id: number
   goodsId: string
