@@ -1,3 +1,4 @@
+import Page404 from '@/components/404/Page404'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall } from '@/hooks'
 import { getMethod } from '@/services'
@@ -42,7 +43,7 @@ export default function DetailNew() {
   }, [id])
   const newDetail = news.data?.result.data[0]
   if (!newDetail) {
-    return 404
+    return <Page404 />
   }
 
   return (
