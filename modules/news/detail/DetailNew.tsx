@@ -11,6 +11,7 @@ import { CiAlarmOn } from 'react-icons/ci'
 export default function DetailNew() {
   const router = useRouter()
   const id = router?.query?.id?.toString()
+
   const [isHover, setIsHover] = useState<string>()
   const handleMouseEnter = (id: string | undefined) => {
     setIsHover(id)
@@ -18,25 +19,31 @@ export default function DetailNew() {
   const handleMouseLeave = () => {
     setIsHover('-1')
   }
-  const [newList, setNewList] = useState<NewItem[]>([])
-  const [itemNew, setItemNew] = useState<NewItem>()
+  const newsList = useApiCall<CommonListResultType<NewItem>, String>({
+    callApi: () =>
+      getMethod({
+        pathName: apiRoute.new.getListNews,
+        params: { page: '1', pageSize: '10', keySort: 'desc', sortField: 'createdDate' },
+      }),
+  })
   const news = useApiCall<CommonListResultType<NewItem>, String>({
     callApi: () =>
       getMethod({
         pathName: apiRoute.new.getListNews,
+        params: { page: '1', pageSize: '1', newsId: id || '' },
       }),
-    handleSuccess(message, data) {
-      setNewList(data.data)
-    },
   })
-  const filterNewItem = () => {
-    const Itemnews = newList.find((item) => item.newsId === id)
-    setItemNew(Itemnews)
-  }
+
   useEffect(() => {
-    news.setLetCall(true)
-    filterNewItem()
-  }, [id, newList.length])
+    if (!!id) {
+      news.setLetCall(true)
+      newsList.setLetCall(true)
+    }
+  }, [id])
+  const newDetail = news.data?.result.data[0]
+  if (!newDetail) {
+    return 404
+  }
 
   return (
     <div style={{ padding: '20px 150px' }}>
@@ -50,7 +57,7 @@ export default function DetailNew() {
           fontWeight: 'bold',
         }}
       >
-        {itemNew?.title}
+        {newDetail?.title}
       </h1>
       <div
         style={{
@@ -64,11 +71,11 @@ export default function DetailNew() {
         <span style={{ display: 'flex', alignItems: 'center' }}>
           <CiAlarmOn size="25" />
           <span style={{ marginLeft: '10px' }}>
-            {itemNew?.createdDate.replaceAll(':00.000+00:00', '')}
+            {newDetail?.createdDate.replaceAll(':00.000+00:00', '')}
           </span>
         </span>
       </div>
-      <p>{itemNew?.content}</p>
+      <p>{newDetail?.content}</p>
       <div
         style={{
           width: '80%',
@@ -88,26 +95,34 @@ export default function DetailNew() {
           fontSize: '32px',
           lineHeight: '40px',
           fontWeight: 'bold',
-          color: isHover === itemNew?.newsId ? '#882106' : '#53382c',
+          color: isHover === newDetail?.newsId ? '#882106' : '#53382c',
           cursor: 'pointer',
         }}
-        onMouseEnter={() => handleMouseEnter(itemNew?.newsId)}
+        onMouseEnter={() => handleMouseEnter(newDetail?.newsId)}
         onMouseLeave={() => handleMouseLeave()}
       >
         {' '}
         CÁC TIN KHÁC
       </h2>
-      <ul>
-        {newList.map((item) => (
+      <ul style={{ padding: 0, margin: 0 }}>
+        {newsList.data?.result.data.map((item) => (
           <li
             style={{
               listStyle: 'none',
               padding: '5px',
               cursor: 'pointer',
             }}
+            onClick={() => router.push(`/news/${item.newsId}`)}
           >
             <BsFillCaretRightFill style={{ color: '#333', padding: '2px 2px' }} /> {item.title}{' '}
-            <span style={{ color: '#333' }}>
+            <span
+              style={{
+                fontWeight: 'lighter',
+                color: '#999999',
+                lineHeight: '22px',
+                fontSize: '14px',
+              }}
+            >
               ( {item.createdDate.replaceAll(':00.000+00:00', '')})
             </span>
           </li>
