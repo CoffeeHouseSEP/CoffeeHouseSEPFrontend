@@ -1,1 +1,1 @@
-export * from './Categorymanagement'
+export * from './CategoryManagement'
