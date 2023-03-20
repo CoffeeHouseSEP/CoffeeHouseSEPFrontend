@@ -1,5 +1,4 @@
 import { UserResponseSuccess, ViewPointType } from '@/types'
-import { CategoryRequest } from '@/types/category'
 
 export const DefaultUser: UserResponseSuccess = {
   id: '',
@@ -20,12 +19,6 @@ export const DefaultUser: UserResponseSuccess = {
   active: 0,
   avatar: '',
   type: 'INTERNAL',
-}
-export const CategoryRequestDefault: CategoryRequest = {
-  categoryId: '',
-  name: '',
-  description: '',
-  status: 0,
 }
 
 export const initUserRequest: ViewPointType[] = [
