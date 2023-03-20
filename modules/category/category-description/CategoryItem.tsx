@@ -21,15 +21,11 @@ export default function CategoryItemView({ list }: IGridCategory) {
     setIsHover(-1)
   }
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(600px, 1fr)' }}>
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '50%',
-          flexWrap: 'wrap',
-          height: '100%',
-          justifyContent: ' space-between',
+          display: 'grid',
+          gridTemplateRows: 'repeat(auto-fit, minmax(600px, 1fr)',
         }}
       >
         {list.map((item) => (
@@ -68,8 +64,8 @@ export default function CategoryItemView({ list }: IGridCategory) {
               <div
                 style={{
                   color: '#faebd7',
-                  fontSize: '18px',
-                  lineHeight: '26px',
+                  fontSize: '1.2rem',
+                  lineHeight: '2rem',
                   fontWeight: 'bold',
                   marginBottom: '40px !important',
                   paddingBottom: '15px',
@@ -87,10 +83,11 @@ export default function CategoryItemView({ list }: IGridCategory) {
                       background: 'transparent',
                       color: '#FAEBD7',
                       cursor: 'pointer',
-                      fontSize: '16px',
-                      lineHeight: '24px',
+                      fontSize: '1rem',
+                      lineHeight: '2.4rem',
                       border: '1px solid #fff',
                     }}
+                    onClick={() => router.push(`/goods`)}
                   >
                     KHÁM PHÁ THÊM
                   </button>
@@ -102,17 +99,21 @@ export default function CategoryItemView({ list }: IGridCategory) {
       </div>
       <div
         style={{
-          display: 'flex',
-          width: '50%',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: 'grid',
+          gridTemplateRows: 'repeat(auto-fit, minmax(400px, 1fr)',
           backgroundColor: '#333',
         }}
       >
         <div>
           <a href="https://activation.highlandscoffee.com.vn/">
             <div
-              style={{ width: '100%', height: '400px', position: 'relative', aspectRatio: '1/1' }}
+              style={{
+                width: '80%',
+                height: '80%',
+                position: 'relative',
+                aspectRatio: '1/1',
+                margin: '0 auto',
+              }}
             >
               <Image layout="fill" src="/asset/coffee.png" />
             </div>
@@ -121,7 +122,13 @@ export default function CategoryItemView({ list }: IGridCategory) {
         <div>
           <a href="https://activation.highlandscoffee.com.vn/">
             <div
-              style={{ width: '100%', height: '400px', position: 'relative', aspectRatio: '1/1' }}
+              style={{
+                width: '80%',
+                height: '80%',
+                position: 'relative',
+                aspectRatio: '1/1',
+                margin: '0 auto',
+              }}
             >
               <Image layout="fill" src="/asset/Matcha.png" />
             </div>
@@ -130,7 +137,13 @@ export default function CategoryItemView({ list }: IGridCategory) {
         <div>
           <a href="https://activation.highlandscoffee.com.vn/">
             <div
-              style={{ width: '100%', height: '400px', position: 'relative', aspectRatio: '1/1' }}
+              style={{
+                width: '80%',
+                height: '80%',
+                position: 'relative',
+                aspectRatio: '1/1',
+                margin: '0 auto',
+              }}
             >
               <Image layout="fill" src="/asset/Tra.png" />
             </div>
