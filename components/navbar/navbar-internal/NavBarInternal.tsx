@@ -5,17 +5,15 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { HiMenuAlt2 } from 'react-icons/hi'
-import { RiNotificationBadgeFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { Search } from '../../search'
 
 interface INavbarInternal {
   setOpenSideBar: React.MouseEventHandler<HTMLDivElement>
-  setOpenNoti: React.MouseEventHandler<HTMLDivElement>
   pixel: number
 }
 
-export const NavbarInternal = ({ setOpenSideBar, pixel, setOpenNoti }: INavbarInternal) => {
+export const NavbarInternal = ({ setOpenSideBar, pixel }: INavbarInternal) => {
   const { darkTheme } = useSelector(GeneralSettingsSelector)
   const { breakPoint } = useSelector(ShareStoreSelector)
 
@@ -74,25 +72,6 @@ export const NavbarInternal = ({ setOpenSideBar, pixel, setOpenNoti }: INavbarIn
       <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {breakPoint > 2 && <Search />}
         {breakPoint < 2 && iconButton()}
-      </div>
-      <div
-        style={{
-          width: 'fit-content',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-          gap: 8,
-        }}
-      >
-        {pixel < 1280 && (
-          <div
-            onClick={setOpenNoti}
-            style={{ width: 'fit-content', height: 'fit-content', cursor: 'pointer' }}
-          >
-            <RiNotificationBadgeFill size={25} />
-          </div>
-        )}
       </div>
     </div>
   )

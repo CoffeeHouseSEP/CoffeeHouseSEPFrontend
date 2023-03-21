@@ -1,10 +1,8 @@
 import { themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
-import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { Backdrop } from '../backdrop'
 import { AccountInformation } from './AccountInformation'
-import { RenderItemSideBar } from './RenderItemSideBar'
 import { SideIconItem } from './SideIconItem'
 
 interface ISideBar {
@@ -14,7 +12,6 @@ interface ISideBar {
 }
 
 interface SidebarItem {
-  id: string
   label: string
   path: string
   icon: string
@@ -22,21 +19,15 @@ interface SidebarItem {
 
 interface SidebarList {
   mainItem: SidebarItem
-  childrenItem: SidebarItem[]
 }
 
 export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
   const { darkTheme } = useSelector(GeneralSettingsSelector)
-  const sidebar: SidebarList[] = []
-
-  const router = useRouter()
-
-  const childrenList =
-    sidebar.find((item) =>
-      item.childrenItem.find((childItem) => childItem.path.includes(router.pathname.split('/')[1]))
-    )?.childrenItem || []
-
-  const lengthSidebar = childrenList.length === 0 ? 300 : 60
+  const sidebar: SidebarList[] = [
+    {
+      mainItem: { label: 'Dashboard', path: '/admin', icon: '' },
+    },
+  ]
 
   return (
     <>
@@ -94,7 +85,7 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              width: pixel >= 1280 || isOpenSideBar ? lengthSidebar : 0,
+              width: pixel >= 1280 || isOpenSideBar ? 300 : 0,
               alignItems: 'center',
             }}
           >
@@ -103,28 +94,10 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
                 link={item.mainItem.path}
                 image={item.mainItem.icon}
                 label={item.mainItem.label}
-                isLabel={childrenList.length === 0}
+                isLabel
               />
             ))}
           </div>
-          {childrenList.length > 0 && (
-            <div
-              style={{
-                overflow: 'auto',
-                width: 'calc(100% - 60px)',
-                borderLeft: `1px solid ${themeValue[darkTheme].colors.border}`,
-              }}
-            >
-              {childrenList.map((item, index) => (
-                <RenderItemSideBar
-                  key={item.path}
-                  item={item}
-                  hasDivide={index + 1 < childrenList.length}
-                  level={1}
-                />
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </>

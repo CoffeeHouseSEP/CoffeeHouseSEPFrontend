@@ -43,7 +43,11 @@ export const AccountInformation = () => {
             boxShadow: themeValue[darkTheme].shadows.lg,
           }}
         >
-          <Image src={accountInfo.avatar} layout="fill" />
+          <Image
+            src={accountInfo.avatar || '/default-avatar.jpg'}
+            layout="fill"
+            style={{ borderRadius: '100%' }}
+          />
         </div>
         <div
           style={{
@@ -65,9 +69,9 @@ export const AccountInformation = () => {
               justifyContent: 'center',
               cursor: 'pointer',
               position: 'relative',
-              backgroundColor: themeValue[darkTheme].colors.blue200,
+              backgroundColor: themeValue[darkTheme].colors.redHighland,
               borderRadius: '100%',
-              border: `2px solid ${themeValue[darkTheme].colors.border}`,
+              border: `2px solid ${themeValue[darkTheme].colors.orangeHighLand}`,
               boxShadow: themeValue[darkTheme].shadows.lg,
             }}
             onClick={() => {

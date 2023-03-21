@@ -1,4 +1,5 @@
 import { Button, Input } from '@/components'
+import { inputStyles } from '@/inventory'
 import { themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { useRef } from 'react'
@@ -94,7 +95,7 @@ export const LoginForm = () => {
   //   const forgotPassword = useTranslation('forgotPassword')
 
   return (
-    <div>
+    <>
       <div
         style={{
           color: themeValue[darkTheme].colors.foreground,
@@ -103,29 +104,22 @@ export const LoginForm = () => {
           textAlign: 'center',
         }}
       >
-        Sign IN
+        Sign In
       </div>
-      <div>
-        <Input
-          style={{ width: '15%', margin: '0 auto' }}
-          ref={emailRef}
-          labelLeft="username"
-          clearable
-        />
-        <Input
-          style={{ width: '15%', margin: '0 auto' }}
-          ref={passwordRef}
-          type="password"
-          labelLeft="password"
-          clearable
-        />
-      </div>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <Input ref={emailRef} {...inputStyles({})} labelLeft="username" clearable />
+      <Input
+        ref={passwordRef}
+        {...inputStyles({})}
+        type="password"
+        labelLeft="password"
+        clearable
+      />
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
         <Button styleType="light">forgotPassword?</Button>
       </div>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingTop: '1rem' }}>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'end', paddingTop: '1rem' }}>
         <Button>Sign In</Button>
       </div>
-    </div>
+    </>
   )
 }

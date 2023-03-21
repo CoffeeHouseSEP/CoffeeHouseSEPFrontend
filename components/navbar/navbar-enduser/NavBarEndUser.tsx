@@ -47,13 +47,13 @@ export const NavBarEndUser = () => {
           <Link href="/">
             <div
               style={{
-                height: '80%',
+                height: '100%',
                 aspectRatio: '4 / 3',
                 position: 'relative',
                 cursor: 'pointer',
               }}
             >
-              <Image src="/logo/HL_cream_logo.png" layout="fill" />
+              <Image src="/logo_transparent.png" layout="fill" />
             </div>
           </Link>
         </div>
