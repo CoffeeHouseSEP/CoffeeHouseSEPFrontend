@@ -27,6 +27,15 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
     {
       mainItem: { label: 'Dashboard', path: '/admin', icon: '' },
     },
+    {
+      mainItem: { label: 'UserManagement', path: '/admin/user/management', icon: '' },
+    },
+    {
+      mainItem: { label: 'CategoryManagement', path: '/admin/category/management', icon: '' },
+    },
+    {
+      mainItem: { label: 'GoodManagement', path: '/admin/good/management', icon: '' },
+    },
   ]
 
   return (
