@@ -11,6 +11,7 @@ export enum TypeAccount {
 export interface LoginResponseSuccess {
   token: string
   tokenType: string
+  role: 'ADMIN' | 'USER' | 'BRANCH_MANAGER'
 }
 
 export type LoginResponseFailure = Record<keyof LoginRequest, string>

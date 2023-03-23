@@ -8,6 +8,7 @@ import { authenticationSelector, setIsLoggedIn, setLoading } from '@/redux/authe
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { postMethod } from '@/services'
 import { LoginRequest, LoginResponseFailure, LoginResponseSuccess } from '@/types'
+import { useRouter } from 'next/router'
 import { useRef } from 'react'
 import { useCookies } from 'react-cookie'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +17,7 @@ import { toast } from 'react-toastify'
 export const LoginForm = () => {
   const emailRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
+  const router = useRouter()
   const [, setCookie] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
   const translate = useTranslationFunction()
   const dispatch = useDispatch()
@@ -55,6 +57,15 @@ export const LoginForm = () => {
         path: '/',
         expires: new Date(new Date().setDate(new Date().getDate() + 7)),
       })
+      if (data.role === 'ADMIN') {
+        router.push('/admin')
+      }
+      if (data.role === 'BRANCH_MANAGER') {
+        router.push('/branch')
+      }
+      if (data.role === 'USER') {
+        router.push('/')
+      }
       dispatch(setIsLoggedIn(true))
       dispatch(setLoading(false))
     },
