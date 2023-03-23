@@ -45,6 +45,7 @@ export const InternalLayout = ({
           width: !useNavbar ? `calc(100% - ${getWidthDiscard()}px)` : '100%',
           marginLeft: pixel >= 1280 ? 'auto' : undefined,
           marginTop: '3.75rem',
+          marginBottom: '1rem',
         }}
       >
         <div style={{ padding: '0px 24px' }}>{children}</div>
