@@ -4,7 +4,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 const initialState: ShareStoreTypes = {
   loading: 0,
   breakPoint: 1,
-  language: {},
+  language: {
+    CategoryCreatePascal: 'Create category',
+    cancel: 'cancel',
+    edit: 'edit',
+    save: 'save',
+    saveLabel: 'Save',
+  },
 }
 
 const ShareStoreSlice = createSlice({

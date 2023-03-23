@@ -35,7 +35,17 @@ export const useGetBreadCrumb = () => {
   }, [router, darkTheme])
 
   return (
-    <div style={{ display: 'flex', gap: 10, overflow: 'auto', alignItems: 'center' }}>
+    <div
+      style={{
+        display: 'flex',
+        gap: 10,
+        overflowX: 'auto',
+        overflowY: 'hidden',
+        alignItems: 'center',
+        height: '60px',
+        whiteSpace: 'nowrap',
+      }}
+    >
       {result.map((item) => item)}
     </div>
   )
