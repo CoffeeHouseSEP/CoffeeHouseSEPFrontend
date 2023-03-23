@@ -1,6 +1,6 @@
 export interface LoginRequest {
-  username: string
-  password: string
+  loginName: string
+  loginPassword: string
 }
 
 export enum TypeAccount {
@@ -9,11 +9,8 @@ export enum TypeAccount {
 }
 
 export interface LoginResponseSuccess {
-  userId: string
   token: string
-  type: TypeAccount
-  verify2Fa: boolean
-  needVerify: boolean
+  tokenType: string
 }
 
 export type LoginResponseFailure = Record<keyof LoginRequest, string>

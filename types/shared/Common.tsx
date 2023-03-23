@@ -7,8 +7,6 @@ export interface CommonResponseType<T> {
   result: T
   message: string
   statusCode: number
-  viewPoints: ViewPointType[]
-  editable: ViewPointType[]
 }
 
 export interface CommonListResultType<T> {

@@ -66,27 +66,6 @@ export const CateDetail = () => {
     },
   })
 
-  //   const changeStatus = useApiCall<CategoryResponse, string>({
-  //     callApi: () => {
-  //       return putMethod({
-  //         pathName: apiRoute.user.changeStatus,
-  //         token: cookies.token,
-  //         params: {
-  //           id: router?.query?.id?.toString() ?? '1',
-  //         },
-  //       })
-  //     },
-  //     handleError: (status, message) => {
-  //       if (status) {
-  //         toast.error(translate(message))
-  //       }
-  //     },
-  //     handleSuccess: (message) => {
-  //       toast.success(translate(message))
-  //       viewResult.setLetCall(true)
-  //       setType('read')
-  //     },
-  //   })
   useEffect(() => {
     if (!!id) {
       viewResult.setLetCall(true)
@@ -111,10 +90,6 @@ export const CateDetail = () => {
         <Loading />
       </div>
     )
-
-  //   const handleChangeStatus = () => {
-  //     changeStatus.setLetCall(true)
-  //   }
 
   const handleSetTypeUpdate = () => {
     setType('update')

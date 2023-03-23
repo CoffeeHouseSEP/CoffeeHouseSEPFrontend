@@ -13,7 +13,6 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 export const CateManagement = () => {
-  //   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
   const translate = useTranslationFunction()
 
   const [page, setPage] = useState<number>(1)

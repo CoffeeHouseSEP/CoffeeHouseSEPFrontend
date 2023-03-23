@@ -1,6 +1,10 @@
 import { useResponsive } from '@/hooks'
+import { LoginForm } from '@/modules/sign-in'
+import { authenticationSelector } from '@/redux/authentication'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Modal } from '../modal'
 import { NavbarInternal } from '../navbar'
 import { SideBar } from '../sidebar'
 
@@ -14,7 +18,7 @@ export const InternalLayout = ({
   const pixel = useResponsive()
   const [isOpenSideBar, setOpenSideBar] = useState(false)
 
-  // const { isLoggedIn } = useSelector(authenticationSelector)
+  const { isLoggedIn } = useSelector(authenticationSelector)
 
   const toggleSideBar = () => {
     setOpenSideBar(!isOpenSideBar)
@@ -33,9 +37,9 @@ export const InternalLayout = ({
 
   return (
     <>
-      {/* <Modal open={!isLoggedIn}>
+      <Modal open={!isLoggedIn}>
         <LoginForm />
-      </Modal> */}
+      </Modal>
       {(!useNavbar || isOpenSideBar) && (
         <SideBar isOpenSideBar={isOpenSideBar} setOpenSideBar={setOpenSideBar} pixel={pixel} />
       )}
