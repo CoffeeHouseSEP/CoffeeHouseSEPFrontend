@@ -1,5 +1,6 @@
 import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
+import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
 import { DefaultCategory } from '@/inventory'
 import { CategoryForm } from '@/inventory/CategoryForm'
@@ -13,11 +14,12 @@ import {
 } from '@/types/category/category'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 export default function CategoryCreate() {
-  // const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
+  const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
 
   const router = useRouter()
   const translate = useTranslationFunction()
@@ -32,9 +34,7 @@ export default function CategoryCreate() {
     callApi: () =>
       postMethod<CategoryRequest>({
         pathName: apiRoute.category.createCategory,
-        // token: cookies.token,
-        token:
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2ODAwOTMyOTAsInVzZXJJZCI6ImUwYjc2OWRjLWZkODMtNGE2MC1iODllLTgwNzNiMTk4MzkyOSJ9.LGCQPKz6YXeLldmZbvnj2iIdDhry15HupI2fIBlWHWVNl7EjH5jWuMdpAC9cBguRrOpDa6hCPRy594GikrX81A',
+        token: cookies.token,
         request: categoryState,
       }),
     handleError(status, message) {

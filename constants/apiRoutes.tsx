@@ -10,4 +10,8 @@ export const apiRoute = {
   goods: {
     getListGoods: '/goods/get-list-goods',
   },
+  auth: {
+    login: '/authentication/login',
+    logout: '/authentication/logout',
+  },
 }

@@ -43,6 +43,7 @@ export const useGetBreadCrumb = () => {
         overflowY: 'hidden',
         alignItems: 'center',
         height: '60px',
+        width: '100%',
         whiteSpace: 'nowrap',
       }}
     >

@@ -1,4 +1,4 @@
-import { Button, CustomTable } from '@/components'
+import { Button, CustomTable, Pagination } from '@/components'
 import { FloatButton } from '@/components/button/FloatButton'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
@@ -7,16 +7,15 @@ import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
 import { CategoryResponse } from '@/types/category/category'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { IoIosCreate } from 'react-icons/io'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 export const CateManagement = () => {
-  //   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
   const translate = useTranslationFunction()
 
-  //   const [page, setPage] = useState<number>(1)
+  const [page, setPage] = useState<number>(1)
 
   const router = useRouter()
 
@@ -30,6 +29,7 @@ export const CateManagement = () => {
     callApi: () =>
       getMethod({
         pathName: apiRoute.category.getListCategory,
+        params: { page: String(page) },
       }),
     handleError(status, message) {
       if (status) {
@@ -91,11 +91,25 @@ export const CateManagement = () => {
         idFiled="categoryId"
         detailPath="admin/category/"
         header={dataField ?? []}
-        body={data ? data.result.data : []}
+        body={
+          data
+            ? data.result.data.map((cate) => {
+                return { ...cate, status: cate.status === 1 ? 'active' : 'deactivate' }
+              })
+            : []
+        }
         loading={loading}
       >
         <>{null}</>
       </CustomTable>
+      {!loading && (
+        <Pagination
+          total={data?.result?.totalRows ?? 0}
+          onChange={(number) => setPage(number)}
+          page={page}
+          paginationStyle={{ marginTop: 20 }}
+        />
+      )}
     </>
   )
 }

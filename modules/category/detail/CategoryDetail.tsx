@@ -66,27 +66,6 @@ export const CateDetail = () => {
     },
   })
 
-  //   const changeStatus = useApiCall<CategoryResponse, string>({
-  //     callApi: () => {
-  //       return putMethod({
-  //         pathName: apiRoute.user.changeStatus,
-  //         token: cookies.token,
-  //         params: {
-  //           id: router?.query?.id?.toString() ?? '1',
-  //         },
-  //       })
-  //     },
-  //     handleError: (status, message) => {
-  //       if (status) {
-  //         toast.error(translate(message))
-  //       }
-  //     },
-  //     handleSuccess: (message) => {
-  //       toast.success(translate(message))
-  //       viewResult.setLetCall(true)
-  //       setType('read')
-  //     },
-  //   })
   useEffect(() => {
     if (!!id) {
       viewResult.setLetCall(true)
@@ -112,10 +91,6 @@ export const CateDetail = () => {
       </div>
     )
 
-  //   const handleChangeStatus = () => {
-  //     changeStatus.setLetCall(true)
-  //   }
-
   const handleSetTypeUpdate = () => {
     setType('update')
   }
@@ -132,16 +107,15 @@ export const CateDetail = () => {
 
   return (
     <div style={{ marginTop: 18, marginBottom: 80 }}>
-      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
+      <h2>{breadCrumb}</h2>
       <div
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'end',
           alignItems: 'center',
           marginBottom: 10,
         }}
       >
-        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
         {breakPoint > 1 ? (
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', gap: 10 }}>

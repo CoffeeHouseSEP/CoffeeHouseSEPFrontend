@@ -177,18 +177,18 @@ export function CustomTable({
           {body.map((itemBody) => (
             <tr
               style={{
-                color: getTextColor(itemBody?.id),
+                color: getTextColor(itemBody[idFiled]),
                 cursor: 'default',
               }}
               onMouseEnter={() => {
-                setHoverId(itemBody?.id)
+                setHoverId(itemBody[idFiled])
               }}
               onMouseLeave={() => {
                 setHoverId('')
               }}
-              key={itemBody?.id}
+              key={itemBody[idFiled]}
               onClick={handleChange}
-              id={itemBody?.id}
+              id={itemBody[idFiled]}
             >
               {newHeader.map((itemHead, index) => {
                 return (
@@ -202,7 +202,7 @@ export function CustomTable({
                         itemHead.key === header.at(-1)?.key ? '12px' : undefined,
                       borderBottomRightRadius:
                         itemHead.key === header.at(-1)?.key ? '12px' : undefined,
-                      backgroundColor: getBackgroundColor(itemBody?.id),
+                      backgroundColor: getBackgroundColor(itemBody[idFiled]),
                     }}
                     key={itemHead.key}
                   >
