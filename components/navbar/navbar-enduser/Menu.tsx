@@ -3,7 +3,7 @@ import { useApiCall } from '@/hooks'
 import { themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { getMethod } from '@/services'
-import { CategoryItem, CommonListResultType } from '@/types'
+import { CategoryItem, CommonListResultType, GoodsItem } from '@/types'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -16,6 +16,22 @@ interface MenuItem {
 }
 
 export const Menu = () => {
+  const [goodList, setGoodList] = useState<GoodsItem[]>([])
+  const pageSize = '10'
+  // const { data, loading, setLetCall } = category
+  const goods = useApiCall<CommonListResultType<GoodsItem>, String>({
+    callApi: () =>
+      getMethod({
+        pathName: apiRoute.goods.getListGoods,
+        params: { page: '1', pageSize },
+      }),
+    handleSuccess(message, data) {
+      setGoodList(data.data)
+    },
+  })
+  useEffect(() => {
+    goods.setLetCall(true)
+  }, [])
   const [isHover, setHover] = useState<string>('')
   const [menuHover, setMenuHover] = useState<string>('')
   const { darkTheme } = useSelector(GeneralSettingsSelector)
@@ -44,7 +60,7 @@ export const Menu = () => {
     },
     {
       label: 'THỰC ĐƠN',
-      menu: <GridCategory setHover={setMenuHover} list={cateItem} />,
+      menu: <GridCategory setHover={setMenuHover} list={cateItem} goodList={goodList} />,
       link: '/menu',
     },
     {
