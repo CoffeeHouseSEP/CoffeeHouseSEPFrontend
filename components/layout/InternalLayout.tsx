@@ -27,7 +27,7 @@ export const InternalLayout = ({
 
   const getWidthDiscard = () => {
     let thisWidth = 0
-    if (pixel >= 1280) thisWidth += 600
+    if (pixel >= 1280) thisWidth += 300
     return thisWidth
   }
 
@@ -44,7 +44,6 @@ export const InternalLayout = ({
         style={{
           width: !useNavbar ? `calc(100% - ${getWidthDiscard()}px)` : '100%',
           marginLeft: pixel >= 1280 ? 'auto' : undefined,
-          marginRight: pixel >= 1280 ? 'auto' : undefined,
           marginTop: '3.75rem',
         }}
       >

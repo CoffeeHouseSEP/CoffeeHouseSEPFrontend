@@ -1,6 +1,8 @@
 export const apiRoute = {
   category: {
     getListCategory: '/category/get-list-category',
+    updateCategory: '/category/update-category',
+    createCategory: '/category/add-new-category',
   },
   new: {
     getListNews: '/news/get-list-news',

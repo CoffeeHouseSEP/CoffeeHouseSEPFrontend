@@ -18,6 +18,8 @@ interface ICustomTable extends HTMLAttributes<HTMLTableElement> {
   selectionMode?: 'single' | 'multiple' | 'none'
   disableAction?: boolean
   selectedKeys?: string[]
+  detailPath: string
+  idFiled: string
 }
 
 export function CustomTable({
@@ -29,6 +31,8 @@ export function CustomTable({
   disableAction = false,
   selectionMode = 'none',
   selectedKeys,
+  detailPath,
+  idFiled,
   ...rest
 }: ICustomTable) {
   const router = useRouter()
@@ -58,7 +62,7 @@ export function CustomTable({
               content: detail,
               icon: <AiOutlineEye size={20} fill="#979797" />,
               func: (id: string, router: NextRouter) => {
-                router.push(`/${router.pathname.split('/')?.[1] ?? ''}/${id}`)
+                router.push(`/${detailPath}/${id}`)
               },
             },
           ]
@@ -67,7 +71,7 @@ export function CustomTable({
             {/* <Tooltip content={action.content}> */}
             <div
               onClick={(e) => {
-                action.func(data?.id, router)
+                action.func(data[idFiled], router)
                 e.stopPropagation()
               }}
             >
@@ -190,7 +194,7 @@ export function CustomTable({
                 return (
                   <td
                     style={{
-                      whiteSpace: 'nowrap',
+                      whiteSpace: 'normal',
                       padding: '10px 16px',
                       borderTopLeftRadius: index === 0 ? '12px' : undefined,
                       borderBottomLeftRadius: index === 0 ? '12px' : undefined,
