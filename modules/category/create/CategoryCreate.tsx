@@ -97,6 +97,7 @@ export default function CategoryCreate() {
       </div>
       <div style={{ paddingTop: 40 }}>
         <CategoryForm
+          type="update"
           category={categoryState}
           onchangeUserState={onchangeUserState}
           errorState={createResult.error?.result}
