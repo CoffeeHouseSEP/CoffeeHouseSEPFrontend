@@ -10,6 +10,12 @@ const initialState: ShareStoreTypes = {
     edit: 'edit',
     save: 'save',
     saveLabel: 'Save',
+    GoodCreatePascal: 'Create Good',
+    name: 'name',
+    applyPrice: 'applyPrice',
+    innerPrice: 'innerPrice',
+    code: 'code',
+    description: 'description',
   },
 }
 

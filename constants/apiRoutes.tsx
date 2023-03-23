@@ -9,5 +9,7 @@ export const apiRoute = {
   },
   goods: {
     getListGoods: '/goods/get-list-goods',
+    createGood: '/goods/add-new-goods',
+    updateGood: '/goods/update-goods',
   },
 }

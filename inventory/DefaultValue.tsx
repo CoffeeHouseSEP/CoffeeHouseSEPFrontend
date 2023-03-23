@@ -1,5 +1,6 @@
 import { UserResponseSuccess, ViewPointType } from '@/types'
 import { CategoryResponse } from '@/types/category/category'
+import { GoodRequest, GoodResponse } from '@/types/goods/goods'
 
 export const DefaultUser: UserResponseSuccess = {
   id: '',
@@ -26,6 +27,32 @@ export const DefaultCategory: CategoryResponse = {
   name: '',
   description: '',
   status: 0,
+}
+export const DefaulRequesttGood: GoodRequest = {
+  goodsId: '',
+  name: '',
+  code: '',
+  applyPrice: 0,
+  innerPrice: 0,
+  description: '',
+  status: 0,
+  categoryId: '',
+  image: {
+    id: '',
+    objectId: '',
+    base64: '',
+    prefix: '',
+  },
+}
+export const DefaultResponseGood: GoodResponse = {
+  goodsId: '',
+  name: '',
+  code: '',
+  applyPrice: 0,
+  innerPrice: 0,
+  description: '',
+  status: 0,
+  categoryId: '',
 }
 
 export const initUserRequest: ViewPointType[] = [

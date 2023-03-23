@@ -14,6 +14,7 @@ export const UploadFileBase64 = ({
   ...rest
 }: IUploadFile) => {
   const [error, setError] = useState('')
+  const [name, setName] = useState('')
 
   const errorSize2MB = useTranslation('errorSize2MB')
 
@@ -21,6 +22,8 @@ export const UploadFileBase64 = ({
     if (e?.target?.files?.length) {
       const fileValue = e.target.files[0]
       if (fileValue.size < 2097152) {
+        setName(fileValue.name)
+
         const reader = new FileReader()
         reader.onload = (event) => {
           const text = (event?.target?.result ?? '').toString()
@@ -34,7 +37,7 @@ export const UploadFileBase64 = ({
     }
   }
   return (
-    <div>
+    <div style={{ display: 'flex' }}>
       <Button style={{ position: 'relative' }}>
         <input
           style={{
@@ -54,6 +57,7 @@ export const UploadFileBase64 = ({
         {labelInput}
       </Button>
       <div style={{ fontSize: 14, color: 'red', paddingTop: 2 }}>{error ?? ''}</div>
+      {name && <div>{name}</div>}
     </div>
   )
 }

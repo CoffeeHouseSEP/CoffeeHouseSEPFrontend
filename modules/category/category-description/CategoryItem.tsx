@@ -100,7 +100,7 @@ export default function CategoryItemView({ list }: IGridCategory) {
         style={{
           display: 'grid',
           gridTemplateRows: 'repeat(auto-fit, minmax(200px,1fr)',
-          backgroundColor: '#333',
+          backgroundColor: '#333333',
         }}
       >
         <div>

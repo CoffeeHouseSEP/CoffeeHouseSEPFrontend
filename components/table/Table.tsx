@@ -83,6 +83,9 @@ export function CustomTable({
       case 'select':
         return <Checkbox isReadOnly isSelected={!!selectedKeys?.find((item) => item === data.id)} />
       default:
+        if (columnKey === 'status') {
+          return data.status?.toString() === '1' ? 'active' : 'deactive'
+        }
         return data[columnKey]?.toString()
     }
   }
