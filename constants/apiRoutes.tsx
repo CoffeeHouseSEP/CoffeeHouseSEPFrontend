@@ -10,6 +10,12 @@ export const apiRoute = {
   goods: {
     getListGoods: '/goods/get-list-goods',
   },
+  branch: {
+    getListBranch: '/branch/get-list-branch',
+    addBranch: '/branch/add-new-branch',
+    updateBranch: '/branch/update-branch',
+    getBranchByManagerid: '/branch/get-branch-by-manager-id',
+  },
   auth: {
     login: '/authentication/login',
     logout: '/authentication/logout',

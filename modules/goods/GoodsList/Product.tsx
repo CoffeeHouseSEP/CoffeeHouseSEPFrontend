@@ -12,7 +12,7 @@ const Product = ({ items }: PropProduct) => {
         margin: '0 auto',
         maxWidth: '1170px',
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr 1fr',
+        gridTemplateColumns: '1fr 1fr 1fr 1fr',
         gap: '3rem 2rem',
         justifyItems: 'center',
       }}
