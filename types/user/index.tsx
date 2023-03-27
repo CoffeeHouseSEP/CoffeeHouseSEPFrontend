@@ -4,6 +4,8 @@ export interface UserResponseSuccess {
   phoneNumber: string
   createdDate: string
   status: number
+  email: string
+  address: string
 }
 
 export interface UserNotifications {

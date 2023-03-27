@@ -39,8 +39,8 @@ export const UserDetail = () => {
       setUser({
         loginName: thisUser.loginName,
         phoneNumber: thisUser.loginName,
-        email: '',
-        address: '',
+        email: thisUser.email,
+        address: thisUser.address,
       })
     },
     handleError(status, message) {

@@ -10,6 +10,8 @@ const initialState: GeneralSettingsStoreTypes = {
     status: 0,
     id: '',
     createdDate: '',
+    email: '',
+    address: '',
   },
 }
 
