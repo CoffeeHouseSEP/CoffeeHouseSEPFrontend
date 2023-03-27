@@ -1,6 +1,7 @@
 import { UserRequest, ViewPointType } from '@/types'
 import { BranchResponse } from '@/types/branch/branch'
 import { CategoryResponse } from '@/types/category/category'
+import { NewsResponse } from '@/types/news/news'
 
 export const DefaultCategory: CategoryResponse = {
   categoryId: '',
@@ -27,6 +28,20 @@ export const DefaultBranch: BranchResponse = {
   status: 0,
   createdDate: '',
   cancelledDate: '',
+  image: {
+    id: 0,
+    objectId: '',
+    base64: '',
+    prefix: '',
+  },
+}
+export const DefaultNews: NewsResponse = {
+  newsId: '',
+  title: '',
+  content: '',
+  createdBy: '',
+  createdDate: '',
+  status: 0,
   image: {
     id: 0,
     objectId: '',
