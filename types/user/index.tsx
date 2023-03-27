@@ -1,22 +1,9 @@
 export interface UserResponseSuccess {
   id: string
-  avatar: string
-  username: string
-  password: string
-  gender: number
-  dob: string
-  address: string
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  tokens: Tokens
-  created: string
-  modified: string
-  verified: boolean
-  verify2FA: boolean
-  active: number
-  type: 'INTERNAL' | 'EXTERNAL'
+  loginName: string
+  phoneNumber: string
+  createdDate: string
+  status: number
 }
 
 export interface UserNotifications {
@@ -31,28 +18,11 @@ export interface UserListSuccess {
   totalRows: number
 }
 
-export interface Tokens {
-  [key: string]: Date
-}
-
-export type UserDetailFailure = Record<keyof UserResponseSuccess, string>
-
 export interface UserRequest {
-  username?: string
-  gender?: number
-  dob?: string
-  address?: string
-  firstName?: string
-  lastName?: string
-  email?: string
-  phone?: string
-  deleted?: number
-}
-
-export interface UserConfig {
-  notificationId: string
-  channelId: string
-  eventId: string
+  loginName: string
+  phoneNumber: string
+  email: string
+  address: string
 }
 
 export type UserRequestFailure = Record<keyof UserRequest, string>

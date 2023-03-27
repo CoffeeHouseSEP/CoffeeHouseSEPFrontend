@@ -6,11 +6,12 @@ import { DefaultCategory } from '@/inventory'
 import { CategoryForm } from '@/inventory/CategoryForm'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
-import { CommonListResultType, UserResponseSuccess } from '@/types'
+import { CommonListResultType } from '@/types'
 import {
   CategoryRequest,
   CategoryRequestFailure,
   CategoryResponse,
+  CategoryResponseSuccess,
 } from '@/types/category/category'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -72,7 +73,7 @@ export const CateDetail = () => {
     }
   }, [id])
 
-  const onchangeUserState = (newUpdate: Partial<UserResponseSuccess>) => {
+  const onchangeUserState = (newUpdate: Partial<CategoryResponseSuccess>) => {
     const newUserState = { ...categoryState }
     setCategoryState({ ...newUserState, ...newUpdate })
   }

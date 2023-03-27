@@ -9,7 +9,7 @@ import { SignOutButton } from './SignOutButton'
 
 export const AccountInformation = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const { darkTheme, accountInfo } = useSelector(GeneralSettingsSelector)
+  const { darkTheme } = useSelector(GeneralSettingsSelector)
 
   return (
     <div
@@ -43,11 +43,7 @@ export const AccountInformation = () => {
             boxShadow: themeValue[darkTheme].shadows.lg,
           }}
         >
-          <Image
-            src={accountInfo.avatar || '/default-avatar.jpg'}
-            layout="fill"
-            style={{ borderRadius: '100%' }}
-          />
+          <Image src="/default-avatar.jpg" layout="fill" style={{ borderRadius: '100%' }} />
         </div>
         <div
           style={{
@@ -57,9 +53,7 @@ export const AccountInformation = () => {
             width: '100%',
           }}
         >
-          <div>
-            {accountInfo.firstName} {accountInfo.lastName}
-          </div>
+          <div>name</div>
           <div
             style={{
               height: '40px',

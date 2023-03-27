@@ -1,13 +1,14 @@
 import { InternalLayout } from '@/components/layout/InternalLayout'
+import { UserManagement } from '@/modules/user/UserManagement'
 import { ReactElement } from 'react'
 import { NextPageWithLayout } from '../../_app'
 
-const UserManagement: NextPageWithLayout = () => {
-  return <>user dashboard</>
+const UserManagementPage: NextPageWithLayout = () => {
+  return <UserManagement />
 }
 
-UserManagement.getLayout = function getLayout(page: ReactElement) {
+UserManagementPage.getLayout = function getLayout(page: ReactElement) {
   return <InternalLayout>{page}</InternalLayout>
 }
 
-export default UserManagement
+export default UserManagementPage
