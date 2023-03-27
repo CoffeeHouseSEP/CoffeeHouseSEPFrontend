@@ -18,10 +18,10 @@ export const BranchForm = ({ branch, onchangeUserState, type, errorState }: IBra
 
   //   const { darkTheme } = useSelector(GeneralSettingsSelector)
 
-  const nameLabel = useTranslation('name')
-  const descriptionLabel = useTranslation('description')
-  const addressLabel = useTranslation('address')
-  const phoneNumberLabel = useTranslation('phoneNumber')
+  const nameLabel = useTranslation('nameBranch')
+  const descriptionLabel = useTranslation('descriptionBranch')
+  const addressLabel = useTranslation('addressBranch')
+  const phoneNumberLabel = useTranslation('phoneNumberBranch')
   const branchManagerIdLabel = useTranslation('branchManagerId')
   const longitudeLabel = useTranslation('longitude')
   const latitudeLabel = useTranslation('latitude')

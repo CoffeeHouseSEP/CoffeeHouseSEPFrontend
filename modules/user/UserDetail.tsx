@@ -2,43 +2,46 @@ import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
-import { DefaultCategory } from '@/inventory'
-import { CategoryForm } from '@/inventory/CategoryForm'
+import { DefaultUserRequest } from '@/inventory'
+import { UserForm } from '@/inventory/UserForm'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
-import { CommonListResultType } from '@/types'
-import {
-  CategoryRequest,
-  CategoryRequestFailure,
-  CategoryResponse,
-  CategoryResponseSuccess,
-} from '@/types/category/category'
+import { UserRequest, UserRequestFailure, UserResponseSuccess } from '@/types'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { FloatTrayDetail } from '../inventory'
+import { FloatTrayDetail } from './inventory/FloatTrayDetail'
 
-export const CateDetail = () => {
+export const UserDetail = () => {
   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
   const router = useRouter()
   const translate = useTranslationFunction()
   const [type, setType] = useState<'read' | 'update'>('read')
-  const [categoryState, setCategoryState] = useState<CategoryResponse>(DefaultCategory)
+  const [user, setUser] = useState<UserRequest>(DefaultUserRequest)
   const id = router?.query?.id?.toString()
   const { breakPoint } = useSelector(ShareStoreSelector)
+  const breadCrumb = useGetBreadCrumb()
 
-  const viewResult = useApiCall<CommonListResultType<CategoryResponse>, string>({
+  const viewResult = useApiCall<UserResponseSuccess, string>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.category.getListCategory,
+        pathName: apiRoute.user.detailUser,
+        token: cookies.token,
         params: {
-          categoryId: id ?? '1',
+          field: 'internalUserId',
+          value: id ?? '1',
         },
       }),
     handleSuccess: (message, data) => {
-      setCategoryState(data.data[0])
+      const thisUser = data
+      setUser({
+        loginName: thisUser.loginName,
+        phoneNumber: thisUser.loginName,
+        email: thisUser.email,
+        address: thisUser.address,
+      })
     },
     handleError(status, message) {
       if (status) {
@@ -47,13 +50,13 @@ export const CateDetail = () => {
     },
   })
 
-  const updateResult = useApiCall<CategoryRequest, CategoryRequestFailure>({
+  const updateResult = useApiCall<UserRequest, UserRequestFailure>({
     callApi: () =>
-      putMethod<CategoryResponse>({
-        pathName: apiRoute.category.updateCategory,
+      putMethod<UserRequest>({
+        pathName: apiRoute.user.updateUser,
         token: cookies.token,
-        params: { categoryId: categoryState.categoryId },
-        request: categoryState,
+        params: { id: id || '' },
+        request: user,
       }),
     handleError(status, message) {
       if (status) {
@@ -73,15 +76,14 @@ export const CateDetail = () => {
     }
   }, [id])
 
-  const onchangeUserState = (newUpdate: Partial<CategoryResponseSuccess>) => {
-    const newUserState = { ...categoryState }
-    setCategoryState({ ...newUserState, ...newUpdate })
+  const onchangeUserState = (newUpdate: Partial<UserRequest>) => {
+    const newUserState = { ...user }
+    setUser({ ...newUserState, ...newUpdate })
   }
 
   const cancelLabel = useTranslation('cancel')
   const saveLabel = useTranslation('saveLabel')
   const editLabel = useTranslation('edit')
-  const breadCrumb = useGetBreadCrumb()
 
   if (viewResult.loading)
     return (
@@ -101,13 +103,21 @@ export const CateDetail = () => {
   }
 
   const handleSetTypeRead = () => {
-    if (viewResult?.data?.result) setCategoryState(viewResult.data.result.data[0])
+    if (viewResult?.data?.result) {
+      const thisUser = viewResult.data.result
+      setUser({
+        loginName: thisUser.loginName,
+        phoneNumber: thisUser.loginName,
+        email: '',
+        address: '',
+      })
+    }
     setType('read')
     updateResult.handleReset()
   }
 
   return (
-    <div style={{ marginTop: 18, marginBottom: 80 }}>
+    <>
       <h2>{breadCrumb}</h2>
       <div
         style={{
@@ -119,34 +129,28 @@ export const CateDetail = () => {
       >
         {breakPoint > 1 ? (
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', gap: 10 }}>
-              {type === 'read' ? (
-                <>
-                  <Button onClick={handleSetTypeUpdate}>{editLabel}</Button>
-                  <Button
-                    color="warning"
-                    onClick={() => {
-                      router.push('/admin/category/management')
-                    }}
-                  >
-                    {cancelLabel}
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button color="primary" onClick={callUpdate} disabled={updateResult.loading}>
-                    {updateResult.loading ? <Loading /> : <>{saveLabel}</>}
-                  </Button>
-                  <Button
-                    color="warning"
-                    onClick={handleSetTypeRead}
-                    disabled={updateResult.loading}
-                  >
-                    {cancelLabel}
-                  </Button>
-                </>
-              )}
-            </div>
+            {type === 'read' ? (
+              <>
+                <Button onClick={handleSetTypeUpdate}>{editLabel}</Button>
+                <Button
+                  color="warning"
+                  onClick={() => {
+                    router.push('/admin/user/management')
+                  }}
+                >
+                  {cancelLabel}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button color="primary" onClick={callUpdate} disabled={updateResult.loading}>
+                  {updateResult.loading ? <Loading /> : <>{saveLabel}</>}
+                </Button>
+                <Button color="warning" onClick={handleSetTypeRead} disabled={updateResult.loading}>
+                  {cancelLabel}
+                </Button>
+              </>
+            )}
           </div>
         ) : (
           <FloatTrayDetail
@@ -158,13 +162,14 @@ export const CateDetail = () => {
         )}
       </div>
       <div style={{ paddingTop: 20 }}>
-        <CategoryForm
-          type={type}
-          category={categoryState}
+        <UserForm
+          user={user}
           onchangeUserState={onchangeUserState}
+          type={type}
           errorState={updateResult.error?.result}
+          isFormUpdate
         />
       </div>
-    </div>
+    </>
   )
 }

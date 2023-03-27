@@ -2,41 +2,35 @@ import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
-import { DefaultCategory } from '@/inventory'
-import { CategoryForm } from '@/inventory/CategoryForm'
-
+import { DefaultUserRequest } from '@/inventory'
+import { UserForm } from '@/inventory/UserForm'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { postMethod } from '@/services'
-import {
-  CategoryRequest,
-  CategoryRequestFailure,
-  CategoryResponse,
-} from '@/types/category/category'
+import { UserRequest, UserRequestFailure } from '@/types'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { FloatTrayCreate } from '../inventory'
+import { FloatTrayCreate } from './inventory/FloatTrayCreate'
 
-export default function CategoryCreate() {
-  const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
-
-  const router = useRouter()
-  const translate = useTranslationFunction()
-
-  const { breakPoint } = useSelector(ShareStoreSelector)
+export const UserCreate = () => {
+  const [user, setUser] = useState<UserRequest>(DefaultUserRequest)
 
   const breadCrumb = useGetBreadCrumb()
 
-  const [categoryState, setCategoryState] = useState<CategoryResponse>(DefaultCategory)
+  const translate = useTranslationFunction()
 
-  const createResult = useApiCall<CategoryRequest, CategoryRequestFailure>({
+  const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
+
+  const router = useRouter()
+
+  const createResult = useApiCall<UserRequest, UserRequestFailure>({
     callApi: () =>
-      postMethod<CategoryRequest>({
-        pathName: apiRoute.category.createCategory,
+      postMethod<UserRequest>({
+        pathName: apiRoute.user.addUser,
         token: cookies.token,
-        request: categoryState,
+        request: user,
       }),
     handleError(status, message) {
       if (status !== 400) {
@@ -45,28 +39,31 @@ export default function CategoryCreate() {
     },
     handleSuccess(message) {
       toast.success(translate(message))
-      router.push('/admin/category/management')
+      router.push('/admin/user/management')
     },
   })
 
-  const onchangeUserState = (newUpdate: Partial<CategoryRequest>) => {
-    const newUserState = { ...categoryState }
-    setCategoryState({ ...newUserState, ...newUpdate })
-  }
-
-  const cancelLabel = useTranslation('cancel')
-
-  const saveLabel = useTranslation('save')
+  const { breakPoint } = useSelector(ShareStoreSelector)
 
   const callCreate = () => {
     createResult.setLetCall(true)
   }
 
   const directManagement = () => {
-    router.push('/admin/category/management')
+    router.push('/admin/user/management')
   }
+
+  const onchangeUserState = (newUpdate: Partial<UserRequest>) => {
+    const newUserState = { ...user }
+    setUser({ ...newUserState, ...newUpdate })
+  }
+
+  const cancelLabel = useTranslation('cancel')
+
+  const saveLabel = useTranslation('save')
+
   return (
-    <div style={{ marginTop: 18, marginBottom: 80 }}>
+    <>
       <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
       <div
         style={{
@@ -78,12 +75,7 @@ export default function CategoryCreate() {
       >
         <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
         {breakPoint > 1 ? (
-          <div
-            style={{
-              display: 'flex',
-              gap: 10,
-            }}
-          >
+          <div style={{ display: 'flex', gap: 10 }}>
             <Button color="primary" onClick={callCreate} disabled={createResult.loading}>
               {createResult.loading ? <Loading /> : <>{saveLabel}</>}
             </Button>
@@ -95,14 +87,12 @@ export default function CategoryCreate() {
           <FloatTrayCreate callCreate={callCreate} directManagement={directManagement} />
         )}
       </div>
-      <div style={{ paddingTop: 40 }}>
-        <CategoryForm
-          type="update"
-          category={categoryState}
-          onchangeUserState={onchangeUserState}
-          errorState={createResult.error?.result}
-        />
-      </div>
-    </div>
+      <UserForm
+        user={user}
+        onchangeUserState={onchangeUserState}
+        type="update"
+        errorState={createResult.error?.result}
+      />
+    </>
   )
 }

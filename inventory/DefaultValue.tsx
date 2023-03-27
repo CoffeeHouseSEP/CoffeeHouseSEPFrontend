@@ -1,32 +1,19 @@
-import { UserResponseSuccess, ViewPointType } from '@/types'
+import { UserRequest, ViewPointType } from '@/types'
 import { BranchResponse } from '@/types/branch/branch'
 import { CategoryResponse } from '@/types/category/category'
 
-export const DefaultUser: UserResponseSuccess = {
-  id: '',
-  username: '',
-  password: '',
-  gender: 0,
-  dob: '',
-  address: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  tokens: {},
-  created: '',
-  modified: '',
-  verified: false,
-  verify2FA: false,
-  active: 0,
-  avatar: '',
-  type: 'INTERNAL',
-}
 export const DefaultCategory: CategoryResponse = {
   categoryId: '',
   name: '',
   description: '',
   status: 0,
+}
+
+export const DefaultUserRequest: UserRequest = {
+  loginName: '',
+  phoneNumber: '',
+  address: '',
+  email: '',
 }
 export const DefaultBranch: BranchResponse = {
   branchId: '',

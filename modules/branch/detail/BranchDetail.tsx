@@ -6,7 +6,7 @@ import { DefaultBranch } from '@/inventory'
 import { BranchForm } from '@/inventory/BranchForm'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
-import { CommonListResultType, UserResponseSuccess } from '@/types'
+import { CommonListResultType } from '@/types'
 import { BranchRequest, BranchRequestFailure, BranchResponse } from '@/types/branch/branch'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -68,7 +68,7 @@ export const BranchDetail = () => {
     }
   }, [id])
 
-  const onchangeUserState = (newUpdate: Partial<UserResponseSuccess>) => {
+  const onchangeUserState = (newUpdate: Partial<BranchRequest>) => {
     const newUserState = { ...branchState }
     setBranchState({ ...newUserState, ...newUpdate })
   }

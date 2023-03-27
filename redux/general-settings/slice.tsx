@@ -1,11 +1,18 @@
-import { DefaultUser } from '@/inventory'
 import { GeneralSettingsStoreTypes, UserResponseSuccess } from '@/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: GeneralSettingsStoreTypes = {
   darkTheme: 'dark',
   languageKey: 'en',
-  accountInfo: DefaultUser,
+  accountInfo: {
+    loginName: '',
+    phoneNumber: '',
+    status: 0,
+    id: '',
+    createdDate: '',
+    email: '',
+    address: '',
+  },
 }
 
 const GeneralSettingsSlice = createSlice({

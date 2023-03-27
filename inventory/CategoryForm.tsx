@@ -18,8 +18,8 @@ export const CategoryForm = ({ category, onchangeUserState, type, errorState }: 
 
   //   const { darkTheme } = useSelector(GeneralSettingsSelector)
 
-  const nameLabel = useTranslation('name')
-  const descriptionLabel = useTranslation('description')
+  const nameLabel = useTranslation('nameCate')
+  const descriptionLabel = useTranslation('descriptionCate')
 
   return (
     <div

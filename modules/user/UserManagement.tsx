@@ -1,34 +1,35 @@
 import { Button, CustomTable, Pagination } from '@/components'
 import { FloatButton } from '@/components/button/FloatButton'
 import { apiRoute } from '@/constants/apiRoutes'
+import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
-import { CommonListResultType, ViewPointType } from '@/types'
-import { BranchResponse } from '@/types/branch/branch'
+import { CommonListResultType, UserResponseSuccess, ViewPointType } from '@/types'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
 import { IoIosCreate } from 'react-icons/io'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-export const BranchManagement = () => {
+export const UserManagement = () => {
   const translate = useTranslationFunction()
 
   const [page, setPage] = useState<number>(1)
+  const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
 
   const router = useRouter()
-
-  const branchCreatePascal = useTranslation('BranchCreatePascal')
 
   const breadCrumb = useGetBreadCrumb()
 
   const { breakPoint } = useSelector(ShareStoreSelector)
 
-  const result = useApiCall<CommonListResultType<BranchResponse>, String>({
+  const result = useApiCall<CommonListResultType<UserResponseSuccess>, String>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.branch.getListBranch,
+        pathName: apiRoute.user.getListUser,
+        token: cookies.token,
         params: { page: String(page) },
       }),
     handleError(status, message) {
@@ -38,30 +39,15 @@ export const BranchManagement = () => {
     },
   })
   const { data, loading, setLetCall } = result
-  useEffect(() => {
-    setLetCall(true)
-  }, [])
 
   const dataField: ViewPointType[] = [
     {
-      key: 'branchId',
-      label: 'branchId',
-    },
-    {
-      key: 'name',
-      label: 'nameBranch',
-    },
-    {
-      key: 'address',
-      label: 'addressBranch',
+      key: 'loginName',
+      label: 'loginName',
     },
     {
       key: 'phoneNumber',
-      label: 'phoneNumberBranch',
-    },
-    {
-      key: 'branchManagerName',
-      label: 'branchManagerName',
+      label: 'phoneNumber',
     },
     {
       key: 'createdDate',
@@ -74,8 +60,14 @@ export const BranchManagement = () => {
   ]
 
   const handleRedirectCreate = () => {
-    router.push('/admin/branch/create')
+    router.push('/admin/user/create')
   }
+
+  useEffect(() => {
+    setLetCall(true)
+  }, [])
+
+  const createUserButton = useTranslation('createUserButton')
 
   return (
     <>
@@ -83,7 +75,7 @@ export const BranchManagement = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
         {breakPoint > 1 ? (
-          <Button onClick={handleRedirectCreate}>{branchCreatePascal}</Button>
+          <Button onClick={handleRedirectCreate}>{createUserButton}</Button>
         ) : (
           <FloatButton
             style={{
@@ -100,13 +92,13 @@ export const BranchManagement = () => {
         )}
       </div>
       <CustomTable
-        idFiled="branchId"
-        detailPath="admin/branch/"
+        idFiled="id"
+        detailPath="admin/user/"
         header={dataField ?? []}
         body={
           data
-            ? data.result.data.map((cate) => {
-                return { ...cate, status: cate.status === 1 ? 'active' : 'deactivate' }
+            ? data.result.data.map((user) => {
+                return { ...user, status: user.status === 1 ? 'active' : 'deactivate' }
               })
             : []
         }
