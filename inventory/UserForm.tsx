@@ -10,9 +10,16 @@ interface IUserForm {
   onchangeUserState: Function
   type: 'read' | 'update'
   errorState?: Partial<UserRequestFailure>
+  isFormUpdate?: boolean
 }
 
-export const UserForm = ({ user, onchangeUserState, type, errorState }: IUserForm) => {
+export const UserForm = ({
+  isFormUpdate,
+  user,
+  onchangeUserState,
+  type,
+  errorState,
+}: IUserForm) => {
   const { breakPoint } = useSelector(ShareStoreSelector)
   const translate = useTranslationFunction()
 
@@ -63,7 +70,7 @@ export const UserForm = ({ user, onchangeUserState, type, errorState }: IUserFor
       </div>
       <div style={{ gridColumn: 'span 1 / span 1' }}>
         <Input
-          readOnly={type === 'read'}
+          readOnly={type === 'read' || isFormUpdate}
           value={user.email}
           label={userEmail}
           onChange={(event) => {
@@ -78,7 +85,7 @@ export const UserForm = ({ user, onchangeUserState, type, errorState }: IUserFor
       </div>
       <div style={{ gridColumn: 'span 1 / span 1' }}>
         <Input
-          readOnly={type === 'read'}
+          readOnly={type === 'read' || isFormUpdate}
           value={user.address}
           label={userAddress}
           onChange={(event) => {

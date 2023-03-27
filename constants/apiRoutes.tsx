@@ -23,5 +23,7 @@ export const apiRoute = {
   user: {
     getListUser: '/user-internal/get-list-users',
     addUser: '/user-internal/add-new-user',
+    detailUser: '/user-internal/get-user-detail',
+    updateUser: '/user-internal/update-user',
   },
 }

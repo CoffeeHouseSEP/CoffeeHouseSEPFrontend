@@ -53,7 +53,7 @@ export const LoginForm = () => {
       }),
     handleSuccess(message, data) {
       toast.success(translate(message))
-      setCookie(TOKEN_AUTHENTICATION, data.token, {
+      setCookie(TOKEN_AUTHENTICATION, `Bearer ${data.token}`, {
         path: '/',
         expires: new Date(new Date().setDate(new Date().getDate() + 7)),
       })

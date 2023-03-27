@@ -17,6 +17,7 @@ import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { FloatTrayCreate } from '../inventory'
 
 export default function CategoryCreate() {
   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
@@ -76,24 +77,23 @@ export default function CategoryCreate() {
         }}
       >
         <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
-        {/* {breakPoint > 1 ? (
-     
+        {breakPoint > 1 ? (
+          <div
+            style={{
+              display: 'flex',
+              gap: 10,
+            }}
+          >
+            <Button color="primary" onClick={callCreate} disabled={createResult.loading}>
+              {createResult.loading ? <Loading /> : <>{saveLabel}</>}
+            </Button>
+            <Button color="warning" onClick={directManagement} disabled={createResult.loading}>
+              {cancelLabel}
+            </Button>
+          </div>
         ) : (
           <FloatTrayCreate callCreate={callCreate} directManagement={directManagement} />
-        )} */}
-        <div
-          style={{
-            display: 'flex',
-            gap: 10,
-          }}
-        >
-          <Button color="primary" onClick={callCreate} disabled={createResult.loading}>
-            {createResult.loading ? <Loading /> : <>{saveLabel}</>}
-          </Button>
-          <Button color="warning" onClick={directManagement} disabled={createResult.loading}>
-            {cancelLabel}
-          </Button>
-        </div>
+        )}
       </div>
       <div style={{ paddingTop: 40 }}>
         <CategoryForm

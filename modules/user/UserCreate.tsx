@@ -2,6 +2,7 @@ import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { DefaultUserRequest } from '@/inventory'
 import { UserForm } from '@/inventory/UserForm'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { postMethod } from '@/services'
@@ -11,14 +12,10 @@ import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { FloatTrayCreate } from './inventory/FloatTrayCreate'
 
 export const UserCreate = () => {
-  const [user, setUser] = useState<UserRequest>({
-    loginName: '',
-    phoneNumber: '',
-    address: '',
-    email: '',
-  })
+  const [user, setUser] = useState<UserRequest>(DefaultUserRequest)
 
   const breadCrumb = useGetBreadCrumb()
 
@@ -56,6 +53,11 @@ export const UserCreate = () => {
     router.push('/admin/user/management')
   }
 
+  const onchangeUserState = (newUpdate: Partial<UserRequest>) => {
+    const newUserState = { ...user }
+    setUser({ ...newUserState, ...newUpdate })
+  }
+
   const cancelLabel = useTranslation('cancel')
 
   const saveLabel = useTranslation('save')
@@ -72,28 +74,22 @@ export const UserCreate = () => {
         }}
       >
         <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
-        {/* {breakPoint > 1 ? (
-     
+        {breakPoint > 1 ? (
+          <div style={{ display: 'flex', gap: 10 }}>
+            <Button color="primary" onClick={callCreate} disabled={createResult.loading}>
+              {createResult.loading ? <Loading /> : <>{saveLabel}</>}
+            </Button>
+            <Button color="warning" onClick={directManagement} disabled={createResult.loading}>
+              {cancelLabel}
+            </Button>
+          </div>
         ) : (
           <FloatTrayCreate callCreate={callCreate} directManagement={directManagement} />
-        )} */}
-        <div
-          style={{
-            display: 'flex',
-            gap: 10,
-          }}
-        >
-          <Button color="primary" onClick={callCreate} disabled={createResult.loading}>
-            {createResult.loading ? <Loading /> : <>{saveLabel}</>}
-          </Button>
-          <Button color="warning" onClick={directManagement} disabled={createResult.loading}>
-            {cancelLabel}
-          </Button>
-        </div>
+        )}
       </div>
       <UserForm
         user={user}
-        onchangeUserState={setUser}
+        onchangeUserState={onchangeUserState}
         type="update"
         errorState={createResult.error?.result}
       />

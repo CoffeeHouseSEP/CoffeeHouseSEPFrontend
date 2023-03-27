@@ -49,11 +49,11 @@ export const CateManagement = () => {
     },
     {
       key: 'name',
-      label: 'name',
+      label: 'nameCate',
     },
     {
       key: 'description',
-      label: 'description',
+      label: 'descriptionCate',
     },
     {
       key: 'status',

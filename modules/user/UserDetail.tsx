@@ -2,38 +2,46 @@ import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
-import { DefaultBranch } from '@/inventory'
-import { BranchForm } from '@/inventory/BranchForm'
+import { DefaultUserRequest } from '@/inventory'
+import { UserForm } from '@/inventory/UserForm'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
-import { CommonListResultType } from '@/types'
-import { BranchRequest, BranchRequestFailure, BranchResponse } from '@/types/branch/branch'
+import { UserRequest, UserRequestFailure, UserResponseSuccess } from '@/types'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { FloatTrayDetail } from '../inventory/FloatTrailDetail'
+import { FloatTrayDetail } from './inventory/FloatTrayDetail'
 
-export const BranchDetail = () => {
+export const UserDetail = () => {
   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
   const router = useRouter()
   const translate = useTranslationFunction()
   const [type, setType] = useState<'read' | 'update'>('read')
-  const [branchState, setBranchState] = useState<BranchResponse>(DefaultBranch)
+  const [user, setUser] = useState<UserRequest>(DefaultUserRequest)
   const id = router?.query?.id?.toString()
   const { breakPoint } = useSelector(ShareStoreSelector)
+  const breadCrumb = useGetBreadCrumb()
 
-  const viewResult = useApiCall<CommonListResultType<BranchResponse>, string>({
+  const viewResult = useApiCall<UserResponseSuccess, string>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.branch.getListBranch,
+        pathName: apiRoute.user.detailUser,
+        token: cookies.token,
         params: {
-          branchId: id ?? '1',
+          field: 'internalUserId',
+          value: id ?? '1',
         },
       }),
     handleSuccess: (message, data) => {
-      setBranchState(data.data[0])
+      const thisUser = data
+      setUser({
+        loginName: thisUser.loginName,
+        phoneNumber: thisUser.loginName,
+        email: '',
+        address: '',
+      })
     },
     handleError(status, message) {
       if (status) {
@@ -42,13 +50,13 @@ export const BranchDetail = () => {
     },
   })
 
-  const updateResult = useApiCall<BranchRequest, BranchRequestFailure>({
+  const updateResult = useApiCall<UserRequest, UserRequestFailure>({
     callApi: () =>
-      putMethod<BranchRequest>({
-        pathName: apiRoute.branch.updateBranch,
+      putMethod<UserRequest>({
+        pathName: apiRoute.user.updateUser,
         token: cookies.token,
-        params: { branchId: branchState.branchId },
-        request: branchState,
+        params: { id: id || '' },
+        request: user,
       }),
     handleError(status, message) {
       if (status) {
@@ -68,15 +76,14 @@ export const BranchDetail = () => {
     }
   }, [id])
 
-  const onchangeUserState = (newUpdate: Partial<BranchRequest>) => {
-    const newUserState = { ...branchState }
-    setBranchState({ ...newUserState, ...newUpdate })
+  const onchangeUserState = (newUpdate: Partial<UserRequest>) => {
+    const newUserState = { ...user }
+    setUser({ ...newUserState, ...newUpdate })
   }
 
   const cancelLabel = useTranslation('cancel')
   const saveLabel = useTranslation('saveLabel')
   const editLabel = useTranslation('edit')
-  const breadCrumb = useGetBreadCrumb()
 
   if (viewResult.loading)
     return (
@@ -96,13 +103,21 @@ export const BranchDetail = () => {
   }
 
   const handleSetTypeRead = () => {
-    if (viewResult?.data?.result) setBranchState(viewResult.data.result.data[0])
+    if (viewResult?.data?.result) {
+      const thisUser = viewResult.data.result
+      setUser({
+        loginName: thisUser.loginName,
+        phoneNumber: thisUser.loginName,
+        email: '',
+        address: '',
+      })
+    }
     setType('read')
     updateResult.handleReset()
   }
 
   return (
-    <div style={{ marginTop: 18, marginBottom: 80 }}>
+    <>
       <h2>{breadCrumb}</h2>
       <div
         style={{
@@ -114,52 +129,13 @@ export const BranchDetail = () => {
       >
         {breakPoint > 1 ? (
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', gap: 10 }}>
-              {type === 'read' ? (
-                <>
-                  <Button onClick={handleSetTypeUpdate}>{editLabel}</Button>
-                  <Button
-                    color="warning"
-                    onClick={() => {
-                      router.push('/admin/branch/management')
-                    }}
-                  >
-                    {cancelLabel}
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button color="primary" onClick={callUpdate} disabled={updateResult.loading}>
-                    {updateResult.loading ? <Loading /> : <>{saveLabel}</>}
-                  </Button>
-                  <Button
-                    color="warning"
-                    onClick={handleSetTypeRead}
-                    disabled={updateResult.loading}
-                  >
-                    {cancelLabel}
-                  </Button>
-                </>
-              )}
-            </div>
-          </div>
-        ) : (
-          <FloatTrayDetail
-            type={type}
-            handleSetTypeUpdate={handleSetTypeUpdate}
-            callUpdate={callUpdate}
-            handleSetTypeRead={handleSetTypeRead}
-          />
-        )}
-        {/* <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', gap: 10 }}>
             {type === 'read' ? (
               <>
                 <Button onClick={handleSetTypeUpdate}>{editLabel}</Button>
                 <Button
                   color="warning"
                   onClick={() => {
-                    router.push('/admin/category/management')
+                    router.push('/admin/user/management')
                   }}
                 >
                   {cancelLabel}
@@ -176,16 +152,24 @@ export const BranchDetail = () => {
               </>
             )}
           </div>
-        </div> */}
+        ) : (
+          <FloatTrayDetail
+            type={type}
+            handleSetTypeUpdate={handleSetTypeUpdate}
+            callUpdate={callUpdate}
+            handleSetTypeRead={handleSetTypeRead}
+          />
+        )}
       </div>
       <div style={{ paddingTop: 20 }}>
-        <BranchForm
-          type={type}
-          branch={branchState}
+        <UserForm
+          user={user}
           onchangeUserState={onchangeUserState}
+          type={type}
           errorState={updateResult.error?.result}
+          isFormUpdate
         />
       </div>
-    </div>
+    </>
   )
 }

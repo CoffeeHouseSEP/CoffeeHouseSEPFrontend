@@ -49,15 +49,15 @@ export const BranchManagement = () => {
     },
     {
       key: 'name',
-      label: 'name',
+      label: 'nameBranch',
     },
     {
       key: 'address',
-      label: 'address',
+      label: 'addressBranch',
     },
     {
       key: 'phoneNumber',
-      label: 'phoneNumber',
+      label: 'phoneNumberBranch',
     },
     {
       key: 'branchManagerName',
