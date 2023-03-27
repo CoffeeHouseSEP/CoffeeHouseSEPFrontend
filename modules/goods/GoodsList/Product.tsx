@@ -1,10 +1,17 @@
 import { GoodsItem } from '@/types'
-import React from 'react'
+import { useState } from 'react'
 
 interface PropProduct {
   items: GoodsItem[]
 }
 const Product = ({ items }: PropProduct) => {
+  const [isHover, setIsHover] = useState<string>()
+  const handleMouseEnter = (id: string) => {
+    setIsHover(id)
+  }
+  const handleMouseLeave = () => {
+    setIsHover('-1')
+  }
   return (
     <div
       style={{
@@ -12,7 +19,7 @@ const Product = ({ items }: PropProduct) => {
         margin: '0 auto',
         maxWidth: '1170px',
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr 1fr',
+        gridTemplateColumns: '1fr 1fr 1fr 1fr',
         gap: '3rem 2rem',
         justifyItems: 'center',
       }}
@@ -46,6 +53,26 @@ const Product = ({ items }: PropProduct) => {
               </header>
             </div>
             <p style={{ marginBottom: 0, paddingTop: '0.5rem' }}>{description}</p>
+            <div
+              style={{
+                marginTop: '10px',
+                backgroundColor: isHover === menuItem.goodsId ? '#b5313a' : '',
+                border: '1px solid #b5313a',
+                color: isHover === menuItem.goodsId ? '#fff' : '#b5313a',
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontSize: '14px',
+                padding: '8px',
+                textAlign: 'center',
+                cursor: 'pointer',
+                borderRadius: '5px',
+              }}
+              onMouseEnter={() => handleMouseEnter(menuItem.goodsId)}
+              onMouseLeave={() => handleMouseLeave()}
+            >
+              <span> Chọn Mua</span>
+            </div>
           </article>
         )
       })}

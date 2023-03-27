@@ -2,42 +2,38 @@ import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
-import { DefaultCategory } from '@/inventory'
-import { CategoryForm } from '@/inventory/CategoryForm'
+import { DefaultBranch } from '@/inventory'
+import { BranchForm } from '@/inventory/BranchForm'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
 import { CommonListResultType, UserResponseSuccess } from '@/types'
-import {
-  CategoryRequest,
-  CategoryRequestFailure,
-  CategoryResponse,
-} from '@/types/category/category'
+import { BranchRequest, BranchRequestFailure, BranchResponse } from '@/types/branch/branch'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { FloatTrayDetail } from '../inventory'
+import { FloatTrayDetail } from '../inventory/FloatTrailDetail'
 
-export const CateDetail = () => {
+export const BranchDetail = () => {
   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
   const router = useRouter()
   const translate = useTranslationFunction()
   const [type, setType] = useState<'read' | 'update'>('read')
-  const [categoryState, setCategoryState] = useState<CategoryResponse>(DefaultCategory)
+  const [branchState, setBranchState] = useState<BranchResponse>(DefaultBranch)
   const id = router?.query?.id?.toString()
   const { breakPoint } = useSelector(ShareStoreSelector)
 
-  const viewResult = useApiCall<CommonListResultType<CategoryResponse>, string>({
+  const viewResult = useApiCall<CommonListResultType<BranchResponse>, string>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.category.getListCategory,
+        pathName: apiRoute.branch.getListBranch,
         params: {
-          categoryId: id ?? '1',
+          branchId: id ?? '1',
         },
       }),
     handleSuccess: (message, data) => {
-      setCategoryState(data.data[0])
+      setBranchState(data.data[0])
     },
     handleError(status, message) {
       if (status) {
@@ -46,13 +42,13 @@ export const CateDetail = () => {
     },
   })
 
-  const updateResult = useApiCall<CategoryRequest, CategoryRequestFailure>({
+  const updateResult = useApiCall<BranchRequest, BranchRequestFailure>({
     callApi: () =>
-      putMethod<CategoryResponse>({
-        pathName: apiRoute.category.updateCategory,
+      putMethod<BranchRequest>({
+        pathName: apiRoute.branch.updateBranch,
         token: cookies.token,
-        params: { categoryId: categoryState.categoryId },
-        request: categoryState,
+        params: { branchId: branchState.branchId },
+        request: branchState,
       }),
     handleError(status, message) {
       if (status) {
@@ -73,8 +69,8 @@ export const CateDetail = () => {
   }, [id])
 
   const onchangeUserState = (newUpdate: Partial<UserResponseSuccess>) => {
-    const newUserState = { ...categoryState }
-    setCategoryState({ ...newUserState, ...newUpdate })
+    const newUserState = { ...branchState }
+    setBranchState({ ...newUserState, ...newUpdate })
   }
 
   const cancelLabel = useTranslation('cancel')
@@ -100,7 +96,7 @@ export const CateDetail = () => {
   }
 
   const handleSetTypeRead = () => {
-    if (viewResult?.data?.result) setCategoryState(viewResult.data.result.data[0])
+    if (viewResult?.data?.result) setBranchState(viewResult.data.result.data[0])
     setType('read')
     updateResult.handleReset()
   }
@@ -125,7 +121,7 @@ export const CateDetail = () => {
                   <Button
                     color="warning"
                     onClick={() => {
-                      router.push('/admin/category/management')
+                      router.push('/admin/branch/management')
                     }}
                   >
                     {cancelLabel}
@@ -155,11 +151,37 @@ export const CateDetail = () => {
             handleSetTypeRead={handleSetTypeRead}
           />
         )}
+        {/* <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 10 }}>
+            {type === 'read' ? (
+              <>
+                <Button onClick={handleSetTypeUpdate}>{editLabel}</Button>
+                <Button
+                  color="warning"
+                  onClick={() => {
+                    router.push('/admin/category/management')
+                  }}
+                >
+                  {cancelLabel}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button color="primary" onClick={callUpdate} disabled={updateResult.loading}>
+                  {updateResult.loading ? <Loading /> : <>{saveLabel}</>}
+                </Button>
+                <Button color="warning" onClick={handleSetTypeRead} disabled={updateResult.loading}>
+                  {cancelLabel}
+                </Button>
+              </>
+            )}
+          </div>
+        </div> */}
       </div>
       <div style={{ paddingTop: 20 }}>
-        <CategoryForm
+        <BranchForm
           type={type}
-          category={categoryState}
+          branch={branchState}
           onchangeUserState={onchangeUserState}
           errorState={updateResult.error?.result}
         />

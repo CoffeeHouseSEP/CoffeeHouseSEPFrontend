@@ -10,6 +10,7 @@ const initialState: ShareStoreTypes = {
     edit: 'edit',
     save: 'save',
     saveLabel: 'Save',
+    BranchCreatePascal: 'Create branch',
   },
 }
 
