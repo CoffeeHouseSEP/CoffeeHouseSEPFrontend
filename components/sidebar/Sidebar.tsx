@@ -102,12 +102,7 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
             }}
           >
             {sidebar.map((item) => (
-              <SideIconItem
-                link={item.mainItem.path}
-                image={item.mainItem.icon}
-                label={item.mainItem.label}
-                isLabel
-              />
+              <SideIconItem link={item.mainItem.path} label={item.mainItem.label} isLabel />
             ))}
           </div>
         </div>
