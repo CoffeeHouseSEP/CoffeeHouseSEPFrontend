@@ -81,7 +81,12 @@ export function CustomTable({
           </div>
         ))
       case 'select':
-        return <Checkbox isReadOnly isSelected={!!selectedKeys?.find((item) => item === data.id)} />
+        return (
+          <Checkbox
+            isReadOnly
+            isSelected={!!selectedKeys?.find((item) => item === data[idFiled])}
+          />
+        )
       default:
         return data[columnKey]?.toString()
     }
