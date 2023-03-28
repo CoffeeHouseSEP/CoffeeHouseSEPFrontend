@@ -38,7 +38,7 @@ export const UserDetail = () => {
       const thisUser = data
       setUser({
         loginName: thisUser.loginName,
-        phoneNumber: thisUser.loginName,
+        phoneNumber: thisUser.phoneNumber,
         email: thisUser.email,
         address: thisUser.address,
       })

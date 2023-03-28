@@ -184,6 +184,7 @@ export const BranchDetail = () => {
           branch={branchState}
           onchangeUserState={onchangeUserState}
           errorState={updateResult.error?.result}
+          selectManager={branchState.branchManagerId}
         />
       </div>
     </div>
