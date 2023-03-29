@@ -1,5 +1,5 @@
 import { UserRequest, ViewPointType } from '@/types'
-import { BranchResponse } from '@/types/branch/branch'
+import { BranchRequest } from '@/types/branch/branch'
 import { CategoryResponse } from '@/types/category/category'
 import { NewsResponse } from '@/types/news/news'
 
@@ -16,7 +16,7 @@ export const DefaultUserRequest: UserRequest = {
   address: '',
   email: '',
 }
-export const DefaultBranch: BranchResponse = {
+export const DefaultBranch: BranchRequest = {
   branchId: '',
   name: '',
   address: '',

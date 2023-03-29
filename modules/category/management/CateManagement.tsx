@@ -40,7 +40,7 @@ export const CateManagement = () => {
   const { data, loading, setLetCall } = result
   useEffect(() => {
     setLetCall(true)
-  }, [])
+  }, [page])
 
   const dataField: ViewPointType[] = [
     {

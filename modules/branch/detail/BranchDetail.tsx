@@ -8,6 +8,7 @@ import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
 import { CommonListResultType } from '@/types'
 import { BranchRequest, BranchRequestFailure, BranchResponse } from '@/types/branch/branch'
+import { ImageResponse } from '@/types/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
@@ -20,20 +21,47 @@ export const BranchDetail = () => {
   const router = useRouter()
   const translate = useTranslationFunction()
   const [type, setType] = useState<'read' | 'update'>('read')
-  const [branchState, setBranchState] = useState<BranchResponse>(DefaultBranch)
+  const [branchState, setBranchState] = useState<BranchRequest>(DefaultBranch)
   const id = router?.query?.id?.toString()
   const { breakPoint } = useSelector(ShareStoreSelector)
+
+  const imageResult = useApiCall<ImageResponse, string>({
+    callApi: () =>
+      getMethod({
+        pathName: apiRoute.image.imageInfo,
+        token: cookies.token,
+        params: {
+          objectId: id ?? '1',
+        },
+      }),
+    handleSuccess: (message, data) => {
+      setBranchState({
+        ...branchState,
+        image: data,
+      })
+    },
+    handleError(status, message) {
+      if (status) {
+        toast.error(translate(message))
+      }
+    },
+  })
 
   const viewResult = useApiCall<CommonListResultType<BranchResponse>, string>({
     callApi: () =>
       getMethod({
         pathName: apiRoute.branch.getListBranch,
+        token: cookies.token,
         params: {
           branchId: id ?? '1',
         },
       }),
     handleSuccess: (message, data) => {
-      setBranchState(data.data[0])
+      setBranchState({
+        ...DefaultBranch,
+        ...data.data[0],
+      })
+      imageResult.setLetCall(true)
     },
     handleError(status, message) {
       if (status) {
@@ -96,7 +124,8 @@ export const BranchDetail = () => {
   }
 
   const handleSetTypeRead = () => {
-    if (viewResult?.data?.result) setBranchState(viewResult.data.result.data[0])
+    if (viewResult?.data?.result)
+      setBranchState({ ...DefaultBranch, ...viewResult.data.result.data[0] })
     setType('read')
     updateResult.handleReset()
   }

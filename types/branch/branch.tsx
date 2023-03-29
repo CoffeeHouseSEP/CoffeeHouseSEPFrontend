@@ -1,3 +1,5 @@
+import { ImageResponse } from '../image'
+
 export interface BranchResponse {
   branchId: string
   name: string
@@ -10,12 +12,6 @@ export interface BranchResponse {
   status: 0 | 1
   createdDate: string
   cancelledDate: string
-  image: {
-    id: number
-    objectId: string
-    base64: string
-    prefix: string
-  }
 }
 
 export interface BranchRequest {
@@ -30,12 +26,7 @@ export interface BranchRequest {
   status: 0 | 1
   createdDate: string
   cancelledDate: string
-  image: {
-    id: number
-    objectId: string
-    base64: string
-    prefix: string
-  }
+  image: ImageResponse
 }
 export interface BranchResponseSuccess {}
 

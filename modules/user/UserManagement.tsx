@@ -65,7 +65,7 @@ export const UserManagement = () => {
 
   useEffect(() => {
     setLetCall(true)
-  }, [])
+  }, [page])
 
   const createUserButton = useTranslation('createUserButton')
 
