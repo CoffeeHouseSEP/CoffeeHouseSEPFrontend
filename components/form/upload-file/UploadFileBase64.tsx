@@ -22,12 +22,10 @@ export const UploadFileBase64 = ({
       const fileValue = e.target.files[0]
       if (fileValue.size < 2097152) {
         const reader = new FileReader()
-        reader.onload = (event) => {
-          const text = (event?.target?.result ?? '').toString()
-          const textBase64 = Buffer.from(text).toString('base64')
-          handleUploadFile(textBase64)
+        reader.onloadend = () => {
+          handleUploadFile(reader.result)
         }
-        reader.readAsText(e.target.files[0])
+        reader.readAsDataURL(fileValue)
       } else {
         setError(errorSize2MB)
       }

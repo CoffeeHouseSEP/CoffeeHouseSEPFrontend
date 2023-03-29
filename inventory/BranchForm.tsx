@@ -1,4 +1,4 @@
-import { Checkbox, CustomTable, Input, Pagination } from '@/components'
+import { Checkbox, CustomTable, Input, Pagination, UploadFileBase64 } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
@@ -7,6 +7,7 @@ import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, UserResponseSuccess, ViewPointType } from '@/types'
 import { BranchRequest, BranchRequestFailure } from '@/types/branch/branch'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
@@ -71,7 +72,7 @@ export const BranchForm = ({
 
   useEffect(() => {
     setLetCall(true)
-  }, [])
+  }, [page])
 
   useEffect(() => {
     if (selectId.length) {
@@ -84,6 +85,19 @@ export const BranchForm = ({
       })
     }
   }, [selectId])
+
+  const handleUploadImage = (value: string) => {
+    const image = `${value}`
+    const imageSplit = image.split('base64,')
+    onchangeUserState({
+      image: {
+        id: 0,
+        objectId: '',
+        base64: imageSplit[1],
+        prefix: `${imageSplit[0]}base64,`,
+      },
+    })
+  }
 
   return (
     <>
@@ -195,8 +209,20 @@ export const BranchForm = ({
             {branch.status ? 'active' : 'deactivate'}
           </Checkbox>
         </div>
+        <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10 }}>
+          <UploadFileBase64
+            handleUploadFile={handleUploadImage}
+            labelInput="Upload branch image"
+            disabled={type === 'read'}
+          />
+          {!!branch.image.base64 && (
+            <div style={{ height: '100%', aspectRatio: '1', position: 'relative' }}>
+              <Image layout="fill" src={`${branch.image.prefix}${branch.image.base64}`} />
+            </div>
+          )}
+        </div>
       </div>
-      <div style={{ maxWidth: 375, marginTop: 10 }}>
+      <div style={{ maxWidth: 375, margin: `10px 0px` }}>
         <Input
           readOnly
           value={branch.branchManagerId}

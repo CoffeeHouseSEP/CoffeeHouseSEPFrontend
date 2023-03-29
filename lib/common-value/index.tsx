@@ -72,3 +72,4 @@ export const AccessStatus = () => {
 export const formatDate = 'yyyy-MM-dd'
 
 export const formatSVGBase64 = 'data:image/svg+xml;base64,'
+export const formatPNGBase = 'data:image/png;base64,'
