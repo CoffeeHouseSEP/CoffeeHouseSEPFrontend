@@ -14,7 +14,7 @@ export default function ListNews() {
     callApi: () =>
       getMethod({
         pathName: apiRoute.new.getListNews,
-        params: { page: page.toString(), pageSize },
+        params: { page: page.toString(), pageSize, status: 1 },
       }),
     handleSuccess(message, data) {
       setNewList(data.data)

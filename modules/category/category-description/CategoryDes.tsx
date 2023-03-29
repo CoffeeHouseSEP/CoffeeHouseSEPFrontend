@@ -13,6 +13,7 @@ export default function CategoryDes() {
     callApi: () =>
       getMethod({
         pathName: apiRoute.category.getListCategory,
+        params: { status: 1 },
       }),
     handleSuccess(message, data) {
       setCateItem(data.data)

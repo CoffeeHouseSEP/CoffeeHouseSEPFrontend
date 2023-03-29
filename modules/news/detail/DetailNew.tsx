@@ -24,7 +24,7 @@ export default function DetailNew() {
     callApi: () =>
       getMethod({
         pathName: apiRoute.new.getListNews,
-        params: { page: '1', pageSize: '10', keySort: 'desc', sortField: 'createdDate' },
+        params: { page: '1', pageSize: '10', keySort: 'desc', sortField: 'createdDate', status: 1 },
       }),
   })
   const news = useApiCall<CommonListResultType<NewItem>, String>({
