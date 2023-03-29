@@ -5,30 +5,30 @@ import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } 
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
-import { BranchResponse } from '@/types/branch/branch'
+import { NewsResponse } from '@/types/news/news'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { IoIosCreate } from 'react-icons/io'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-export const BranchManagement = () => {
+export const NewManagement = () => {
   const translate = useTranslationFunction()
 
   const [page, setPage] = useState<number>(1)
 
   const router = useRouter()
 
-  const branchCreatePascal = useTranslation('BranchCreatePascal')
+  const newsCreatePascal = useTranslation('NewsCreatePascal')
 
   const breadCrumb = useGetBreadCrumb()
 
   const { breakPoint } = useSelector(ShareStoreSelector)
 
-  const result = useApiCall<CommonListResultType<BranchResponse>, String>({
+  const result = useApiCall<CommonListResultType<NewsResponse>, String>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.branch.getListBranch,
+        pathName: apiRoute.news.getListNews,
         params: { page: String(page), pageSize: '10' },
       }),
     handleError(status, message) {
@@ -44,28 +44,24 @@ export const BranchManagement = () => {
 
   const dataField: ViewPointType[] = [
     {
-      key: 'branchId',
-      label: 'branchId',
+      key: 'newsId',
+      label: 'newsId',
     },
     {
-      key: 'name',
-      label: 'nameBranch',
+      key: 'title',
+      label: 'title',
     },
     {
-      key: 'address',
-      label: 'addressBranch',
-    },
-    {
-      key: 'phoneNumber',
-      label: 'phoneNumberBranch',
-    },
-    {
-      key: 'branchManagerName',
-      label: 'branchManagerName',
+      key: 'createdBy',
+      label: 'createdBy',
     },
     {
       key: 'createdDate',
       label: 'createdDate',
+    },
+    {
+      key: 'content',
+      label: 'content',
     },
     {
       key: 'status',
@@ -74,7 +70,7 @@ export const BranchManagement = () => {
   ]
 
   const handleRedirectCreate = () => {
-    router.push('/admin/branch/create')
+    router.push('/admin/news/create')
   }
 
   return (
@@ -83,7 +79,7 @@ export const BranchManagement = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
         {breakPoint > 1 ? (
-          <Button onClick={handleRedirectCreate}>{branchCreatePascal}</Button>
+          <Button onClick={handleRedirectCreate}>{newsCreatePascal}</Button>
         ) : (
           <FloatButton
             style={{
@@ -100,8 +96,8 @@ export const BranchManagement = () => {
         )}
       </div>
       <CustomTable
-        idFiled="branchId"
-        detailPath="admin/branch/"
+        idFiled="newsId"
+        detailPath="admin/news/"
         header={dataField ?? []}
         body={
           data

@@ -39,6 +39,9 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
     {
       mainItem: { label: 'GoodManagement', path: '/admin/good/management', icon: '' },
     },
+    {
+      mainItem: { label: 'NewsManagement', path: '/admin/news/management', icon: '' },
+    },
   ]
 
   return (

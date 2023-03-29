@@ -13,7 +13,7 @@ export default function ListNews() {
   const news = useApiCall<CommonListResultType<NewItem>, String>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.new.getListNews,
+        pathName: apiRoute.news.getListNews,
         params: { page: page.toString(), pageSize },
       }),
     handleSuccess(message, data) {

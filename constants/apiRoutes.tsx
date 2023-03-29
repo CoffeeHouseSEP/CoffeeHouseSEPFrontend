@@ -4,8 +4,10 @@ export const apiRoute = {
     updateCategory: '/category/update-category',
     createCategory: '/category/add-new-category',
   },
-  new: {
+  news: {
     getListNews: '/news/get-list-news',
+    createNews: '/news/add-new-news',
+    updateNews: '/news/update-news',
   },
   goods: {
     getListGoods: '/goods/get-list-goods',
