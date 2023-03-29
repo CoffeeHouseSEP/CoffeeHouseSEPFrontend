@@ -171,7 +171,18 @@ export const HomeContainer = () => {
                   }}
                   onClick={() => router.push(`/news/${item.newsId}`)}
                 >
-                  <ImageItem width={100} height={80} id={item.newsId} />
+                  <div
+                    style={{
+                      width: '120px',
+                      height: '80px',
+                      position: 'relative',
+                      aspectRatio: '1/1',
+                      cursor: 'pointer',
+                      transition: 'linear 1s',
+                    }}
+                  >
+                    <ImageItem id={item.newsId} />
+                  </div>
                   <div
                     style={{
                       display: 'flex',

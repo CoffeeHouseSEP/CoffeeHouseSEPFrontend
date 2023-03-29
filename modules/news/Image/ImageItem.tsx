@@ -10,10 +10,8 @@ import { toast } from 'react-toastify'
 
 interface IitemImage {
   id: string
-  width?: number
-  height?: number
 }
-export default function ImageItem({ id, width, height }: IitemImage) {
+export default function ImageItem({ id }: IitemImage) {
   const [isHover, setIsHover] = useState<string>()
   const handleMouseEnter = (id: string | undefined) => {
     setIsHover(id)
@@ -46,29 +44,23 @@ export default function ImageItem({ id, width, height }: IitemImage) {
   }, [id])
 
   return (
-    <div>
+    <>
       {!!imageResult.data?.result.base64 ? (
-        <div
+        <Image
           style={{
-            height: `${height}px`,
-            width: `${width}px`,
-            aspectRatio: '1',
-            position: 'relative',
-            objectFit: 'cover',
+            scale: isHover === id ? '1.1' : '1',
+            transform: 'linear',
+            objectFit: 'contain',
           }}
-        >
-          <Image
-            layout="fill"
-            style={{ scale: isHover === id ? '1.1' : '1', transform: 'linear' }}
-            alt="Tet1"
-            src={`${imageResult.data.result.prefix}${imageResult.data.result.base64}`}
-            onMouseEnter={() => handleMouseEnter(id)}
-            onMouseLeave={() => handleMouseLeave()}
-          />
-        </div>
+          alt="Tet1"
+          src={`${imageResult.data.result.prefix}${imageResult.data.result.base64}`}
+          onMouseEnter={() => handleMouseEnter(id)}
+          onMouseLeave={() => handleMouseLeave()}
+          layout="fill"
+        />
       ) : (
         <div>Not Found Image</div>
       )}
-    </div>
+    </>
   )
 }

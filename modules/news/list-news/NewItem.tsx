@@ -23,6 +23,7 @@ export default function NewsItem({ list }: IPropNews) {
         <div
           style={{
             textAlign: 'center',
+            height: '100%',
             borderRadius: '5%',
             boxShadow: '2px 2px 2px 2px #888888',
             overflow: 'hidden',
@@ -32,6 +33,7 @@ export default function NewsItem({ list }: IPropNews) {
           <div
             style={{
               width: '100%',
+              height: '70%',
               position: 'relative',
               aspectRatio: '1/1',
               cursor: 'pointer',

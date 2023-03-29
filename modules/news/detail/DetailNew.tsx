@@ -78,7 +78,19 @@ export default function DetailNew() {
       </div>
       <p>{newDetail?.content}</p>
 
-      <ImageItem width={760} height={340} id={newDetail.newsId} />
+      <div
+        style={{
+          width: '800px',
+          height: '351px',
+          position: 'relative',
+          aspectRatio: '1/1',
+          cursor: 'pointer',
+          transition: 'linear 1s',
+          margin: '0 auto',
+        }}
+      >
+        <ImageItem id={newDetail.newsId} />
+      </div>
 
       <h2
         style={{
