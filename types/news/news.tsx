@@ -1,3 +1,5 @@
+import { ImageResponse } from '../image'
+
 export interface NewsResponse {
   newsId: string
   title: string
@@ -5,12 +7,6 @@ export interface NewsResponse {
   createdBy: string
   createdDate: string
   status: 0 | 1
-  image: {
-    id: 0
-    objectId: string
-    base64: string
-    prefix: string
-  }
 }
 
 export interface NewsRequest {
@@ -20,12 +16,7 @@ export interface NewsRequest {
   createdBy: string
   createdDate: string
   status: 0 | 1
-  image: {
-    id: 0
-    objectId: string
-    base64: string
-    prefix: string
-  }
+  image: ImageResponse
 }
 export interface NewsResponseSuccess {}
 

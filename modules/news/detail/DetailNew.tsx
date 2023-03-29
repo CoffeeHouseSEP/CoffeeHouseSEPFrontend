@@ -3,11 +3,11 @@ import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall } from '@/hooks'
 import { getMethod } from '@/services'
 import { CommonListResultType, NewItem } from '@/types'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { BsFillCaretRightFill } from 'react-icons/bs'
 import { CiAlarmOn } from 'react-icons/ci'
+import ImageItem from '../Image/ImageItem'
 
 export default function DetailNew() {
   const router = useRouter()
@@ -77,20 +77,9 @@ export default function DetailNew() {
         </span>
       </div>
       <p>{newDetail?.content}</p>
-      <div
-        style={{
-          width: '80%',
-          height: '100%',
-          position: 'relative',
-          aspectRatio: '1/1',
-          cursor: 'pointer',
-          transition: 'linear 1s',
-          objectFit: 'cover',
-          margin: ' 0 auto',
-        }}
-      >
-        <Image layout="fill" objectFit="cover" src="/asset/about1.jpg" />
-      </div>
+
+      <ImageItem width={760} height={340} id={newDetail.newsId} />
+
       <h2
         style={{
           fontSize: '32px',
