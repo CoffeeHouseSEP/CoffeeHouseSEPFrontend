@@ -21,6 +21,7 @@ export default function GoodList() {
     handleSuccess(message, data) {
       setGoodItem(data.data)
     },
+    preventLoadingGlobal: true,
   })
   const { data, loading, setLetCall } = goods
   useEffect(() => {

@@ -2,11 +2,12 @@ import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useTranslationFunction } from '@/hooks'
 import { themeValue } from '@/lib'
+import { setIsLoggedIn } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { getMethod } from '@/services'
 import { useState } from 'react'
 import { useCookies } from 'react-cookie'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 export const SignOutButton = () => {
@@ -15,6 +16,8 @@ export const SignOutButton = () => {
   const [cookies, , removeCookie] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
 
   const translate = useTranslationFunction()
+
+  const dispatch = useDispatch()
 
   const result = useApiCall<string, string>({
     callApi: () =>
@@ -26,6 +29,7 @@ export const SignOutButton = () => {
       toast.success(translate(message))
       removeCookie(TOKEN_AUTHENTICATION)
       removeCookie(USER_ID)
+      dispatch(setIsLoggedIn(false))
     },
     handleError(status, message) {
       if (status) {
@@ -48,7 +52,7 @@ export const SignOutButton = () => {
         cursor: 'pointer',
         position: 'relative',
         borderBottom: `1px solid ${themeValue[darkTheme].colors.border}`,
-        backgroundColor: hover ? themeValue[darkTheme].colors.blue200 : '',
+        backgroundColor: hover ? themeValue[darkTheme].colors.primaryLightHover : '',
       }}
       onMouseEnter={() => {
         setHover(true)

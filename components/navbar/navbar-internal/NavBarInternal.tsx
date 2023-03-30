@@ -6,7 +6,6 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { HiMenuAlt2 } from 'react-icons/hi'
 import { useSelector } from 'react-redux'
-import { Search } from '../../search'
 
 interface INavbarInternal {
   setOpenSideBar: React.MouseEventHandler<HTMLDivElement>
@@ -69,10 +68,10 @@ export const NavbarInternal = ({ setOpenSideBar, pixel }: INavbarInternal) => {
         {breakPoint > 2 && iconButton()}
       </div>
 
-      <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {breakPoint > 2 && <Search />}
         {breakPoint < 2 && iconButton()}
-      </div>
+      </div> */}
     </div>
   )
 }

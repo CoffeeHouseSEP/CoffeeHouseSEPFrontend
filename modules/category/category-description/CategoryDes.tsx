@@ -17,6 +17,7 @@ export default function CategoryDes() {
     handleSuccess(message, data) {
       setCateItem(data.data)
     },
+    preventLoadingGlobal: true,
   })
 
   useEffect(() => {

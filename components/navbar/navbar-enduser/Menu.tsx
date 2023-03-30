@@ -28,10 +28,13 @@ export const Menu = () => {
     handleSuccess(message, data) {
       setGoodList(data.data)
     },
+    preventLoadingGlobal: true,
   })
+
   useEffect(() => {
     goods.setLetCall(true)
   }, [])
+
   const [isHover, setHover] = useState<string>('')
   const [menuHover, setMenuHover] = useState<string>('')
   const { darkTheme } = useSelector(GeneralSettingsSelector)
@@ -50,6 +53,7 @@ export const Menu = () => {
     handleSuccess(message, data) {
       setCateItem(data.data)
     },
+    preventLoadingGlobal: true,
   })
 
   useEffect(() => {

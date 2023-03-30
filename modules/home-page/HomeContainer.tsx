@@ -30,7 +30,9 @@ export const HomeContainer = () => {
         pathName: apiRoute.news.getListNews,
         params: { page: '1', pageSize: '3', keySort: 'asc', sortField: 'createdDate', status: 1 },
       }),
+    preventLoadingGlobal: true,
   })
+
   useEffect(() => {
     newsList.setLetCall(true)
     // getImage.setLetCall(true)

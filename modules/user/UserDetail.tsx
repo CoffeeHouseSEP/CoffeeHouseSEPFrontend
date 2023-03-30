@@ -18,7 +18,6 @@ export const UserDetail = () => {
   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
   const router = useRouter()
   const translate = useTranslationFunction()
-  const [type, setType] = useState<'read' | 'update'>('read')
   const [user, setUser] = useState<UserRequest>(DefaultUserRequest)
   const id = router?.query?.id?.toString()
   const { breakPoint } = useSelector(ShareStoreSelector)
@@ -66,7 +65,6 @@ export const UserDetail = () => {
     handleSuccess(message) {
       toast.success(translate(message))
       viewResult.setLetCall(true)
-      setType('read')
     },
   })
 
@@ -82,8 +80,6 @@ export const UserDetail = () => {
   }
 
   const cancelLabel = useTranslation('cancel')
-  const saveLabel = useTranslation('saveLabel')
-  const editLabel = useTranslation('edit')
 
   if (viewResult.loading)
     return (
@@ -93,28 +89,6 @@ export const UserDetail = () => {
         <Loading />
       </div>
     )
-
-  const handleSetTypeUpdate = () => {
-    setType('update')
-  }
-
-  const callUpdate = () => {
-    updateResult.setLetCall(true)
-  }
-
-  const handleSetTypeRead = () => {
-    if (viewResult?.data?.result) {
-      const thisUser = viewResult.data.result
-      setUser({
-        loginName: thisUser.loginName,
-        phoneNumber: thisUser.loginName,
-        email: '',
-        address: '',
-      })
-    }
-    setType('read')
-    updateResult.handleReset()
-  }
 
   return (
     <>
@@ -129,43 +103,24 @@ export const UserDetail = () => {
       >
         {breakPoint > 1 ? (
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            {type === 'read' ? (
-              <>
-                <Button onClick={handleSetTypeUpdate}>{editLabel}</Button>
-                <Button
-                  color="warning"
-                  onClick={() => {
-                    router.push('/admin/user/management')
-                  }}
-                >
-                  {cancelLabel}
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button color="primary" onClick={callUpdate} disabled={updateResult.loading}>
-                  {updateResult.loading ? <Loading /> : <>{saveLabel}</>}
-                </Button>
-                <Button color="warning" onClick={handleSetTypeRead} disabled={updateResult.loading}>
-                  {cancelLabel}
-                </Button>
-              </>
-            )}
+            <Button
+              color="warning"
+              onClick={() => {
+                router.push('/admin/user/management')
+              }}
+            >
+              {cancelLabel}
+            </Button>
           </div>
         ) : (
-          <FloatTrayDetail
-            type={type}
-            handleSetTypeUpdate={handleSetTypeUpdate}
-            callUpdate={callUpdate}
-            handleSetTypeRead={handleSetTypeRead}
-          />
+          <FloatTrayDetail />
         )}
       </div>
       <div style={{ paddingTop: 20 }}>
         <UserForm
           user={user}
           onchangeUserState={onchangeUserState}
-          type={type}
+          type="read"
           errorState={updateResult.error?.result}
           isFormUpdate
         />

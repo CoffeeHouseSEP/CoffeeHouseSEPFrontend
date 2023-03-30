@@ -1,7 +1,7 @@
 import { Button, Input, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
-import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useTranslationFunction } from '@/hooks'
+import { ROLE_COOKIE, TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { inputStyles } from '@/inventory'
 import { encodeBase64, themeValue } from '@/lib'
 import { authenticationSelector, setIsLoggedIn, setLoading } from '@/redux/authentication'
@@ -14,33 +14,15 @@ import { useCookies } from 'react-cookie'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-export const LoginForm = () => {
+export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
   const emailRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
-  const [, setCookie] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
+  const [, setCookie] = useCookies([TOKEN_AUTHENTICATION, USER_ID, ROLE_COOKIE])
   const translate = useTranslationFunction()
   const dispatch = useDispatch()
   const { darkTheme } = useSelector(GeneralSettingsSelector)
   const { isLoginLoading } = useSelector(authenticationSelector)
-
-  // const resultForgotPassword = useApiCall({
-  //   callApi: () =>
-  //     postMethod({
-  //       pathName: apiRoute.auth.forgotPassword,
-  //       params: {
-  //         email: emailRef?.current?.value || '',
-  //       },
-  //     }),
-  //   handleError(status, message) {
-  //     if (status) {
-  //       toast.error(translate(message))
-  //     }
-  //   },
-  //   handleSuccess(message) {
-  //     toast.success(translate(message))
-  //   },
-  // })
 
   const result = useApiCall<LoginResponseSuccess, LoginResponseFailure>({
     callApi: () =>
@@ -53,19 +35,8 @@ export const LoginForm = () => {
       }),
     handleSuccess(message, data) {
       toast.success(translate(message))
-      setCookie(TOKEN_AUTHENTICATION, `Bearer ${data.token}`, {
-        path: '/',
-        expires: new Date(new Date().setDate(new Date().getDate() + 7)),
-      })
-      if (data.role === 'ADMIN') {
-        router.push('/admin')
-      }
-      if (data.role === 'BRANCH_MANAGER') {
-        router.push('/branch')
-      }
-      if (data.role === 'USER') {
-        router.push('/')
-      }
+      setCookie(TOKEN_AUTHENTICATION, `Bearer ${data.token}`)
+      setCookie(ROLE_COOKIE, data.role)
       dispatch(setIsLoggedIn(true))
       dispatch(setLoading(false))
     },
@@ -85,6 +56,12 @@ export const LoginForm = () => {
     dispatch(setLoading(true))
   }
 
+  const signIn = useTranslation('signIn')
+  const internalUser = useTranslation('internalAccount')
+  const forgotPassword = useTranslation('forgotPassword')
+  const loginName = useTranslation('loginName')
+  const password = useTranslation('password')
+
   return (
     <>
       <div
@@ -95,12 +72,12 @@ export const LoginForm = () => {
           textAlign: 'center',
         }}
       >
-        Sign In
+        {signIn}
       </div>
       <Input
         ref={emailRef}
         {...inputStyles({ error: error?.result.loginName && translate(error.result.loginName) })}
-        labelLeft="username"
+        labelLeft={loginName}
         clearable
         onFocus={handleReset}
       />
@@ -110,18 +87,27 @@ export const LoginForm = () => {
           error: error?.result.loginPassword && translate(error.result.loginPassword),
         })}
         type="password"
-        labelLeft="password"
+        labelLeft={password}
         clearable
         onFocus={handleReset}
       />
       <div style={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
         <Button styleType="light" disabled={isLoginLoading}>
-          forgotPassword?
+          {forgotPassword}?
         </Button>
       </div>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'end', paddingTop: '1rem' }}>
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'end',
+          paddingTop: '1rem',
+          gap: 10,
+        }}
+      >
+        {isEndUser && <Button onClick={() => router.push('/admin')}>{internalUser}</Button>}
         <Button onClick={handleLogin} disabled={isLoginLoading}>
-          {isLoginLoading ? <Loading /> : <>Sign In</>}
+          {isLoginLoading ? <Loading /> : <>{signIn}</>}
         </Button>
       </div>
     </>

@@ -51,10 +51,12 @@ export const DarkThemeValue = {
     selection: pink.pink800,
     border: 'rgba(255, 255, 255, 0.15)',
 
-    primary: blueDark.blue600,
+    primary: '#b22830',
+    // blueDark.blue600,
     success: greenDark.green600,
     secondary: purpleDark.purple700,
-    warning: yellowDark.yellow600,
+    warning: '#f1bc7a',
+    // yellowDark.yellow600,
     error: redDark.red600,
     gradient: `linear-gradient(112deg, ${cyanDark.cyan600} -63.59%, ${pinkDark.pink600} -20.3%, ${blueDark.blue600} 70.46%)`,
 
@@ -64,7 +66,8 @@ export const DarkThemeValue = {
     warningLight: yellowDark.yellow200,
     errorLight: redDark.red200,
 
-    primaryLightHover: blueDark.blue400,
+    primaryLightHover: '#b22830',
+    // blueDark.blue400,
     secondaryLightHover: purpleDark.purple400,
     successLightHover: greenDark.green400,
     warningLightHover: yellowDark.yellow400,

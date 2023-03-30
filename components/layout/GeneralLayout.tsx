@@ -1,8 +1,9 @@
-import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
+import { ROLE_COOKIE, TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useGetDarkMode } from '@/hooks'
-import { setIsLoggedIn } from '@/redux/authentication'
+import { authenticationSelector, setIsLoggedIn } from '@/redux/authentication'
 import { GeneralSettingsSelector, setGeneralSettings } from '@/redux/general-settings'
 import { ShareStoreSelector } from '@/redux/share-store'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,12 +11,14 @@ import { BackdropLoading } from '../backdrop'
 
 export const GeneralLayout = ({ children }: { children: React.ReactNode }) => {
   const { darkTheme } = useSelector(GeneralSettingsSelector)
-
+  const { isLoggedIn } = useSelector(authenticationSelector)
   const { loading } = useSelector(ShareStoreSelector)
 
-  const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
+  const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID, ROLE_COOKIE])
 
   const isDark = useGetDarkMode()
+
+  const router = useRouter()
 
   const dispatch = useDispatch()
 
@@ -32,6 +35,26 @@ export const GeneralLayout = ({ children }: { children: React.ReactNode }) => {
       dispatch(setIsLoggedIn(false))
     }
   }, [])
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      if (router.pathname.includes('admin') || router.pathname.includes('branch')) {
+        if (cookies.role === 'USER') {
+          router.push('/')
+        }
+        if (router.pathname.includes('admin')) {
+          if (cookies.role === 'BRANCH_MANAGER') {
+            router.push('/branch')
+          }
+        }
+        if (router.pathname.includes('branch')) {
+          if (cookies.role === 'ADMIN') {
+            router.push('/admin')
+          }
+        }
+      }
+    }
+  }, [isLoggedIn])
 
   return (
     <>

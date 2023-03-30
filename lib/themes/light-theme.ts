@@ -37,10 +37,12 @@ export const LightThemeValue = {
     selection: blue.blue200,
     border: 'rgba(0, 0, 0, 0.15)',
 
-    primary: blue.blue600,
+    primary: '#b22830',
+    // blue.blue600,
     success: green.green600,
     secondary: purple.purple700,
-    warning: yellow.yellow600,
+    warning: '#f1bc7a',
+    // yellow.yellow600,
     error: red.red600,
     gradient: `linear-gradient(112deg, ${cyan.cyan600} -63.59%, ${pink.pink600} -20.3%, ${blue.blue600} 70.46%)`,
 
@@ -50,7 +52,8 @@ export const LightThemeValue = {
     warningLight: yellow.yellow200,
     errorLight: red.red200,
 
-    primaryLightHover: blue.blue400,
+    primaryLightHover: '#d16c52',
+    // primaryLightHover: blue.blue400,
     secondaryLightHover: purple.purple400,
     successLightHover: green.green400,
     warningLightHover: yellow.yellow400,
