@@ -57,6 +57,10 @@ const initialState: ShareStoreTypes = {
     title: 'Title',
     createdBy: 'Created by',
     content: 'Content',
+    password: 'Password',
+    signIn: 'Sign in',
+    forgotPassword: 'Forgot password',
+    internalAccount: 'Login with internal account',
   },
 }
 
