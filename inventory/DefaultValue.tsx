@@ -2,7 +2,7 @@ import { UserRequest, ViewPointType } from '@/types'
 import { BranchRequest } from '@/types/branch/branch'
 import { CategoryResponse } from '@/types/category/category'
 import { GoodsRequest } from '@/types/goods/goods'
-import { NewsResponse } from '@/types/news/news'
+import { NewsRequest } from '@/types/news/news'
 
 export const DefaultCategory: CategoryResponse = {
   categoryId: '',
@@ -55,7 +55,7 @@ export const DefaultBranch: BranchRequest = {
     prefix: '',
   },
 }
-export const DefaultNews: NewsResponse = {
+export const DefaultNews: NewsRequest = {
   newsId: '',
   title: '',
   content: '',

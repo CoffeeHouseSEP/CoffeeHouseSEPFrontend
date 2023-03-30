@@ -1,8 +1,8 @@
 import { NewItem } from '@/types'
-import Image from 'next/image'
-import { CiAlarmOn } from 'react-icons/ci'
-import React, { useState } from 'react'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { CiAlarmOn } from 'react-icons/ci'
+import ImageItem from '../Image/ImageItem'
 
 interface IPropNews {
   list: NewItem[]
@@ -23,6 +23,7 @@ export default function NewsItem({ list }: IPropNews) {
         <div
           style={{
             textAlign: 'center',
+            height: '100%',
             borderRadius: '5%',
             boxShadow: '2px 2px 2px 2px #888888',
             overflow: 'hidden',
@@ -32,14 +33,14 @@ export default function NewsItem({ list }: IPropNews) {
           <div
             style={{
               width: '100%',
-              height: '247px',
+              height: '70%',
               position: 'relative',
               aspectRatio: '1/1',
               cursor: 'pointer',
               transition: 'linear 1s',
             }}
           >
-            <Image layout="fill" objectFit="cover" src="/asset/News2.png" />
+            <ImageItem id={item.newsId} />
           </div>
           <p
             style={{
