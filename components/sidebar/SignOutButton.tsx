@@ -10,7 +10,7 @@ import { useCookies } from 'react-cookie'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-export const SignOutButton = () => {
+export const SignOutButton = ({ style }: { style?: object }) => {
   const [hover, setHover] = useState(false)
   const { darkTheme } = useSelector(GeneralSettingsSelector)
   const [cookies, , removeCookie] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
@@ -53,6 +53,7 @@ export const SignOutButton = () => {
         position: 'relative',
         borderBottom: `1px solid ${themeValue[darkTheme].colors.border}`,
         backgroundColor: hover ? themeValue[darkTheme].colors.primaryLightHover : '',
+        ...style,
       }}
       onMouseEnter={() => {
         setHover(true)

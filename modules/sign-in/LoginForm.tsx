@@ -37,6 +37,15 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
       toast.success(translate(message))
       setCookie(TOKEN_AUTHENTICATION, `Bearer ${data.token}`)
       setCookie(ROLE_COOKIE, data.role)
+      if (data.role === 'USER') {
+        router.push('/')
+      }
+      if (data.role === 'BRANCH_MANAGER') {
+        router.push('/branch')
+      }
+      if (data.role === 'ADMIN') {
+        router.push('/admin')
+      }
       dispatch(setIsLoggedIn(true))
       dispatch(setLoading(false))
     },

@@ -1,6 +1,7 @@
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall } from '@/hooks'
 import { themeValue } from '@/lib'
+import { authenticationSelector } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { getMethod } from '@/services'
 import { CategoryItem, CommonListResultType, GoodsItem } from '@/types'
@@ -18,6 +19,7 @@ interface MenuItem {
 export const Menu = () => {
   const [goodList, setGoodList] = useState<GoodsItem[]>([])
   const pageSize = '10'
+  const { isLoggedIn } = useSelector(authenticationSelector)
   // const { data, loading, setLetCall } = category
   const goods = useApiCall<CommonListResultType<GoodsItem>, String>({
     callApi: () =>
@@ -60,7 +62,7 @@ export const Menu = () => {
     category.setLetCall(true)
   }, [])
 
-  const menuList: MenuItem[] = [
+  let menuList: MenuItem[] = [
     {
       label: 'QUÁN CÀ PHÊ',
       link: '/stores',
@@ -82,11 +84,33 @@ export const Menu = () => {
       label: 'MUA NGAY',
       link: '/shopping',
     },
-    {
-      label: 'ĐĂNG NHẬP',
-      link: '/login',
-    },
   ]
+
+  if (isLoggedIn) {
+    menuList = [
+      ...menuList,
+      {
+        label: 'TÀI KHOẢN',
+        link: '/account',
+      },
+      {
+        label: 'GIỎ HÀNG',
+        link: '/cart',
+      },
+      {
+        label: 'ĐƠN HÀNG',
+        link: '/my-order',
+      },
+    ]
+  } else {
+    menuList = [
+      ...menuList,
+      {
+        label: 'ĐĂNG NHẬP',
+        link: '/login',
+      },
+    ]
+  }
 
   const styleHover = (label: string) => {
     return {
