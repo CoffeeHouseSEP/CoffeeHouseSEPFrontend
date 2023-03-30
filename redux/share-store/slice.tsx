@@ -37,6 +37,18 @@ const initialState: ShareStoreTypes = {
     branchManagerId: 'Manager id',
     branchId: 'id',
     branchManagerName: 'Manager name',
+    nameGoods: 'Goods Name',
+    description: 'Description',
+    code: 'code',
+    goodsUnit: 'Good Unit',
+    innerPrice: 'InnerPrice',
+    applyPrice: 'ApplyPrice',
+    isSold: 'isSold',
+    isSize: 'Size Goods',
+    name: 'CategoryName',
+    goodsId: 'Goods id',
+    GoodCreatePascal: 'Create Good',
+    NewsManagement: 'News Management',
   },
 }
 

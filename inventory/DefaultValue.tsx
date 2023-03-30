@@ -1,6 +1,7 @@
 import { UserRequest, ViewPointType } from '@/types'
 import { BranchRequest } from '@/types/branch/branch'
 import { CategoryResponse } from '@/types/category/category'
+import { GoodsRequest } from '@/types/goods/goods'
 import { NewsResponse } from '@/types/news/news'
 
 export const DefaultCategory: CategoryResponse = {
@@ -15,6 +16,25 @@ export const DefaultUserRequest: UserRequest = {
   phoneNumber: '',
   address: '',
   email: '',
+}
+export const DefaultGoods: GoodsRequest = {
+  goodsId: '',
+  name: '',
+  code: '',
+  applyPrice: 0,
+  innerPrice: 0,
+  description: '',
+  status: 0,
+  categoryId: '',
+  isSize: 0,
+  isSold: 0,
+  goodsUnit: 0,
+  image: {
+    id: 0,
+    objectId: '',
+    base64: '',
+    prefix: '',
+  },
 }
 export const DefaultBranch: BranchRequest = {
   branchId: '',

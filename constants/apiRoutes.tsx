@@ -11,6 +11,8 @@ export const apiRoute = {
   },
   goods: {
     getListGoods: '/goods/get-list-goods',
+    createGoods: '/goods/add-new-goods',
+    updateGoods: '/goods/update-goods',
   },
   branch: {
     getListBranch: '/branch/get-list-branch',
@@ -30,5 +32,6 @@ export const apiRoute = {
   },
   image: {
     imageInfo: '/image-info/get-image-by-object-id',
+    removeImage: '/image-info/remove-image-info',
   },
 }
