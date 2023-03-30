@@ -1,13 +1,14 @@
 import { InternalLayout } from '@/components/layout/InternalLayout'
+import { GoodManagement } from '@/modules/goods/management'
 import { ReactElement } from 'react'
 import { NextPageWithLayout } from '../../_app'
 
-const GoodManagement: NextPageWithLayout = () => {
-  return <>good dashboard</>
+const GoodsManagement: NextPageWithLayout = () => {
+  return <GoodManagement />
 }
 
-GoodManagement.getLayout = function getLayout(page: ReactElement) {
+GoodsManagement.getLayout = function getLayout(page: ReactElement) {
   return <InternalLayout>{page}</InternalLayout>
 }
 
-export default GoodManagement
+export default GoodsManagement

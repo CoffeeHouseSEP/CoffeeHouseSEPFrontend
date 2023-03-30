@@ -16,7 +16,7 @@ export default function GoodList() {
     callApi: () =>
       getMethod({
         pathName: apiRoute.goods.getListGoods,
-        params: { page: page.toString(), pageSize },
+        params: { page: page.toString(), pageSize, status: 1 },
       }),
     handleSuccess(message, data) {
       setGoodItem(data.data)
