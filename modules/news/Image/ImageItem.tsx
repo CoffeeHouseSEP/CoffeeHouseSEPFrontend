@@ -10,8 +10,9 @@ import { toast } from 'react-toastify'
 
 interface IitemImage {
   id: string
+  altname?: string
 }
-export default function ImageItem({ id }: IitemImage) {
+export default function ImageItem({ id, altname }: IitemImage) {
   const [isHover, setIsHover] = useState<string>()
   const handleMouseEnter = (id: string | undefined) => {
     setIsHover(id)
@@ -52,7 +53,7 @@ export default function ImageItem({ id }: IitemImage) {
             transform: 'linear',
             objectFit: 'contain',
           }}
-          alt="Tet1"
+          alt={altname}
           src={`${imageResult.data.result.prefix}${imageResult.data.result.base64}`}
           onMouseEnter={() => handleMouseEnter(id)}
           onMouseLeave={() => handleMouseLeave()}

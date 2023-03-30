@@ -1,3 +1,4 @@
+import ImageItem from '@/modules/news/Image/ImageItem'
 import { GoodsItem } from '@/types'
 import { useState } from 'react'
 
@@ -28,7 +29,7 @@ const Product = ({ items }: PropProduct) => {
         const { id, name, applyPrice, description } = menuItem
         return (
           <article key={id} style={{ display: 'grid', maxWidth: '25rem' }}>
-            <img
+            {/* <img
               src="/asset/Matcha.png"
               alt={name}
               style={{
@@ -39,7 +40,21 @@ const Product = ({ items }: PropProduct) => {
                 display: 'block',
                 margin: '0 auto',
               }}
-            />
+            /> */}
+            <div
+              style={{
+                width: '200px',
+                height: '100%',
+                position: 'relative',
+                aspectRatio: '1/1',
+                cursor: 'pointer',
+                transition: 'linear 1s',
+                border: '0.25rem solid #2c2891',
+                borderRadius: '5%',
+              }}
+            >
+              <ImageItem altname={menuItem.name} id={menuItem.goodsId} />
+            </div>
             <div>
               <header
                 style={{
@@ -48,7 +63,7 @@ const Product = ({ items }: PropProduct) => {
                   borderBottom: '0.5px dotted #333',
                 }}
               >
-                <h5 style={{ marginBottom: '0.5rem' }}>{name}</h5>
+                <h5 style={{ marginBottom: '0.5rem', cursor: 'pointer' }}>{name}</h5>
                 <h4 style={{ color: '#2c2891' }}>₹{Math.floor(applyPrice) * 10}</h4>
               </header>
             </div>

@@ -63,7 +63,13 @@ export const GridCategory = ({ list, setHover, goodList }: IGridCategory) => {
                 }}
                 key={filteredName.id}
               >
-                <AiFillCaretRight /> {filteredName.name}
+                {isHover && (
+                  <AiFillCaretRight
+                    onMouseEnter={() => handleMouseEnter(filteredName.id)}
+                    onMouseLeave={() => handleMouseLeave()}
+                  />
+                )}
+                {filteredName.name}
               </div>
             ))}
         </div>

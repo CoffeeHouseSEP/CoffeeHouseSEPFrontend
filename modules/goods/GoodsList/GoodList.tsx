@@ -1,22 +1,40 @@
 import { Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
-import { useApiCall } from '@/hooks'
+import { useApiCall, useTranslationFunction } from '@/hooks'
 import { getMethod } from '@/services'
-import { CommonListResultType, GoodsItem } from '@/types'
+import { CategoryItem, CommonListResultType, GoodsItem } from '@/types'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import Categories from './Categories'
 import Product from './Product'
 
 export default function GoodList() {
   const [page, setPage] = useState<number>(1)
+  const translate = useTranslationFunction()
   const [goodItem, setGoodItem] = useState<GoodsItem[]>([])
+  const [cateItem, setCateItem] = useState<CategoryItem[]>([])
+  const [categoryId, setCategoryId] = useState<number>()
   const pageSize = '10'
-  // const { data, loading, setLetCall } = category
+
+  const category = useApiCall<CommonListResultType<CategoryItem>, String>({
+    callApi: () =>
+      getMethod({
+        pathName: apiRoute.category.getListCategory,
+        params: { status: 1 },
+      }),
+    handleSuccess(message, data) {
+      setCateItem(data.data)
+    },
+    handleError(status, message) {
+      toast.error(translate(message))
+    },
+  })
+
   const goods = useApiCall<CommonListResultType<GoodsItem>, String>({
     callApi: () =>
       getMethod({
         pathName: apiRoute.goods.getListGoods,
-        params: { page: page.toString(), pageSize, status: 1 },
+        params: { page: page.toString(), pageSize, status: 1, categoryId: categoryId || '' },
       }),
     handleSuccess(message, data) {
       setGoodItem(data.data)
@@ -24,20 +42,21 @@ export default function GoodList() {
   })
   const { data, loading, setLetCall } = goods
   useEffect(() => {
+    category.setLetCall(true)
     setLetCall(true)
   }, [page])
 
   const filterItems = (categoryId: number) => {
     if (categoryId === -1) {
       if (data) {
-        const newGoods = data?.result.data
-        setGoodItem(newGoods)
+        setCategoryId(undefined)
+        setLetCall(true)
         return
       }
     }
     if (data) {
-      const newGoods = data.result.data.filter((item) => item.categoryId === categoryId)
-      setGoodItem(newGoods)
+      setCategoryId(categoryId)
+      setLetCall(true)
     }
   }
   return (
@@ -50,7 +69,7 @@ export default function GoodList() {
               style={{ width: '5rem', height: '0.25rem', background: '#2c2891', margin: '0 auto' }}
             />
           </div>
-          <Categories filterItems={filterItems} />
+          <Categories category={cateItem} categoryId={categoryId} filterItems={filterItems} />
           <Product items={goodItem} />
         </section>
       )}

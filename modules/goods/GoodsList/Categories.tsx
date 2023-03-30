@@ -1,37 +1,18 @@
-import { apiRoute } from '@/constants/apiRoutes'
-import { useApiCall } from '@/hooks'
-import { getMethod } from '@/services'
-import { CategoryItem, CommonListResultType } from '@/types'
-import React, { useEffect, useState } from 'react'
+import { CategoryItem } from '@/types'
 
 interface PropCategory {
   filterItems: (categoryId: number) => void
+  categoryId?: number
+  category?: CategoryItem[]
 }
-const Categories = ({ filterItems }: PropCategory) => {
-  const [cateItem, setCateItem] = useState<CategoryItem[]>([])
-  const [activeCategory, setActiveCategory] = useState(-1)
-  const handlefilterItems = (categoryId: number, index: number) => {
+const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
+  const handlefilterItems = (categoryId: number) => {
     filterItems(categoryId)
-    setActiveCategory(index)
   }
   const filterAllItems = () => {
     filterItems(-1)
-    setActiveCategory(-1)
   }
 
-  const category = useApiCall<CommonListResultType<CategoryItem>, String>({
-    callApi: () =>
-      getMethod({
-        pathName: apiRoute.category.getListCategory,
-        params: { status: 1 },
-      }),
-    handleSuccess(message, data) {
-      setCateItem(data.data)
-    },
-  })
-  useEffect(() => {
-    category.setLetCall(true)
-  }, [])
   return (
     <div
       style={{
@@ -54,7 +35,7 @@ const Categories = ({ filterItems }: PropCategory) => {
       >
         <div
           style={{
-            background: activeCategory === -1 ? '#2c2891' : 'transparent',
+            background: !categoryId ? '#2c2891' : 'transparent',
             borderColor: 'transparent',
             fontSize: '1rem',
             textTransform: 'capitalize',
@@ -69,30 +50,31 @@ const Categories = ({ filterItems }: PropCategory) => {
         >
           All
         </div>
-        {cateItem.map((category, index) => {
-          return (
-            <div>
-              <div
-                style={{
-                  background: activeCategory === index ? '#2c2891' : 'transparent',
-                  borderColor: 'transparent',
-                  fontSize: '1rem',
-                  textTransform: 'capitalize',
-                  margin: '0 0.5rem',
-                  letterSpacing: '1px',
-                  padding: '0.375rem 0.75rem',
-                  color: '#fff',
-                  cursor: 'pointer',
-                  borderRadius: '5%',
-                }}
-                key={category.categoryId}
-                onClick={() => handlefilterItems(category.categoryId, index)}
-              >
-                {category.name}
+        {category &&
+          category.map((category) => {
+            return (
+              <div>
+                <div
+                  style={{
+                    background: categoryId === category.categoryId ? '#2c2891' : 'transparent',
+                    borderColor: 'transparent',
+                    fontSize: '1rem',
+                    textTransform: 'capitalize',
+                    margin: '0 0.5rem',
+                    letterSpacing: '1px',
+                    padding: '0.375rem 0.75rem',
+                    color: '#fff',
+                    cursor: 'pointer',
+                    borderRadius: '5%',
+                  }}
+                  key={category.categoryId}
+                  onClick={() => handlefilterItems(category.categoryId)}
+                >
+                  {category.name}
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
       </div>
     </div>
   )
