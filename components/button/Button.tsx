@@ -34,7 +34,11 @@ export const Button = ({
   const getColor = (): CSSProperties => {
     const disableColor = themeValue[darkTheme].colors.gray400
 
-    const colorChoose = themeValue[darkTheme].colors[color ?? 'primary']
+    const colorChoose = color
+      ? themeValue[darkTheme].colors[color]
+      : themeValue[darkTheme].colors.redHighland
+
+    // const colorChoose = themeValue[darkTheme].colors[color ?? 'primary']
 
     const colorLight = (color ?? 'primary').concat('Light') as keyof typeof themeValue.light.colors
 

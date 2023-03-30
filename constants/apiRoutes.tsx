@@ -34,4 +34,9 @@ export const apiRoute = {
     imageInfo: '/image-info/get-image-by-object-id',
     removeImage: '/image-info/remove-image-info',
   },
+  profile: {
+    getProfile: '/user-internal/get-user-profile',
+    updateProfile: '/user-internal/update-user-profile',
+    changePass: '/user-internal/change-password',
+  },
 }
