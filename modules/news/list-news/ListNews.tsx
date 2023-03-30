@@ -30,13 +30,13 @@ export default function ListNews() {
         <h1>{loading ? 'loading...' : 'TIN TỨC'}</h1>
         <div style={{ width: '8rem', height: '0.25rem', background: '#333', margin: '0 auto' }} />
       </div>
-      <section style={{ width: '90vw', maxWidth: '90vw', margin: '2rem auto' }}>
+      <section style={{ width: '75vw', maxWidth: '90vw', margin: '2rem auto' }}>
         <div
           style={{
             display: 'grid',
             gap: '2rem',
             marginBottom: '4rem',
-            gridTemplateColumns: '1fr 1fr 1fr',
+            gridTemplateColumns: 'auto auto auto',
           }}
         >
           <NewsItem list={newList} />
@@ -46,7 +46,6 @@ export default function ListNews() {
         total={news.data?.result?.totalRows || 0}
         onChange={(number) => setPage(number)}
         page={page}
-        pageSize={6}
         paginationStyle={{
           marginTop: 20,
           marginBottom: 20,
