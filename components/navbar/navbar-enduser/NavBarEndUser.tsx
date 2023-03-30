@@ -1,5 +1,7 @@
 import { Dropdown } from '@/components/dropdown'
+import { SignOutButton } from '@/components/sidebar/SignOutButton'
 import { themeValue } from '@/lib'
+import { authenticationSelector } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { OptionsType } from '@/types'
 import Image from 'next/image'
@@ -13,6 +15,7 @@ import { Menu } from './Menu'
 export const NavBarEndUser = () => {
   const [search, setSearch] = useState<string>('')
   const { darkTheme } = useSelector(GeneralSettingsSelector)
+  const { isLoggedIn } = useSelector(authenticationSelector)
 
   const languageList: OptionsType<string>[] = [
     {
@@ -104,6 +107,16 @@ export const NavBarEndUser = () => {
                 <AiOutlineSearch />
               </div>
             </div>
+            {isLoggedIn && (
+              <div style={{ width: '100px' }}>
+                <SignOutButton
+                  style={{
+                    color: themeValue[darkTheme].colors.background,
+                    borderBottom: `1px solid ${themeValue[darkTheme].colors.background}`,
+                  }}
+                />
+              </div>
+            )}
           </div>
           <div
             style={{
