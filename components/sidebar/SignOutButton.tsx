@@ -1,10 +1,11 @@
 import { apiRoute } from '@/constants/apiRoutes'
-import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
+import { ROLE_COOKIE, TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useTranslationFunction } from '@/hooks'
 import { themeValue } from '@/lib'
 import { setIsLoggedIn } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { getMethod } from '@/services'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,8 +14,8 @@ import { toast } from 'react-toastify'
 export const SignOutButton = ({ style }: { style?: object }) => {
   const [hover, setHover] = useState(false)
   const { darkTheme } = useSelector(GeneralSettingsSelector)
-  const [cookies, , removeCookie] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
-
+  const [cookies, , removeCookie] = useCookies([TOKEN_AUTHENTICATION, USER_ID, ROLE_COOKIE])
+  const router = useRouter()
   const translate = useTranslationFunction()
 
   const dispatch = useDispatch()
@@ -29,7 +30,9 @@ export const SignOutButton = ({ style }: { style?: object }) => {
       toast.success(translate(message))
       removeCookie(TOKEN_AUTHENTICATION)
       removeCookie(USER_ID)
+      removeCookie(ROLE_COOKIE)
       dispatch(setIsLoggedIn(false))
+      router.push('/')
     },
     handleError(status, message) {
       if (status) {

@@ -111,8 +111,8 @@ export const NavBarEndUser = () => {
               <div style={{ width: '100px' }}>
                 <SignOutButton
                   style={{
-                    color: themeValue[darkTheme].colors.background,
-                    borderBottom: `1px solid ${themeValue[darkTheme].colors.background}`,
+                    color: 'white',
+                    borderBottom: `1px solid ${'white'}`,
                   }}
                 />
               </div>
