@@ -35,7 +35,7 @@ export const SideIconItem = (props: SidebarIconProps) => {
         cursor: 'pointer',
         position: 'relative',
         borderBottom: isLabel ? `1px solid ${themeValue[darkTheme].colors.border}` : '',
-        backgroundColor: hover ? themeValue[darkTheme].colors.blue200 : '',
+        backgroundColor: hover ? themeValue[darkTheme].colors.primaryLightHover : '',
       }}
       onMouseEnter={() => {
         setHover(true)

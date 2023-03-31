@@ -19,10 +19,12 @@ export const useGetBreadCrumb = () => {
       if (item === content[content.length - 1]) {
         if (item === '[id]') {
           newResult.push(
-            <div style={{ color: themeValue[darkTheme].colors.blue600 }}>{router.query.id}</div>
+            <div style={{ color: themeValue[darkTheme].colors.redHighland }}>{router.query.id}</div>
           )
         } else {
-          newResult.push(<div style={{ color: themeValue[darkTheme].colors.blue600 }}>{item}</div>)
+          newResult.push(
+            <div style={{ color: themeValue[darkTheme].colors.redHighland }}>{item}</div>
+          )
         }
       } else {
         newResult.push(<div>{item}</div>)

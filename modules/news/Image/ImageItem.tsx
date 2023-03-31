@@ -37,6 +37,7 @@ export default function ImageItem({ id, altname }: IitemImage) {
         toast.error(translate(message))
       }
     },
+    preventLoadingGlobal: true,
   })
   useEffect(() => {
     if (!!id) {

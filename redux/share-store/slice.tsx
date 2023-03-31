@@ -49,6 +49,18 @@ const initialState: ShareStoreTypes = {
     goodsId: 'Goods id',
     GoodCreatePascal: 'Create Good',
     NewsManagement: 'News Management',
+    nameUser: 'Full name',
+    settings: 'Settings',
+    signOut: 'Sign out',
+    NewsCreatePascal: 'Create news',
+    newsId: 'News id',
+    title: 'Title',
+    createdBy: 'Created by',
+    content: 'Content',
+    password: 'Password',
+    signIn: 'Sign in',
+    forgotPassword: 'Forgot password',
+    internalAccount: 'Login with internal account',
   },
 }
 
