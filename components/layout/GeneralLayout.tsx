@@ -38,6 +38,16 @@ export const GeneralLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
+      if (router.pathname.includes('account')) {
+        if (cookies.role === 'BRANCH_MANAGER' || cookies.role === 'ADMIN') {
+          router.push('/settings')
+        }
+      }
+      if (router.pathname.includes('settings')) {
+        if (cookies.role === 'USER') {
+          router.push('/account')
+        }
+      }
       if (router.pathname.includes('admin') || router.pathname.includes('branch')) {
         if (cookies.role === 'USER') {
           router.push('/')
@@ -53,6 +63,12 @@ export const GeneralLayout = ({ children }: { children: React.ReactNode }) => {
           }
         }
       }
+    } else if (
+      router.pathname.includes('account') ||
+      router.pathname.includes('my-order') ||
+      router.pathname.includes('cart')
+    ) {
+      router.push('/')
     }
   }, [isLoggedIn])
 
