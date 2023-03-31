@@ -1,10 +1,10 @@
 import { EndUserLayout } from '@/components'
-import GoodList from '@/modules/goods/GoodsList/GoodList'
+import GoodsDetail from '@/modules/goods/detail/GoodsDetail'
 import { ReactElement } from 'react'
-import { NextPageWithLayout } from './_app'
+import { NextPageWithLayout } from '../_app'
 
 const HomePage: NextPageWithLayout = () => {
-  return <GoodList />
+  return <GoodsDetail />
 }
 
 HomePage.getLayout = function getLayout(page: ReactElement) {

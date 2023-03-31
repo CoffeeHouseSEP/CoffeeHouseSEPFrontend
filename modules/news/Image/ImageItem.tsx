@@ -9,7 +9,7 @@ import { useCookies } from 'react-cookie'
 import { toast } from 'react-toastify'
 
 interface IitemImage {
-  id: string
+  id?: string
   altname?: string
 }
 export default function ImageItem({ id, altname }: IitemImage) {
@@ -47,12 +47,12 @@ export default function ImageItem({ id, altname }: IitemImage) {
 
   return (
     <>
-      {!!imageResult.data?.result.base64 ? (
+      {!!imageResult.data?.result.base64 && (
         <Image
           style={{
             scale: isHover === id ? '1.1' : '1',
             transform: 'linear',
-            objectFit: 'contain',
+            objectFit: 'cover',
           }}
           alt={altname}
           src={`${imageResult.data.result.prefix}${imageResult.data.result.base64}`}
@@ -60,8 +60,6 @@ export default function ImageItem({ id, altname }: IitemImage) {
           onMouseLeave={() => handleMouseLeave()}
           layout="fill"
         />
-      ) : (
-        <div>Not Found Image</div>
       )}
     </>
   )

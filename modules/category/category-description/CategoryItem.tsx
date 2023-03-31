@@ -57,7 +57,7 @@ export default function CategoryItemView({ list }: IGridCategory) {
                   marginBottom: '15px',
                 }}
                 href="#"
-                onClick={() => router.push(`/goods`)}
+                onClick={() => router.push(`/goods/listgoods`)}
               >
                 {item.name}
               </a>
