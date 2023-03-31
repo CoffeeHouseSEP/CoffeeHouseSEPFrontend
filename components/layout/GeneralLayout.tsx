@@ -63,6 +63,12 @@ export const GeneralLayout = ({ children }: { children: React.ReactNode }) => {
           }
         }
       }
+    } else if (
+      router.pathname.includes('account') ||
+      router.pathname.includes('my-order') ||
+      router.pathname.includes('cart')
+    ) {
+      router.push('/')
     }
   }, [isLoggedIn])
 
