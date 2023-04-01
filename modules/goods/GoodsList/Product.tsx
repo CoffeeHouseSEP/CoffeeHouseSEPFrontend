@@ -29,7 +29,7 @@ const Product = ({ items }: PropProduct) => {
     >
       {items &&
         items.map((menuItem) => {
-          const { name, applyPrice, description } = menuItem
+          const { name, applyPrice } = menuItem
           return (
             <article key={menuItem.goodsId} style={{ display: 'grid', maxWidth: '25rem' }}>
               <div
@@ -64,7 +64,6 @@ const Product = ({ items }: PropProduct) => {
                   <h4 style={{ color: '#2c2891' }}>₹{Math.floor(applyPrice) * 10}</h4>
                 </header>
               </div>
-              <p style={{ marginBottom: 0, paddingTop: '0.5rem' }}>{description}</p>
               <div
                 style={{
                   marginTop: '10px',

@@ -1,29 +1,27 @@
+import { Input } from '@/components'
 import { cityData, cityStore } from '@/components/mock-data/MockDataConstant'
 import { RecommendedDataType, RecommendedDataTypeStore } from '@/components/mock-data/MockDataType'
 import { CustomSlider } from '@/components/slider/Slider'
 import { apiRoute } from '@/constants/apiRoutes'
-import { useApiCall } from '@/hooks'
+import { useApiCall, useResponsive } from '@/hooks'
+import { themeValue } from '@/lib'
+import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { getMethod } from '@/services'
 import { CommonListResultType, NewItem } from '@/types'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { AiOutlineSend } from 'react-icons/ai'
 import { BsChevronRight, BsFillCalendar2DateFill } from 'react-icons/bs'
+import { useSelector } from 'react-redux'
 import { CardDestinations } from '../home-comps/card-destinations/CardDestinations'
 import { CardLocation } from '../home-comps/card-location/CardLocation'
 import ImageItem from '../news/Image/ImageItem'
 
 export const HomeContainer = () => {
+  const { darkTheme } = useSelector(GeneralSettingsSelector)
   const router = useRouter()
-  // const translate = useTranslationFunction()
-  // const [isHover, setIsHover] = useState<string>()
-  // const handleMouseEnter = (id: string | undefined) => {
-  //   setIsHover(id)
-  // }
-  // const handleMouseLeave = () => {
-  //   setIsHover('-1')
-  // }
-
+  const pixel = useResponsive()
   const newsList = useApiCall<CommonListResultType<NewItem>, String>({
     callApi: () =>
       getMethod({
@@ -35,7 +33,6 @@ export const HomeContainer = () => {
 
   useEffect(() => {
     newsList.setLetCall(true)
-    // getImage.setLetCall(true)
   }, [])
   return (
     <>
@@ -77,7 +74,12 @@ export const HomeContainer = () => {
         <div>
           <a href="https://activation.highlandscoffee.com.vn/">
             <div
-              style={{ width: '100%', height: '485px', position: 'relative', aspectRatio: '1/1' }}
+              style={{
+                width: pixel <= 1280 ? `${pixel}px` : '100%',
+                height: pixel <= 1280 ? `${pixel}px` : '485px',
+                position: 'relative',
+                aspectRatio: '1/1',
+              }}
             >
               <Image layout="fill" src="/asset/poster.png" />
             </div>
@@ -86,7 +88,12 @@ export const HomeContainer = () => {
         <div>
           <a href="https://activation.highlandscoffee.com.vn/">
             <div
-              style={{ width: '100%', height: '485px', position: 'relative', aspectRatio: '1/1' }}
+              style={{
+                width: pixel <= 1280 ? `${pixel}px` : '100%',
+                height: pixel <= 1280 ? `${pixel}px` : '485px',
+                position: 'relative',
+                aspectRatio: '1/1',
+              }}
             >
               <Image layout="fill" src="/asset/poster2.png" />
             </div>
@@ -96,30 +103,24 @@ export const HomeContainer = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: pixel <= 1280 ? '1fr ' : '1fr 1fr',
           position: 'relative',
         }}
       >
-        <div style={{ width: '100%', height: '459px', position: 'relative', aspectRatio: '1/1' }}>
-          <Image layout="fill" objectFit="cover" src="/asset/store.jpg" />
-        </div>
-        {/* <div
-          style={{
-            position: 'absolute',
-            fontSize: '2rem',
-            fontWeight: '1000',
-            top: '10%',
-            left: '20%',
-            color: '#fff',
-          }}
-        >
-          {' '}
-          QUÁN MỚI{' '}
-        </div> */}
         <div
           style={{
-            width: '100%',
-            height: '459px',
+            width: pixel <= 1280 ? `${pixel}px` : '100%',
+            height: pixel <= 1280 ? `${pixel}px` : '485px',
+            position: 'relative',
+            aspectRatio: '1/1',
+          }}
+        >
+          <Image layout="fill" objectFit="cover" src="/asset/store.jpg" />
+        </div>
+        <div
+          style={{
+            width: pixel <= 1000 ? `${pixel}px` : '100%',
+            height: pixel <= 1000 ? `${pixel}px` : '485px',
             position: 'relative',
             top: 0,
             bottom: 0,
@@ -127,7 +128,13 @@ export const HomeContainer = () => {
           }}
         >
           <Image layout="fill" objectFit="cover" src="/asset/News_Banner.jpg" />
-          <div style={{ position: 'absolute', top: 40, left: 100 }}>
+          <div
+            style={{
+              position: 'absolute',
+              top: pixel <= 500 ? 10 : 40,
+              left: pixel <= 500 ? 20 : 100,
+            }}
+          >
             <div
               style={{
                 display: 'flex',
@@ -196,7 +203,7 @@ export const HomeContainer = () => {
                     <h5
                       style={{
                         textTransform: 'uppercase',
-                        fontSize: '16px',
+                        fontSize: pixel <= 500 ? '13px' : '16px',
                         lineHeight: '24px',
                         fontWeight: 'bold',
                         maxHeight: '48px',
@@ -212,6 +219,30 @@ export const HomeContainer = () => {
                   </div>
                 </div>
               ))}
+            <div style={{ display: 'flex', gap: 0 }}>
+              <Input
+                style={{
+                  width: pixel <= 1280 ? 300 : 400,
+                  height: '100%',
+                  backgroundColor: themeValue[darkTheme].colors.background,
+                }}
+                placeholder="Send..."
+                type="email"
+              />
+              <div
+                style={{
+                  backgroundColor: '#53382c',
+                  display: 'flex',
+                  padding: 12,
+                  justifyContent: 'center',
+                  color: '#fff',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                }}
+              >
+                <AiOutlineSend style={{ marginRight: 10 }} /> <span>Gửi</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

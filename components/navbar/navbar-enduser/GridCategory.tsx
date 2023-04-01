@@ -28,7 +28,6 @@ export const GridCategory = ({ list, setHover, goodList }: IGridCategory) => {
     <div
       style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}
       onMouseLeave={() => setHover('')}
-      onClick={() => router.push('/menu')}
     >
       {list.map((item) => (
         <div style={{ width: '100%' }}>
@@ -44,6 +43,7 @@ export const GridCategory = ({ list, setHover, goodList }: IGridCategory) => {
             onMouseEnter={() => handleMouseEnter(item.name)}
             onMouseLeave={() => handleMouseLeave()}
             key={item.categoryId}
+            onClick={() => router.push('/menu')}
           >
             {item.name}
           </div>

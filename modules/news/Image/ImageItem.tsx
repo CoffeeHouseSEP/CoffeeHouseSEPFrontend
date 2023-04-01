@@ -52,7 +52,10 @@ export default function ImageItem({ id, altname }: IitemImage) {
           style={{
             scale: isHover === id ? '1.1' : '1',
             transform: 'linear',
-            objectFit: 'cover',
+            objectFit: 'contain',
+            width: '100%',
+            position: 'relative',
+            height: 'unset',
           }}
           alt={altname}
           src={`${imageResult.data.result.prefix}${imageResult.data.result.base64}`}
