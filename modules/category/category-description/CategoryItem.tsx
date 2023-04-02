@@ -78,7 +78,7 @@ export default function CategoryItemView({ list, goodList }: IGridCategory) {
                   <div
                     style={{
                       color: '#faebd7',
-                      fontSize: pixel <= 603 ? '14px' : '18px',
+                      fontSize: pixel <= 960 ? '14px' : '18px',
                       lineHeight: '26px',
                       fontWeight: 'bold',
                       marginBottom: '40px !important',
@@ -100,6 +100,7 @@ export default function CategoryItemView({ list, goodList }: IGridCategory) {
                           fontSize: '16px',
                           lineHeight: '24px',
                           border: '1px solid #fff',
+                          marginBottom: pixel <= 960 ? 'auto' : '0',
                         }}
                       >
                         KHÁM PHÁ THÊM
