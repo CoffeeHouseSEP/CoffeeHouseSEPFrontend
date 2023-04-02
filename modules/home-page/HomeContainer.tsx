@@ -184,7 +184,7 @@ export const HomeContainer = () => {
                       width: '120px',
                       height: '80px',
                       position: 'relative',
-                      aspectRatio: '1/1',
+                      aspectRatio: '1',
                       cursor: 'pointer',
                       transition: 'linear 1s',
                     }}

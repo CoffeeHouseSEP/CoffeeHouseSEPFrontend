@@ -47,7 +47,7 @@ export const CardGoods = ({ data }: CardGoodsProps) => {
             style: {
               aspectRatio: '1/1',
               cursor: 'pointer',
-              width: pixel <= 500 ? '40%' : '60%',
+              width: pixel <= 500 ? '40%' : '50%',
               height: '100%',
               background: '#fff',
               position: 'relative',

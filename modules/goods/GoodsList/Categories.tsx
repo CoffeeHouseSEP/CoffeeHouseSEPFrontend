@@ -1,3 +1,4 @@
+import { useResponsive } from '@/hooks'
 import { CategoryItem } from '@/types'
 
 interface PropCategory {
@@ -6,6 +7,7 @@ interface PropCategory {
   category?: CategoryItem[]
 }
 const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
+  const pixel = useResponsive()
   const handlefilterItems = (categoryId: number) => {
     filterItems(categoryId)
   }
@@ -24,7 +26,7 @@ const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
       <div
         style={{
           display: 'flex',
-          width: '100%',
+          width: pixel <= 380 ? '80%' : '100%',
           flexDirection: 'row',
           alignItems: 'center',
           backgroundColor: '#333',
@@ -37,7 +39,7 @@ const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
           style={{
             background: !categoryId ? '#2c2891' : 'transparent',
             borderColor: 'transparent',
-            fontSize: '1rem',
+            fontSize: pixel <= 380 ? '0.6rem' : '1rem',
             textTransform: 'capitalize',
             margin: '0 0.5rem',
             letterSpacing: '1px',
@@ -58,7 +60,7 @@ const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
                   style={{
                     background: categoryId === category.categoryId ? '#2c2891' : 'transparent',
                     borderColor: 'transparent',
-                    fontSize: '1rem',
+                    fontSize: pixel <= 380 ? '0.6rem' : '1rem',
                     textTransform: 'capitalize',
                     margin: '0 0.5rem',
                     letterSpacing: '1px',

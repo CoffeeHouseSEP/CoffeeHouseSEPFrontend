@@ -100,6 +100,7 @@ export default function GoodsDetail() {
             <div
               style={{
                 aspectRatio: '1/1',
+                width: '200px',
                 cursor: 'pointer',
                 position: 'relative',
                 background: '#ffffff',

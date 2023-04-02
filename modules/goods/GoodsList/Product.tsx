@@ -22,8 +22,8 @@ const Product = ({ items }: PropProduct) => {
         margin: '0 auto',
         maxWidth: '1170px',
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr 1fr 1fr',
-        gap: '3rem 2rem',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px,1fr)',
+        gap: '2rem 1rem',
         justifyItems: 'center',
       }}
     >

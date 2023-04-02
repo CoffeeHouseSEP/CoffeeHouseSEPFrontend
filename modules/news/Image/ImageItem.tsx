@@ -51,17 +51,13 @@ export default function ImageItem({ id, altname }: IitemImage) {
         <Image
           style={{
             scale: isHover === id ? '1.1' : '1',
-            transform: 'linear',
-            objectFit: 'contain',
-            width: '100%',
-            position: 'relative',
-            height: 'unset',
           }}
           alt={altname}
           src={`${imageResult.data.result.prefix}${imageResult.data.result.base64}`}
           onMouseEnter={() => handleMouseEnter(id)}
           onMouseLeave={() => handleMouseLeave()}
           layout="fill"
+          objectFit="cover"
         />
       )}
     </>
