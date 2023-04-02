@@ -3,11 +3,13 @@ import { useApiCall, useTranslationFunction } from '@/hooks'
 import { getMethod } from '@/services'
 import { CommonListResultType } from '@/types'
 import { BranchResponse } from '@/types/branch/branch'
-import { useEffect } from 'react'
-import { AiTwotonePhone, AiOutlineWifi, AiFillCreditCard } from 'react-icons/ai'
+import { useEffect, useRef } from 'react'
+import { AiFillCreditCard, AiOutlineWifi, AiTwotonePhone } from 'react-icons/ai'
+import MapGL, { Marker } from 'react-map-gl'
 import { toast } from 'react-toastify'
 
 export default function Store() {
+  const mapRef = useRef<any>(null)
   const translate = useTranslationFunction()
 
   //   const [page, setPage] = useState<number>(1)
@@ -27,6 +29,13 @@ export default function Store() {
   useEffect(() => {
     setLetCall(true)
   }, [])
+
+  const test: any = [
+    {
+      lat: 21.03113338597627,
+      lg: 105.8056575571521,
+    },
+  ]
   return (
     <>
       {!loading && (
@@ -37,6 +46,7 @@ export default function Store() {
             margin: '0 auto',
             display: 'flex',
             alignItems: 'center',
+            overflow: 'hidden',
           }}
         >
           <div>
@@ -141,7 +151,30 @@ export default function Store() {
               </div>
             </div>
           </div>
-          <div>MAP</div>
+          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            <MapGL
+              maxTileCacheSize={1024}
+              onLoad={() => {
+                mapRef.current?.resize()
+              }}
+              ref={mapRef}
+              initialViewState={{
+                latitude: 21.0139401,
+                longitude: 105.78423989999999,
+                zoom: 13,
+                bearing: 0,
+                pitch: 0,
+              }}
+              style={{ width: '100%', height: '439px', top: 0 }}
+              mapStyle="mapbox://styles/ducmanh250801/clfzl5vke01cl01pegtxsooyx"
+              mapboxAccessToken="pk.eyJ1IjoiZHVjbWFuaDI1MDgwMSIsImEiOiJjbGZzaGhwMDUwNjNpM2tvYTh3Yjk0eThrIn0.3HrzpcTTMgvFwLZzgRGuzw"
+            >
+              {test &&
+                test?.map((data: any, index: any) => (
+                  <Marker key={index} latitude={data.lat} longitude={data.lg} />
+                ))}
+            </MapGL>
+          </div>
         </div>
       )}
     </>

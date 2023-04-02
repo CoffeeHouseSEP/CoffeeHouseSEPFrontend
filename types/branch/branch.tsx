@@ -7,8 +7,8 @@ export interface BranchResponse {
   phoneNumber: string
   description: string
   branchManagerId: string
-  longitude: string
-  latitude: string
+  longitude: number
+  latitude: number
   status: 0 | 1
   createdDate: string
   cancelledDate: string
@@ -21,8 +21,8 @@ export interface BranchRequest {
   phoneNumber: string
   description: string
   branchManagerId: string
-  longitude: string
-  latitude: string
+  longitude: number
+  latitude: number
   status: 0 | 1
   createdDate: string
   cancelledDate: string
