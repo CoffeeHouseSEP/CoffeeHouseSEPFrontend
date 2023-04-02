@@ -65,7 +65,7 @@ export const Menu = () => {
   let menuList: MenuItem[] = [
     {
       label: 'QUÁN CÀ PHÊ',
-      link: '/stores',
+      link: '/store/stores',
     },
     {
       label: 'THỰC ĐƠN',

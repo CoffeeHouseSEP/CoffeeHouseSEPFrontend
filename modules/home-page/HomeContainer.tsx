@@ -174,7 +174,6 @@ export const HomeContainer = () => {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
                     margin: '2px 0',
                     cursor: 'pointer',
                   }}

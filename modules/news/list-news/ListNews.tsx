@@ -46,6 +46,7 @@ export default function ListNews() {
         total={news.data?.result?.totalRows || 0}
         onChange={(number) => setPage(number)}
         page={page}
+        pageSize={6}
         paginationStyle={{
           marginTop: 20,
           marginBottom: 20,

@@ -217,7 +217,7 @@ export default function GoodsDetail() {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            width: pixel <= 1280 ? '60%' : '400px',
+            width: pixel <= 1280 ? '100%' : '400px',
             height: '100%',
             margin: '0 auto',
           }}
