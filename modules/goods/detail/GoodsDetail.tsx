@@ -121,6 +121,7 @@ export default function GoodsDetail() {
                 lineHeight: '24px',
                 color: ' #53382c',
                 fontWeight: 'normal',
+                width: pixel <= 980 ? '100%' : '50%',
               }}
             >
               {goodDetail?.description}
