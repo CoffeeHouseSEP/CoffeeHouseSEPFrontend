@@ -6,7 +6,7 @@ export default function AboutUs() {
   const pixel = useResponsive()
   return (
     <div>
-      <div style={{ display: 'flex', flexDirection: pixel <= 980 ? 'column' : 'row' }}>
+      <div style={{ display: 'flex', flexDirection: pixel <= 960 ? 'column' : 'row' }}>
         <div
           style={{
             width: '100%',
@@ -47,7 +47,7 @@ export default function AboutUs() {
             <p>
               <div style={{ fontSize: 18 }}>CÂU CHUYỆN NÀY LÀ CỦA CHÚNG MÌNH</div>
             </p>
-            <div style={{ width: pixel <= 980 ? '100%' : '50%', margin: '0 auto' }}>
+            <div style={{ width: pixel <= 960 ? '100%' : '50%', margin: '0 auto' }}>
               <div style={{ fontFamily: 'Roboto,sans-serif' }}>
                 <div style={{ fontSize: 16 }}>
                   <div style={{ lineHeight: '115%' }}>
@@ -99,7 +99,7 @@ export default function AboutUs() {
           </a>
         </div>
       </div>
-      <div style={{ display: 'flex', flexDirection: pixel <= 980 ? 'column' : 'row' }}>
+      <div style={{ display: 'flex', flexDirection: pixel <= 960 ? 'column' : 'row' }}>
         <div className="img lazy-start fadeIn" style={{ width: '100%' }}>
           <a href="https://activation.highlandscoffee.com.vn/">
             <div
@@ -149,7 +149,7 @@ export default function AboutUs() {
             <p>
               <div style={{ fontSize: 18 }}>DỊCH VỤ NÀY LÀ CỦA CHÚNG MÌNH</div>
             </p>
-            <div style={{ width: pixel <= 980 ? '100%' : '50%', margin: '0 auto' }}>
+            <div style={{ width: pixel <= 960 ? '100%' : '50%', margin: '0 auto' }}>
               <div style={{ fontFamily: 'Roboto,sans-serif' }}>
                 <div style={{ fontSize: 16 }}>
                   <div style={{ lineHeight: '115%' }}>
