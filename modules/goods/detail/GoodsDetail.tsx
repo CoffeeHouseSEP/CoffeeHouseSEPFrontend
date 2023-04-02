@@ -79,7 +79,7 @@ export default function GoodsDetail() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            flexDirection: pixel <= 1280 ? 'column' : 'row',
+            flexDirection: pixel <= 980 ? 'column' : 'row',
           }}
         >
           <div>
