@@ -1,8 +1,10 @@
-import { InternalLayout } from '@/components/layout/InternalLayout'
 import { useRoleSwitch } from '@/hooks'
 import { BranchDetail } from '@/modules/branch/detail'
+import dynamic from 'next/dynamic'
 import { ReactElement } from 'react'
 import { NextPageWithLayout } from '../../_app'
+
+const InternalLayout = dynamic(() => import('@/components/layout/InternalLayout'), { ssr: false })
 
 const BranchsDetail: NextPageWithLayout = () => {
   return useRoleSwitch(<BranchDetail />)

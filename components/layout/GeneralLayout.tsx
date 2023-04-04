@@ -37,7 +37,7 @@ export const GeneralLayout = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (!!isLoggedIn) {
       if (router.pathname.includes('account')) {
         if (cookies.role === 'BRANCH_MANAGER' || cookies.role === 'ADMIN') {
           router.push('/settings')
