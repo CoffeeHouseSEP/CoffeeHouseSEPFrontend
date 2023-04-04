@@ -1,5 +1,7 @@
+import { ROLE_COOKIE } from '@/constants/auth'
 import { themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
+import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { Backdrop } from '../backdrop'
 import { AccountInformation } from './AccountInformation'
@@ -23,13 +25,12 @@ interface SidebarList {
 
 export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
   const { darkTheme } = useSelector(GeneralSettingsSelector)
-  const sidebar: SidebarList[] = [
+  const [cookies] = useCookies([ROLE_COOKIE])
+  let sidebar: SidebarList[] = [
     {
       mainItem: { label: 'Dashboard', path: '/admin', icon: '' },
     },
-    {
-      mainItem: { label: 'BranchManagement', path: '/admin/branch/management', icon: '' },
-    },
+
     {
       mainItem: { label: 'UserManagement', path: '/admin/user/management', icon: '' },
     },
@@ -43,6 +44,15 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
       mainItem: { label: 'NewsManagement', path: '/admin/news/management', icon: '' },
     },
   ]
+
+  if (cookies.role === 'ADMIN') {
+    sidebar = [
+      ...sidebar,
+      {
+        mainItem: { label: 'BranchManagement', path: '/admin/branch/management', icon: '' },
+      },
+    ]
+  }
 
   return (
     <>

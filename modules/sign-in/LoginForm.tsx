@@ -40,10 +40,7 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
       if (data.role === 'USER') {
         router.push('/')
       }
-      if (data.role === 'BRANCH_MANAGER') {
-        router.push('/branch')
-      }
-      if (data.role === 'ADMIN') {
+      if (data.role === 'ADMIN' || data.role === 'BRANCH_MANAGER') {
         router.push('/admin')
       }
       dispatch(setIsLoggedIn(true))
