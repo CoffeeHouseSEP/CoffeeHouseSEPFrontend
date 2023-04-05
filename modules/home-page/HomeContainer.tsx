@@ -120,7 +120,7 @@ export const HomeContainer = () => {
         <div
           style={{
             width: pixel <= 1000 ? `${pixel}px` : '100%',
-            height: pixel <= 1000 ? `${pixel}px` : '485px',
+            height: pixel <= 380 ? '380px' : '485px',
             position: 'relative',
             top: 0,
             bottom: 0,
@@ -131,7 +131,7 @@ export const HomeContainer = () => {
           <div
             style={{
               position: 'absolute',
-              top: pixel <= 500 ? 10 : 40,
+              top: pixel <= 500 ? 0 : 40,
               left: pixel <= 500 ? 20 : 100,
             }}
           >
@@ -181,8 +181,8 @@ export const HomeContainer = () => {
                 >
                   <div
                     style={{
-                      width: '120px',
-                      height: '80px',
+                      width: pixel <= 380 ? '80px' : '120px',
+                      height: pixel <= 380 ? '60px' : '80px',
                       position: 'relative',
                       aspectRatio: '1',
                       cursor: 'pointer',
@@ -202,16 +202,23 @@ export const HomeContainer = () => {
                     <h5
                       style={{
                         textTransform: 'uppercase',
-                        fontSize: pixel <= 500 ? '13px' : '16px',
-                        lineHeight: '24px',
+                        fontSize: pixel <= 380 ? '10px' : '16px',
+                        lineHeight: pixel <= 380 ? '16px' : '24px',
                         fontWeight: 'bold',
                         maxHeight: '48px',
+                        width: pixel <= 380 ? '60%' : '100%',
                         overflow: 'hidden',
                       }}
                     >
                       {item.title}
                     </h5>
-                    <span style={{ color: '#666666', fontSize: '12px', lineHeight: '21px' }}>
+                    <span
+                      style={{
+                        color: '#666666',
+                        fontSize: pixel <= 380 ? '10px' : '12px',
+                        lineHeight: '21px',
+                      }}
+                    >
                       <BsFillCalendar2DateFill style={{ marginRight: '10px' }} />
                       {item?.createdDate.replaceAll(':00.000+00:00', '')}
                     </span>
@@ -221,7 +228,7 @@ export const HomeContainer = () => {
             <div style={{ display: 'flex', gap: 0 }}>
               <Input
                 style={{
-                  width: pixel <= 1280 ? 300 : 400,
+                  width: pixel <= 380 ? 200 : 400,
                   height: '100%',
                   backgroundColor: themeValue[darkTheme].colors.background,
                 }}

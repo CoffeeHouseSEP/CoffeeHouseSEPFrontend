@@ -21,6 +21,7 @@ export default function Store() {
         toast.error(translate(message))
       }
     },
+    preventLoadingGlobal: true,
   })
   const { data, loading, setLetCall } = result
   const numberOfStore = data?.result.data.length

@@ -29,6 +29,7 @@ export default function GoodsDetail() {
     handleError(status, message) {
       toast.error(translate(message))
     },
+    preventLoadingGlobal: true,
   })
 
   const setQuantity = (id: number) => {
@@ -55,6 +56,7 @@ export default function GoodsDetail() {
     handleError(status, message) {
       toast.error(translate(message))
     },
+    preventLoadingGlobal: true,
   })
 
   useEffect(() => {
@@ -63,6 +65,9 @@ export default function GoodsDetail() {
       newsList.setLetCall(true)
     }
   }, [id])
+  const addToCartHandler = () => {
+    router.push(`/cart/${id}?qty=${qty}`)
+  }
   const goodList = newsList.data?.result?.data
   return (
     <div
@@ -147,6 +152,7 @@ export default function GoodsDetail() {
                   top: '50%',
                   transform: 'translate(-50%, -50%)',
                 }}
+                onClick={addToCartHandler}
               >
                 ĐẶT MUA NGAY
               </div>
@@ -206,7 +212,7 @@ export default function GoodsDetail() {
               <span style={{ marginRight: ' 5px' }}> Price :</span>
               {activeSize === 1
                 ? goodDetail?.applyPrice
-                : goodDetail?.applyPrice && goodDetail.applyPrice + 9}
+                : goodDetail?.applyPrice && goodDetail.applyPrice + 6}
               ${' '}
             </h4>
           </div>

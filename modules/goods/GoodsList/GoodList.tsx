@@ -29,6 +29,7 @@ export default function GoodList() {
     handleError(status, message) {
       toast.error(translate(message))
     },
+    preventLoadingGlobal: true,
   })
 
   const goods = useApiCall<CommonListResultType<GoodsRequest>, String>({
