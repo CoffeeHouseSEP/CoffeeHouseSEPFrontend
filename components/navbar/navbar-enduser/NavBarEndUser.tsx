@@ -1,5 +1,6 @@
 import { Dropdown } from '@/components/dropdown'
 import { SignOutButton } from '@/components/sidebar/SignOutButton'
+import { useResponsive } from '@/hooks'
 import { themeValue } from '@/lib'
 import { authenticationSelector } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
@@ -11,8 +12,10 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { Input } from '../../form'
 import { Menu } from './Menu'
+import { MenuMobile } from './MenuMobile'
 
 export const NavBarEndUser = () => {
+  const pixel = useResponsive()
   const [search, setSearch] = useState<string>('')
   const { darkTheme } = useSelector(GeneralSettingsSelector)
   const { isLoggedIn } = useSelector(authenticationSelector)
@@ -82,7 +85,7 @@ export const NavBarEndUser = () => {
               styleType="light"
               isCloseSelect
             />
-            <div style={{ display: 'flex', gap: 0 }}>
+            <div style={{ display: pixel <= 980 ? 'none' : 'flex', gap: 0 }}>
               <Input
                 value={search}
                 onChange={(e) => {
@@ -118,16 +121,22 @@ export const NavBarEndUser = () => {
               </div>
             )}
           </div>
-          <div
-            style={{
-              height: '50%',
-              display: 'flex',
-              gap: 15,
-              alignItems: 'end',
-            }}
-          >
-            <Menu />
-          </div>
+          {pixel <= 980 ? (
+            <div style={{ position: 'absolute', top: 65, right: 40 }}>
+              <MenuMobile />
+            </div>
+          ) : (
+            <div
+              style={{
+                height: '50%',
+                display: 'flex',
+                gap: 15,
+                alignItems: 'end',
+              }}
+            >
+              <Menu />
+            </div>
+          )}
         </div>
       </div>
     </div>

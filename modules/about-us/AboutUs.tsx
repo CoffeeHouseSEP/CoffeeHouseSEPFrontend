@@ -1,17 +1,19 @@
+import { useResponsive } from '@/hooks'
 import Image from 'next/image'
 import React from 'react'
 
 export default function AboutUs() {
+  const pixel = useResponsive()
   return (
     <div>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', flexDirection: pixel <= 960 ? 'column' : 'row' }}>
         <div
           style={{
-            width: '50%',
+            width: '100%',
             background: 'linear-gradient(to right, #abbaab, #ffffff)',
             maxWidth: '1200px',
-            padding: '0 15px',
             textAlign: 'center',
+            padding: 10,
           }}
         >
           <div
@@ -45,7 +47,7 @@ export default function AboutUs() {
             <p>
               <div style={{ fontSize: 18 }}>CÂU CHUYỆN NÀY LÀ CỦA CHÚNG MÌNH</div>
             </p>
-            <div style={{ width: '50%', margin: '0 auto' }}>
+            <div style={{ width: pixel <= 960 ? '100%' : '50%', margin: '0 auto' }}>
               <div style={{ fontFamily: 'Roboto,sans-serif' }}>
                 <div style={{ fontSize: 16 }}>
                   <div style={{ lineHeight: '115%' }}>
@@ -87,7 +89,7 @@ export default function AboutUs() {
           </div>
         </div>
 
-        <div className="img lazy-start fadeIn" style={{ width: '50%' }}>
+        <div className="img lazy-start fadeIn" style={{ width: '100%' }}>
           <a href="https://activation.highlandscoffee.com.vn/">
             <div
               style={{ width: '100%', height: '374px', position: 'relative', aspectRatio: '1/1' }}
@@ -97,8 +99,8 @@ export default function AboutUs() {
           </a>
         </div>
       </div>
-      <div style={{ display: 'flex' }}>
-        <div className="img lazy-start fadeIn" style={{ width: '50%' }}>
+      <div style={{ display: 'flex', flexDirection: pixel <= 960 ? 'column' : 'row' }}>
+        <div className="img lazy-start fadeIn" style={{ width: '100%' }}>
           <a href="https://activation.highlandscoffee.com.vn/">
             <div
               style={{ width: '100%', height: '374px', position: 'relative', aspectRatio: '1/1' }}
@@ -109,10 +111,10 @@ export default function AboutUs() {
         </div>
         <div
           style={{
-            width: '50%',
+            padding: 10,
+            width: '100%',
             background: 'linear-gradient(to right, #f2994a, #f2c94c)',
             maxWidth: '1200px',
-            padding: '0 15px',
             textAlign: 'center',
           }}
         >
@@ -147,7 +149,7 @@ export default function AboutUs() {
             <p>
               <div style={{ fontSize: 18 }}>DỊCH VỤ NÀY LÀ CỦA CHÚNG MÌNH</div>
             </p>
-            <div style={{ width: '50%', margin: '0 auto' }}>
+            <div style={{ width: pixel <= 960 ? '100%' : '50%', margin: '0 auto' }}>
               <div style={{ fontFamily: 'Roboto,sans-serif' }}>
                 <div style={{ fontSize: 16 }}>
                   <div style={{ lineHeight: '115%' }}>

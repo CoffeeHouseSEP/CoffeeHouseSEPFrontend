@@ -36,7 +36,6 @@ export const Menu = () => {
   useEffect(() => {
     goods.setLetCall(true)
   }, [])
-
   const [isHover, setHover] = useState<string>('')
   const [menuHover, setMenuHover] = useState<string>('')
   const { darkTheme } = useSelector(GeneralSettingsSelector)
@@ -65,7 +64,7 @@ export const Menu = () => {
   let menuList: MenuItem[] = [
     {
       label: 'QUÁN CÀ PHÊ',
-      link: '/stores',
+      link: '/store/stores',
     },
     {
       label: 'THỰC ĐƠN',
@@ -127,7 +126,6 @@ export const Menu = () => {
       cursor: 'pointer',
     }
   }
-
   return (
     <>
       {menuList.map((item) => {
@@ -177,6 +175,7 @@ export const Menu = () => {
         <div
           style={{
             position: 'fixed',
+            transition: 'linear 1s',
             top: 0,
             left: 0,
             right: 0,

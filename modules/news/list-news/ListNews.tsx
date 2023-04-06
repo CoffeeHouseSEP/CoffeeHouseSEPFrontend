@@ -19,6 +19,7 @@ export default function ListNews() {
     handleSuccess(message, data) {
       setNewList(data.data)
     },
+    preventLoadingGlobal: true,
   })
   const { loading, setLetCall } = news
   useEffect(() => {
@@ -34,9 +35,9 @@ export default function ListNews() {
         <div
           style={{
             display: 'grid',
-            gap: '2rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px,1fr)',
+            gap: '2rem 1rem',
             marginBottom: '4rem',
-            gridTemplateColumns: 'auto auto auto',
           }}
         >
           <NewsItem list={newList} />
@@ -46,6 +47,7 @@ export default function ListNews() {
         total={news.data?.result?.totalRows || 0}
         onChange={(number) => setPage(number)}
         page={page}
+        pageSize={6}
         paginationStyle={{
           marginTop: 20,
           marginBottom: 20,

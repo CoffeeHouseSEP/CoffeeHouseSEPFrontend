@@ -9,9 +9,10 @@ import { useCookies } from 'react-cookie'
 import { toast } from 'react-toastify'
 
 interface IitemImage {
-  id: string
+  id?: string
+  altname?: string
 }
-export default function ImageItem({ id }: IitemImage) {
+export default function ImageItem({ id, altname }: IitemImage) {
   const [isHover, setIsHover] = useState<string>()
   const handleMouseEnter = (id: string | undefined) => {
     setIsHover(id)
@@ -46,21 +47,18 @@ export default function ImageItem({ id }: IitemImage) {
 
   return (
     <>
-      {!!imageResult.data?.result.base64 ? (
+      {!!imageResult.data?.result.base64 && (
         <Image
           style={{
             scale: isHover === id ? '1.1' : '1',
-            transform: 'linear',
-            objectFit: 'contain',
           }}
-          alt="Tet1"
+          alt={altname}
           src={`${imageResult.data.result.prefix}${imageResult.data.result.base64}`}
           onMouseEnter={() => handleMouseEnter(id)}
           onMouseLeave={() => handleMouseLeave()}
           layout="fill"
+          objectFit="cover"
         />
-      ) : (
-        <div>Not Found Image</div>
       )}
     </>
   )

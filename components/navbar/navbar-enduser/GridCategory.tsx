@@ -15,20 +15,19 @@ interface IGridCategory {
 export const GridCategory = ({ list, setHover, goodList }: IGridCategory) => {
   const router = useRouter()
   const { darkTheme } = useSelector(GeneralSettingsSelector)
-  const [isHover, setIsHover] = useState<number>()
+  const [isHover, setIsHover] = useState<string>()
 
-  const handleMouseEnter = (id: number) => {
+  const handleMouseEnter = (id: string) => {
     setIsHover(id)
   }
   const handleMouseLeave = () => {
-    setIsHover(-1)
+    setIsHover('-1')
   }
 
   return (
     <div
       style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}
       onMouseLeave={() => setHover('')}
-      onClick={() => router.push('/menu')}
     >
       {list.map((item) => (
         <div style={{ width: '100%' }}>
@@ -37,14 +36,14 @@ export const GridCategory = ({ list, setHover, goodList }: IGridCategory) => {
               width: '100%',
               padding: '10px 10px',
               fontWeight: 'bold',
-              color:
-                isHover === item.categoryId ? '#fff' : themeValue[darkTheme].colors.orangeHighLand,
+              color: isHover === item.name ? '#fff' : themeValue[darkTheme].colors.orangeHighLand,
               transition: 'linear 1s',
               cursor: 'pointer',
             }}
-            onMouseEnter={() => handleMouseEnter(item.categoryId)}
+            onMouseEnter={() => handleMouseEnter(item.name)}
             onMouseLeave={() => handleMouseLeave()}
             key={item.categoryId}
+            onClick={() => router.push('/menu')}
           >
             {item.name}
           </div>
@@ -60,10 +59,15 @@ export const GridCategory = ({ list, setHover, goodList }: IGridCategory) => {
                   cursor: 'pointer',
                   fontSize: '14px',
                   lineHeight: '22px',
+                  transform: isHover === filteredName.goodsId ? 'translateX(2%)' : '',
                 }}
                 key={filteredName.id}
+                onMouseEnter={() => handleMouseEnter(filteredName.goodsId)}
+                onMouseLeave={() => handleMouseLeave()}
+                onClick={() => router.push(`/goods/${filteredName.goodsId}`)}
               >
-                <AiFillCaretRight /> {filteredName.name}
+                {isHover === filteredName.goodsId ? <AiFillCaretRight /> : ''}
+                {filteredName.name}
               </div>
             ))}
         </div>
