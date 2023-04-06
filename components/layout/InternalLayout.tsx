@@ -1,4 +1,4 @@
-import { useResponsive } from '@/hooks'
+import { useResponsive, useRoleSwitch } from '@/hooks'
 import { LoginForm } from '@/modules/sign-in'
 import { authenticationSelector } from '@/redux/authentication'
 import { useRouter } from 'next/router'
@@ -8,7 +8,7 @@ import { Modal } from '../modal'
 import { NavbarInternal } from '../navbar'
 import { SideBar } from '../sidebar'
 
-export const InternalLayout = ({
+const InternalLayout = ({
   children,
   useNavbar,
 }: {
@@ -52,8 +52,10 @@ export const InternalLayout = ({
           marginBottom: '1rem',
         }}
       >
-        <div style={{ padding: '0px 24px' }}>{children}</div>
+        <div style={{ padding: '0px 24px' }}>{useRoleSwitch(children)}</div>
       </div>
     </>
   )
 }
+
+export default InternalLayout

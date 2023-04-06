@@ -180,32 +180,6 @@ export const BranchDetail = () => {
             handleSetTypeRead={handleSetTypeRead}
           />
         )}
-        {/* <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', gap: 10 }}>
-            {type === 'read' ? (
-              <>
-                <Button onClick={handleSetTypeUpdate}>{editLabel}</Button>
-                <Button
-                  color="warning"
-                  onClick={() => {
-                    router.push('/admin/category/management')
-                  }}
-                >
-                  {cancelLabel}
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button color="primary" onClick={callUpdate} disabled={updateResult.loading}>
-                  {updateResult.loading ? <Loading /> : <>{saveLabel}</>}
-                </Button>
-                <Button color="warning" onClick={handleSetTypeRead} disabled={updateResult.loading}>
-                  {cancelLabel}
-                </Button>
-              </>
-            )}
-          </div>
-        </div> */}
       </div>
       <div style={{ paddingTop: 20 }}>
         <BranchForm

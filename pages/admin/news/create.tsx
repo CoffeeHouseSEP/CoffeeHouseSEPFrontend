@@ -1,10 +1,13 @@
-import { InternalLayout } from '@/components/layout/InternalLayout'
+import { useRoleSwitch } from '@/hooks'
 import NewCreate from '@/modules/news/create/CreateNew'
+import dynamic from 'next/dynamic'
 import { ReactElement } from 'react'
 import { NextPageWithLayout } from '../../_app'
 
+const InternalLayout = dynamic(() => import('@/components/layout/InternalLayout'), { ssr: false })
+
 const NewsCreate: NextPageWithLayout = () => {
-  return <NewCreate />
+  return useRoleSwitch(<NewCreate />)
 }
 
 NewsCreate.getLayout = function getLayout(page: ReactElement) {

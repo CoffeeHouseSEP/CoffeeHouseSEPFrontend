@@ -61,6 +61,7 @@ const initialState: ShareStoreTypes = {
     signIn: 'Sign in',
     forgotPassword: 'Forgot password',
     internalAccount: 'Login with internal account',
+    forbidden: 'Access denied',
   },
 }
 
