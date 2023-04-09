@@ -21,14 +21,14 @@ export default function ListNews() {
     },
     preventLoadingGlobal: true,
   })
-  const { loading, setLetCall } = news
+  const { setLetCall } = news
   useEffect(() => {
     setLetCall(true)
   }, [page])
   return (
     <div>
       <div style={{ textAlign: 'center', margin: '10rem 0 4rem 0' }}>
-        <h1>{loading ? 'loading...' : 'TIN TỨC'}</h1>
+        <h1>NEWS</h1>
         <div style={{ width: '8rem', height: '0.25rem', background: '#333', margin: '0 auto' }} />
       </div>
       <section style={{ width: '75vw', maxWidth: '90vw', margin: '2rem auto' }}>

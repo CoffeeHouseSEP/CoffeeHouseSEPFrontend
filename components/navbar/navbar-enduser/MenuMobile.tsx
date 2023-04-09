@@ -223,7 +223,7 @@ export const MenuMobile = () => {
                   style={{
                     height: '50px',
                     aspectRatio: '1/1',
-                    display: 'flex',
+                    display: menu ? 'flex' : 'none',
                     alignItems: 'center',
                     justifyContent: 'center',
                     cursor: 'pointer',
