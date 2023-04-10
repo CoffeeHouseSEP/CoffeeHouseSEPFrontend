@@ -48,5 +48,6 @@ export const apiRoute = {
     completeRequest: '/request/complete-request',
     cancelRequest: '/request/cancel-request',
     approveRequest: '/request/approve-request',
+    requestDetailRequest: '/request-detail/get-list-request-detail-by-request-id',
   },
 }
