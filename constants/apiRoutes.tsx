@@ -40,4 +40,13 @@ export const apiRoute = {
     updateProfile: '/user-internal/update-user-profile',
     changePass: '/user-internal/change-password',
   },
+  request: {
+    getRequest: '/request/get-list-request',
+    addRequest: '/request/add-new-request',
+    updateRequest: '/request/update-request',
+    sendRequest: '/request/send-request',
+    completeRequest: '/request/complete-request',
+    cancelRequest: '/request/cancel-request',
+    approveRequest: '/request/approve-request',
+  },
 }

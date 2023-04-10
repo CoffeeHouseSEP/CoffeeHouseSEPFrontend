@@ -51,6 +51,17 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
       {
         mainItem: { label: 'BranchManagement', path: '/admin/branch/management', icon: '' },
       },
+      {
+        mainItem: { label: 'RequestManagement', path: '/branch/request/management', icon: '' },
+      },
+    ]
+  }
+  if (cookies.role === 'BRANCH_MANAGER') {
+    sidebar = [
+      ...sidebar,
+      {
+        mainItem: { label: 'RequestManagement', path: '/branch/request/management', icon: '' },
+      },
     ]
   }
 
