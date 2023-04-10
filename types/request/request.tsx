@@ -16,6 +16,10 @@ export interface RequestBranchResponse {
   createdByName: string
   approvedByName: string
 }
+export interface RequestCancel {
+  requestId: string
+  cancelReason: string
+}
 
 export interface RequestBranchRequest {
   requestId: string
