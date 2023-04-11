@@ -1,6 +1,6 @@
 import Page404 from '@/components/404/Page404'
 import { apiRoute } from '@/constants/apiRoutes'
-import { useApiCall } from '@/hooks'
+import { useApiCall, useResponsive } from '@/hooks'
 import { getMethod } from '@/services'
 import { CommonListResultType, NewItem } from '@/types'
 import { useRouter } from 'next/router'
@@ -10,6 +10,7 @@ import { CiAlarmOn } from 'react-icons/ci'
 import ImageItem from '../Image/ImageItem'
 
 export default function DetailNew() {
+  const pixel = useResponsive()
   const router = useRouter()
   const id = router?.query?.id?.toString()
 
@@ -47,14 +48,13 @@ export default function DetailNew() {
   }
 
   return (
-    <div style={{ padding: '20px 150px' }}>
+    <div style={{ padding: pixel <= 980 ? '10px 10px' : '20px 150px' }}>
       <h1
         style={{
           fontSize: '24px',
           lineHeight: '32px',
           color: '#83382c',
           textTransform: 'uppercase',
-          display: 'block',
           fontWeight: 'bold',
         }}
       >
@@ -80,13 +80,12 @@ export default function DetailNew() {
 
       <div
         style={{
-          width: '800px',
-          height: '351px',
+          width: pixel <= 980 ? 'auto' : '50%',
+          height: pixel <= 980 ? 'auto' : '20%',
           position: 'relative',
           aspectRatio: '1/1',
           cursor: 'pointer',
           transition: 'linear 1s',
-          margin: '0 auto',
         }}
       >
         <ImageItem id={newDetail.newsId} />
@@ -113,8 +112,15 @@ export default function DetailNew() {
               listStyle: 'none',
               padding: '5px',
               cursor: 'pointer',
+              color: isHover === item?.newsId ? '#882106' : '#53382c',
+              transition: 'linear 0.5s',
+              fontSize: '15px',
+              lineHeight: '23px',
+              textOverflow: 'clip',
             }}
             onClick={() => router.push(`/news/${item.newsId}`)}
+            onMouseEnter={() => handleMouseEnter(item?.newsId)}
+            onMouseLeave={() => handleMouseLeave()}
           >
             <BsFillCaretRightFill style={{ color: '#333', padding: '2px 2px' }} /> {item.title}{' '}
             <span

@@ -28,6 +28,7 @@ export default function NewsItem({ list }: IPropNews) {
             boxShadow: '2px 2px 2px 2px #888888',
             overflow: 'hidden',
           }}
+          onClick={() => router.push(`/news/${item.newsId}`)}
           key={item.newsId}
         >
           <div

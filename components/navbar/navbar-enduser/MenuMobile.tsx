@@ -20,6 +20,13 @@ interface MenuItem {
 }
 
 export const MenuMobile = () => {
+  const [isHover1, setIsHover1] = useState<boolean>(false)
+  const handleMouseEnter = () => {
+    setIsHover1(true)
+  }
+  const handleMouseLeave = () => {
+    setIsHover1(false)
+  }
   const { isLoggedIn } = useSelector(authenticationSelector)
   // const { data, loading, setLetCall } = category
   const [menu, setMenu] = useState<Boolean>(false)
@@ -103,13 +110,15 @@ export const MenuMobile = () => {
     <div>
       <div
         style={{
-          color: '#fff',
-          backgroundColor: '#53382c',
+          color: isHover1 ? '#53382c' : '#ffffff',
+          backgroundColor: isHover1 ? '#ffffff' : '#53382c',
           width: 50,
           height: 50,
           position: 'relative',
           cursor: 'pointer',
         }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={() => setMenu(true)}
       >
         <div
@@ -118,8 +127,8 @@ export const MenuMobile = () => {
             top: '50%',
             left: '50%',
             transform: 'translateX(-50%)',
-            color: '#fff',
-            borderBottom: '3px solid #fff',
+            color: '#53382c',
+            borderBottom: isHover1 ? '3px solid #53382c ' : '3px solid #fff',
             width: '60%',
             margin: '0 auto',
           }}
@@ -130,8 +139,8 @@ export const MenuMobile = () => {
             top: '30%',
             left: '50%',
             transform: 'translateX(-50%)',
-            color: '#fff',
-            borderBottom: '3px solid #fff',
+            color: '#53382c',
+            borderBottom: isHover1 ? '3px solid #53382c ' : '3px solid #fff',
             width: '60%',
             margin: '0 auto',
           }}
@@ -149,22 +158,40 @@ export const MenuMobile = () => {
           Menu
         </span>
       </div>
-
+      <div
+        style={{
+          position: 'fixed',
+          width: '100%',
+          height: '100%',
+          display: menu ? 'block' : 'none',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          zIndex: 2,
+          cursor: 'pointer',
+        }}
+      />
       <div
         style={{
           background: '#DDDDDD',
           position: 'fixed',
-          width: menu ? '50%' : '0%',
+          width: menu ? '60%' : '0%',
           height: isLoggedIn ? '75%' : '60%',
           top: 0,
           right: 0,
           bottom: 0,
-          zIndex: 1,
-          transition: 'linear 0.5s',
+          zIndex: 3,
+          transition: 'all 1s',
         }}
       >
         <BiExit
-          style={{ fontSize: '40px', color: '#333', cursor: 'pointer' }}
+          style={{
+            fontSize: '40px',
+            color: '#333',
+            cursor: 'pointer',
+          }}
           onClick={() => setMenu(false)}
         />
         {menuList.map((item) => {
@@ -196,7 +223,7 @@ export const MenuMobile = () => {
                   style={{
                     height: '50px',
                     aspectRatio: '1/1',
-                    display: 'flex',
+                    display: menu ? 'flex' : 'none',
                     alignItems: 'center',
                     justifyContent: 'center',
                     cursor: 'pointer',
@@ -228,6 +255,7 @@ export const MenuMobile = () => {
                 lineHeight: '24px',
                 border: 'solid 1px rgba(0,0,0,0.2)',
                 cursor: 'pointer',
+                position: 'relative',
                 backgroundColor:
                   isHover === item.label || menuHover === item.label
                     ? themeValue[darkTheme].colors.brownHoverHighLand
