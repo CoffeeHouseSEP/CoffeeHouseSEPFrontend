@@ -232,7 +232,7 @@ export const HomeContainer = () => {
                   height: '100%',
                   backgroundColor: themeValue[darkTheme].colors.background,
                 }}
-                placeholder="Send..."
+                placeholder="Enter your email to receive information..."
                 type="email"
               />
               <div

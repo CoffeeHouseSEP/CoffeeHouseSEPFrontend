@@ -79,13 +79,12 @@ export default function Store() {
                   <div
                     style={{
                       padding: '20px',
-                      borderBottom: 'solid 1px #e7e7e7',
                       cursor: 'pointer',
                       transition: 'all 0.3s linear',
                     }}
                   >
                     {data?.result.data.map((item) => (
-                      <div style={{ marginBottom: '10px' }}>
+                      <div style={{ marginBottom: '10px', borderBottom: 'solid 1px #e7e7e7' }}>
                         <div
                           style={{
                             fontSize: '18px',
@@ -131,7 +130,7 @@ export default function Store() {
                           {' '}
                           <AiOutlineWifi /> Wifi Free
                         </div>
-                        <div>
+                        <div style={{ marginBottom: 15 }}>
                           {' '}
                           <AiFillCreditCard /> Payment by card
                         </div>
