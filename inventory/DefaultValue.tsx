@@ -22,6 +22,7 @@ export const DefaultUserRequest: UserRequest = {
 export const DefaultOrder: OrderRequest = {
   ordersId: '',
   customerId: '',
+  customerName: '',
   branchId: '',
   createdDate: '',
   totalPrice: 0,
