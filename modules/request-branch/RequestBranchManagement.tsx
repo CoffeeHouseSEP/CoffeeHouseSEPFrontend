@@ -1,17 +1,21 @@
-import { CustomTable, Pagination } from '@/components'
+import { Button, CustomTable, Pagination } from '@/components'
+import { FloatButton } from '@/components/button/FloatButton'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslationFunction } from '@/hooks'
+import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
 import { RequestBranchRequest } from '@/types/request/request'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { IoIosCreate } from 'react-icons/io'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-export const RequestManagement = () => {
+export const RequestBranchManagement = () => {
+  const router = useRouter()
   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
   const translate = useTranslationFunction()
 
@@ -39,6 +43,10 @@ export const RequestManagement = () => {
     setLetCall(true)
   }, [page])
 
+  const branchCreatePascal = useTranslation('RequestCreatePascal')
+  const handleRedirectCreate = () => {
+    router.push('/admin/request-branch/create')
+  }
   const dataField: ViewPointType[] = [
     {
       key: 'requestId',
@@ -83,10 +91,27 @@ export const RequestManagement = () => {
       <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
+        {breakPoint > 1 ? (
+          <Button onClick={handleRedirectCreate}>{branchCreatePascal}</Button>
+        ) : (
+          <FloatButton
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '60px',
+              aspectRatio: '1 / 1',
+            }}
+            onClick={handleRedirectCreate}
+          >
+            <IoIosCreate style={{ width: '50%', height: '50%' }} />
+          </FloatButton>
+        )}
       </div>
+
       <CustomTable
         idFiled="requestId"
-        detailPath="admin/request/"
+        detailPath="admin/request-branch/"
         header={dataField ?? []}
         body={data ? data.result.data : []}
         loading={loading}

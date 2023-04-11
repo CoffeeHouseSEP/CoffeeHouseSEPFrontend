@@ -21,7 +21,12 @@ interface IRequestForm {
   errorState?: Partial<RequestFailure>
 }
 
-export const RequestForm = ({ request, onchangeUserState, type, errorState }: IRequestForm) => {
+export const RequestBranchForm = ({
+  request,
+  onchangeUserState,
+  type,
+  errorState,
+}: IRequestForm) => {
   const router = useRouter()
   const { breakPoint } = useSelector(ShareStoreSelector)
   const translate = useTranslationFunction()
@@ -86,7 +91,7 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
       >
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
-            readOnly={type === 'read'}
+            readOnly
             value={request.requestId}
             label={requestIdLabel}
             onChange={(event) => {
@@ -101,7 +106,7 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
-            readOnly={type === 'read'}
+            readOnly
             value={request.branchId}
             label={branchIdLabel}
             onChange={(event) => {
@@ -116,7 +121,7 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
-            readOnly={type === 'read'}
+            readOnly
             value={request.createdBy}
             label={createdByLabel}
             onChange={(event) => {
@@ -146,7 +151,7 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
-            readOnly={type === 'read'}
+            readOnly
             value={request.createdDate}
             label={createdDateLabel}
             onChange={(event) => {
@@ -161,7 +166,7 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
-            readOnly={type === 'read'}
+            readOnly
             value={request.status}
             label={statusLabel}
             onChange={(event) => {

@@ -79,6 +79,13 @@ const initialState: ShareStoreTypes = {
     size: 'Size',
     orderDetailId: 'OrderDetail ID',
     goodsName: 'Goods Name',
+    branchName: 'Branch Name',
+    completedDate: 'CompletedDate',
+    cancelledDate: 'CancelledDate',
+    CompleteRequest: 'Completed Request',
+    Save: 'Save',
+    RequestCreatePascal: 'Create Request',
+    SendRequest: 'Send Request',
   },
 }
 
