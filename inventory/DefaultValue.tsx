@@ -3,6 +3,7 @@ import { BranchRequest } from '@/types/branch/branch'
 import { CategoryResponse } from '@/types/category/category'
 import { GoodsRequest } from '@/types/goods/goods'
 import { NewsRequest } from '@/types/news/news'
+import { RequestBranchRequest } from '@/types/request/request'
 
 export const DefaultCategory: CategoryResponse = {
   categoryId: '',
@@ -16,6 +17,28 @@ export const DefaultUserRequest: UserRequest = {
   phoneNumber: '',
   address: '',
   email: '',
+}
+export const DefaultRequest: RequestBranchRequest = {
+  requestId: '',
+  branchId: '',
+  createdBy: '',
+  createdDate: '',
+  status: '',
+  approvedBy: '',
+  approvedDate: '',
+  completedDate: '',
+  cancelledDate: '',
+  reason: '',
+  totalPrice: 0,
+  listRequestDetail: [
+    {
+      requestDetailId: '',
+      requestId: '',
+      goodsId: '',
+      quantity: 0,
+      applyPrice: 0,
+    },
+  ],
 }
 export const DefaultGoods: GoodsRequest = {
   goodsId: '',
