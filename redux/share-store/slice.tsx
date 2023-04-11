@@ -70,6 +70,15 @@ const initialState: ShareStoreTypes = {
     quantity: 'Quantity',
     ApproveRequest: 'Approve Request',
     CancelRequest: 'Cancel Request',
+    OrderManagement: 'Order Management',
+    ordersId: 'Orders ID',
+    customerId: 'Customer ID',
+    shippedDate: 'ShippedDate',
+    couponId: 'Coupon ID',
+    customerName: 'Customer Name',
+    size: 'Size',
+    orderDetailId: 'OrderDetail ID',
+    goodsName: 'Goods Name',
   },
 }
 

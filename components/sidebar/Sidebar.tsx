@@ -62,6 +62,9 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
       {
         mainItem: { label: 'RequestManagement', path: '/branch/request/management', icon: '' },
       },
+      {
+        mainItem: { label: 'OrderManagement', path: '/admin/orders/management', icon: '' },
+      },
     ]
   }
 

@@ -50,4 +50,10 @@ export const apiRoute = {
     approveRequest: '/request/approve-request',
     requestDetailRequest: '/request-detail/get-list-request-detail-by-request-id',
   },
+  order: {
+    getOrders: '/orders/get-list-orders',
+    approveOrders: '/orders/approve-orders',
+    cancelOrders: '/orders/cancel-orders',
+    orderDetail: '/order-detail/get-list-order-detail-by-order-id',
+  },
 }
