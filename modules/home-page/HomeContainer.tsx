@@ -69,7 +69,6 @@ export const HomeContainer = () => {
           numberDisplay={1}
         />
       </div>
-
       <div>
         <div>
           <a href="https://activation.highlandscoffee.com.vn/">
@@ -154,18 +153,19 @@ export const HomeContainer = () => {
                 TIN MỚI NHẤT
               </h2>
               <div>
-                <a
+                <div
                   style={{
                     textDecoration: 'underline',
                     display: 'flex',
                     alignItems: 'center',
                     fontSize: '13px',
                     fontWeight: 'bold',
+                    cursor: 'pointer',
                   }}
-                  href="news/listnews"
+                  onClick={() => router.push('/news/listnews')}
                 >
                   <span>Xem toàn bộ</span> <BsChevronRight />
-                </a>
+                </div>
               </div>
             </div>
             {newsList.data?.result &&
@@ -228,7 +228,7 @@ export const HomeContainer = () => {
             <div style={{ display: 'flex', gap: 0 }}>
               <Input
                 style={{
-                  width: pixel <= 380 ? 200 : 400,
+                  width: pixel <= 380 ? 200 : '100%',
                   height: '100%',
                   backgroundColor: themeValue[darkTheme].colors.background,
                 }}
