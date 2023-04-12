@@ -6,22 +6,22 @@ import { inputStyles } from '@/inventory'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
-import { RequestBranchRequest, RequestFailure } from '@/types/request/request'
-import { RequestDetailResponse } from '@/types/requestDetail/requestDetail'
+import { OrderFailure, OrderRequest } from '@/types/order/order'
+import { OrderDetailResponse } from '@/types/orderDetail/orderDetail'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-interface IRequestForm {
-  request: RequestBranchRequest
+interface IOrderForm {
+  order: OrderRequest
   onchangeUserState: Function
   type: 'read' | 'update'
-  errorState?: Partial<RequestFailure>
+  errorState?: Partial<OrderFailure>
 }
 
-export const RequestForm = ({ request, onchangeUserState, type, errorState }: IRequestForm) => {
+export const OrderForm = ({ order, onchangeUserState, type, errorState }: IOrderForm) => {
   const router = useRouter()
   const { breakPoint } = useSelector(ShareStoreSelector)
   const translate = useTranslationFunction()
@@ -29,19 +29,20 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
   const [page, setPage] = useState<number>(1)
   const id = router?.query?.id?.toString()
 
-  const requestIdLabel = useTranslation('requestId')
-  const branchIdLabel = useTranslation('branchId')
-  const createdByLabel = useTranslation('createdBy')
+  const ordersIdLabel = useTranslation('ordersId')
+  const customerIdLabel = useTranslation('customerId')
+  const customerNameLabel = useTranslation('customerName')
   const createdDateLabel = useTranslation('createdDate')
+  const couponIdLabel = useTranslation('couponId')
   const totalPriceLabel = useTranslation('totalPrice')
   const statusLabel = useTranslation('status')
 
-  const result = useApiCall<CommonListResultType<RequestDetailResponse>, String>({
+  const result = useApiCall<CommonListResultType<OrderDetailResponse>, String>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.request.requestDetailRequest,
+        pathName: apiRoute.order.orderDetail,
         token: cookies.token,
-        params: { page: String(page), requestId: id || '' },
+        params: { page: String(page), orderId: id || '' },
       }),
     handleError(status, message) {
       if (status) {
@@ -50,17 +51,18 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
     },
   })
   const { data, loading, setLetCall } = result
+
   useEffect(() => {
     setLetCall(true)
   }, [page])
   const dataField: ViewPointType[] = [
     {
-      key: 'requestDetailId',
-      label: 'requestDetailId',
+      key: 'orderDetailId',
+      label: 'orderDetailId',
     },
     {
-      key: 'requestId',
-      label: 'requestId',
+      key: 'ordersId',
+      label: 'ordersId',
     },
     {
       key: 'goodsId',
@@ -73,6 +75,14 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
     {
       key: 'applyPrice',
       label: 'applyPrice',
+    },
+    {
+      key: 'size',
+      label: 'size',
+    },
+    {
+      key: 'goodsName',
+      label: 'goodsName',
     },
   ]
   return (
@@ -87,52 +97,52 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
             readOnly={type === 'read'}
-            value={request.requestId}
-            label={requestIdLabel}
+            value={order.ordersId}
+            label={ordersIdLabel}
             onChange={(event) => {
               onchangeUserState({
-                requestId: event.currentTarget.value,
+                ordersId: event.currentTarget.value,
               })
             }}
             {...inputStyles({
-              error: errorState?.requestId && translate(errorState.requestId),
+              error: errorState?.ordersId && translate(errorState.ordersId),
             })}
           />
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
             readOnly={type === 'read'}
-            value={request.branchId}
-            label={branchIdLabel}
+            value={order.customerId}
+            label={customerIdLabel}
             onChange={(event) => {
               onchangeUserState({
-                branchId: event.currentTarget.value,
+                customerId: event.currentTarget.value,
               })
             }}
             {...inputStyles({
-              error: errorState?.branchId && translate(errorState.branchId),
+              error: errorState?.customerId && translate(errorState.customerId),
             })}
           />
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
             readOnly={type === 'read'}
-            value={request.createdBy}
-            label={createdByLabel}
+            value={order.customerName}
+            label={customerNameLabel}
             onChange={(event) => {
               onchangeUserState({
                 createdBy: event.currentTarget.value,
               })
             }}
             {...inputStyles({
-              error: errorState?.createdBy && translate(errorState.createdBy),
+              error: errorState?.customerName && translate(errorState.customerName),
             })}
           />
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
             readOnly={type === 'read'}
-            value={request.totalPrice}
+            value={order.totalPrice}
             label={totalPriceLabel}
             onChange={(event) => {
               onchangeUserState({
@@ -147,7 +157,22 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
             readOnly={type === 'read'}
-            value={request.createdDate}
+            value={order.couponId}
+            label={couponIdLabel}
+            onChange={(event) => {
+              onchangeUserState({
+                couponId: event.currentTarget.value,
+              })
+            }}
+            {...inputStyles({
+              error: errorState?.couponId && translate(errorState.couponId),
+            })}
+          />
+        </div>
+        <div style={{ gridColumn: 'span 1 / span 1' }}>
+          <Input
+            readOnly={type === 'read'}
+            value={order.createdDate}
             label={createdDateLabel}
             onChange={(event) => {
               onchangeUserState({
@@ -162,7 +187,7 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
             readOnly={type === 'read'}
-            value={request.status}
+            value={order.status}
             label={statusLabel}
             onChange={(event) => {
               onchangeUserState({

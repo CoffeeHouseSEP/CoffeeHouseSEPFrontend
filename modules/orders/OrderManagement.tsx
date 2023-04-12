@@ -5,13 +5,13 @@ import { useApiCall, useGetBreadCrumb, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
-import { RequestBranchRequest } from '@/types/request/request'
+import { OrderRequest } from '@/types/order/order'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-export const RequestManagement = () => {
+export const OrderManagement = () => {
   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
   const translate = useTranslationFunction()
 
@@ -21,10 +21,10 @@ export const RequestManagement = () => {
 
   const { breakPoint } = useSelector(ShareStoreSelector)
 
-  const result = useApiCall<CommonListResultType<RequestBranchRequest>, String>({
+  const result = useApiCall<CommonListResultType<OrderRequest>, String>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.request.getRequest,
+        pathName: apiRoute.order.getOrders,
         token: cookies.token,
         params: { page: String(page), pageSize: '10' },
       }),
@@ -41,36 +41,32 @@ export const RequestManagement = () => {
 
   const dataField: ViewPointType[] = [
     {
-      key: 'requestId',
-      label: 'requestId',
+      key: 'ordersId',
+      label: 'ordersId',
     },
     {
-      key: 'branchName',
-      label: 'branchName',
+      key: 'customerId',
+      label: 'customerId',
     },
     {
-      key: 'createdBy',
-      label: 'createdBy',
+      key: 'customerName',
+      label: 'customerName',
     },
     {
       key: 'createdDate',
       label: 'createdDate',
     },
     {
-      key: 'approvedBy',
-      label: 'approvedBy',
-    },
-    {
-      key: 'completedDate',
-      label: 'completedDate',
-    },
-    {
-      key: 'cancelledDate',
-      label: 'cancelledDate',
-    },
-    {
       key: 'totalPrice',
       label: 'totalPrice',
+    },
+    {
+      key: 'shippedDate',
+      label: 'shippedDate',
+    },
+    {
+      key: 'couponId',
+      label: 'couponId',
     },
     {
       key: 'status',
@@ -85,8 +81,8 @@ export const RequestManagement = () => {
         <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
       </div>
       <CustomTable
-        idFiled="requestId"
-        detailPath="admin/request/"
+        idFiled="ordersId"
+        detailPath="admin/orders/"
         header={dataField ?? []}
         body={data ? data.result.data : []}
         loading={loading}
