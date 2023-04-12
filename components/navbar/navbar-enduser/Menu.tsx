@@ -81,7 +81,7 @@ export const Menu = () => {
     },
     {
       label: 'MUA NGAY',
-      link: '/shopping',
+      link: '/goods/listgoods',
     },
   ]
 

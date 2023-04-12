@@ -21,12 +21,12 @@ const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
+        width: '100%',
       }}
     >
       <div
         style={{
           display: 'flex',
-          width: pixel <= 380 ? '80%' : '100%',
           flexDirection: 'row',
           alignItems: 'center',
           backgroundColor: '#333',
@@ -39,7 +39,7 @@ const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
           style={{
             background: !categoryId ? '#2c2891' : 'transparent',
             borderColor: 'transparent',
-            fontSize: pixel <= 380 ? '0.6rem' : '1rem',
+            fontSize: pixel <= 500 ? '0.5rem' : '1rem',
             textTransform: 'capitalize',
             margin: '0 0.5rem',
             letterSpacing: '1px',
@@ -60,9 +60,9 @@ const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
                   style={{
                     background: categoryId === category.categoryId ? '#2c2891' : 'transparent',
                     borderColor: 'transparent',
-                    fontSize: pixel <= 380 ? '0.6rem' : '1rem',
+                    fontSize: pixel <= 500 ? '0.5rem' : '1rem',
                     textTransform: 'capitalize',
-                    margin: '0 0.5rem',
+                    margin: pixel <= 500 ? '' : '0 0.5rem',
                     letterSpacing: '1px',
                     padding: '0.375rem 0.75rem',
                     color: '#fff',

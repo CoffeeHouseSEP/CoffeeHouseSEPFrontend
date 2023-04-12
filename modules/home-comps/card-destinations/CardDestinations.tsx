@@ -13,7 +13,7 @@ export const CardDestinations = ({ data }: CardDestinationsProps) => {
       image={{
         content: data.imageUrl,
         style: {
-          width: pixel <= 1280 ? `${pixel}px` : 'auto',
+          width: pixel <= 1280 ? `${pixel}px` : '100%',
           height: pixel <= 1280 ? `${pixel}px` : '485px',
           position: 'relative',
           aspectRatio: '1/1',

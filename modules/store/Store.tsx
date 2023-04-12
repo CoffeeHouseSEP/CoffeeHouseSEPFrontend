@@ -3,12 +3,14 @@ import { useApiCall, useTranslationFunction } from '@/hooks'
 import { getMethod } from '@/services'
 import { CommonListResultType } from '@/types'
 import { BranchResponse } from '@/types/branch/branch'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { AiTwotonePhone, AiOutlineWifi, AiFillCreditCard } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 
 export default function Store() {
   const translate = useTranslationFunction()
+  const router = useRouter()
 
   //   const [page, setPage] = useState<number>(1)
   const result = useApiCall<CommonListResultType<BranchResponse>, String>({
@@ -38,6 +40,7 @@ export default function Store() {
             margin: '0 auto',
             display: 'flex',
             alignItems: 'center',
+            justifyItems: 'center',
           }}
         >
           <div>
@@ -84,7 +87,10 @@ export default function Store() {
                     }}
                   >
                     {data?.result.data.map((item) => (
-                      <div style={{ marginBottom: '10px', borderBottom: 'solid 1px #e7e7e7' }}>
+                      <div
+                        onClick={() => router.push(`/store/${item.branchId}`)}
+                        style={{ marginBottom: '10px', borderBottom: 'solid 1px #e7e7e7' }}
+                      >
                         <div
                           style={{
                             fontSize: '18px',
@@ -141,7 +147,6 @@ export default function Store() {
               </div>
             </div>
           </div>
-          <div>MAP</div>
         </div>
       )}
     </>

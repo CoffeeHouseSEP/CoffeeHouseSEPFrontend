@@ -177,8 +177,7 @@ export const MenuMobile = () => {
         style={{
           background: '#DDDDDD',
           position: 'fixed',
-          width: menu ? '60%' : '0%',
-          height: isLoggedIn ? '75%' : '60%',
+          width: menu ? '100%' : '0%',
           top: 0,
           right: 0,
           bottom: 0,
@@ -218,7 +217,15 @@ export const MenuMobile = () => {
                 }}
                 onMouseLeave={() => setHover('')}
               >
-                <span onClick={() => router.push(item.link)}> {item.label}</span>
+                <div
+                  style={{ width: '100%' }}
+                  onClick={() => {
+                    router.push(item.link)
+                    setMenu(false)
+                  }}
+                >
+                  {item.label}
+                </div>
                 <div
                   style={{
                     height: '50px',
@@ -242,7 +249,10 @@ export const MenuMobile = () => {
             )
           return (
             <div
-              onClick={() => router.push(item.link)}
+              onClick={() => {
+                router.push(item.link)
+                setMenu(false)
+              }}
               onMouseEnter={() => {
                 setHover(item.label)
                 setMenuHover(item.label)
@@ -292,7 +302,17 @@ export const MenuMobile = () => {
             onMouseEnter={() => setMenuHover('')}
           />
         )}
-        <div style={{ display: 'flex', gap: 0, padding: 15 }}>
+        <div
+          style={{
+            display: 'flex',
+            gap: 0,
+            padding: 15,
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }}
+        >
           <Input
             value={search}
             onChange={(e) => {
