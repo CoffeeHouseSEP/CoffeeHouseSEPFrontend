@@ -16,7 +16,6 @@ export default function GoodList() {
   const [cateItem, setCateItem] = useState<CategoryItem[]>([])
   const [categoryId, setCategoryId] = useState<number>()
   const pageSize = '8'
-
   const category = useApiCall<CommonListResultType<CategoryItem>, String>({
     callApi: () =>
       getMethod({
@@ -68,11 +67,16 @@ export default function GoodList() {
   return (
     <main>
       {!loading && (
-        <section style={{ padding: '1rem 0', width: '90vw', margin: '0 auto' }}>
+        <section style={{ padding: '1rem 0', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
             <h2>OUR MENU</h2>
             <div
-              style={{ width: '5rem', height: '0.25rem', background: '#2c2891', margin: '0 auto' }}
+              style={{
+                width: '5rem',
+                height: '0.25rem',
+                background: '#2c2891',
+                margin: '0 auto',
+              }}
             />
           </div>
           <Categories category={cateItem} categoryId={categoryId} filterItems={filterItems} />

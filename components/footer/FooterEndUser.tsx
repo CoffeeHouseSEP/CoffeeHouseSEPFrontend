@@ -37,6 +37,7 @@ export default function FooterEndUser() {
         justifyContent: 'space-around',
         alignItems: 'center',
         padding: 25,
+        width: '100%',
         color: '#fff',
         textAlign: 'center',
       }}
