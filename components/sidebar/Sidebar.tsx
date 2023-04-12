@@ -60,7 +60,14 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
     sidebar = [
       ...sidebar,
       {
-        mainItem: { label: 'RequestManagement', path: '/branch/request/management', icon: '' },
+        mainItem: {
+          label: 'RequestManagement',
+          path: '/admin/request-branch/management',
+          icon: '',
+        },
+      },
+      {
+        mainItem: { label: 'OrderManagement', path: '/admin/orders/management', icon: '' },
       },
     ]
   }
