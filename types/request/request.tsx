@@ -1,4 +1,4 @@
-import { RequestDetailResponse } from '../requestDetail/requestDetail'
+import { RequestCreateResponse } from '../requestDetail/requestDetail'
 
 export interface RequestBranchResponse {
   requestId: string
@@ -33,7 +33,7 @@ export interface RequestBranchRequest {
   cancelledDate: string
   reason: string
   totalPrice: number
-  listRequestDetail: RequestDetailResponse[]
+  listRequestDetail: RequestCreateResponse[]
 }
 export interface BranchResponseSuccess {}
 

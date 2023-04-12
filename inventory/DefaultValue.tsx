@@ -61,8 +61,6 @@ export const DefaultRequest: RequestBranchRequest = {
   totalPrice: 0,
   listRequestDetail: [
     {
-      requestDetailId: '',
-      requestId: '',
       goodsId: '',
       quantity: 0,
       applyPrice: 0,
