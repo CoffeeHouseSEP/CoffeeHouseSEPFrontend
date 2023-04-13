@@ -1,4 +1,5 @@
 import { useResponsive } from '@/hooks'
+import { themeValue } from '@/lib'
 import { CategoryItem } from '@/types'
 
 interface PropCategory {
@@ -37,7 +38,7 @@ const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
       >
         <div
           style={{
-            background: !categoryId ? '#2c2891' : 'transparent',
+            background: !categoryId ? themeValue.dark.colors.redHighland : 'transparent',
             borderColor: 'transparent',
             fontSize: pixel <= 500 ? '0.5rem' : '1rem',
             textTransform: 'capitalize',
@@ -58,7 +59,10 @@ const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
               <div>
                 <div
                   style={{
-                    background: categoryId === category.categoryId ? '#2c2891' : 'transparent',
+                    background:
+                      categoryId === category.categoryId
+                        ? themeValue.dark.colors.redHighland
+                        : 'transparent',
                     borderColor: 'transparent',
                     fontSize: pixel <= 500 ? '0.5rem' : '1rem',
                     textTransform: 'capitalize',

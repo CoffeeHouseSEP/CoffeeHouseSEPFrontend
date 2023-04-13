@@ -1,3 +1,4 @@
+import { themeValue } from '@/lib'
 import ImageItem from '@/modules/news/Image/ImageItem'
 import { GoodsRequest } from '@/types/goods/goods'
 import { useRouter } from 'next/router'
@@ -40,7 +41,7 @@ const Product = ({ items }: PropProduct) => {
                   aspectRatio: '1/1',
                   cursor: 'pointer',
                   transition: 'linear 1s',
-                  border: '0.25rem solid #2c2891',
+                  border: `0.25rem solid ${themeValue.dark.colors.redHighland}`,
                   borderRadius: '5%',
                 }}
                 onClick={() => router.push(`/goods/${menuItem.goodsId}`)}
