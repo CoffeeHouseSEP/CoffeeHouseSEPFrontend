@@ -9,6 +9,10 @@ export interface BranchResponse {
   branchManagerId: string
   longitude: string
   latitude: string
+  ward: string
+  district: string
+  province: string
+  street: string
   status: 0 | 1
   createdDate: string
   cancelledDate: string
@@ -26,6 +30,10 @@ export interface BranchRequest {
   status: 0 | 1
   createdDate: string
   cancelledDate: string
+  ward: string
+  district: string
+  province: string
+  street: string
   image: ImageResponse
 }
 export interface BranchResponseSuccess {}

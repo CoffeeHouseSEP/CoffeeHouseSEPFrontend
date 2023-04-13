@@ -57,4 +57,8 @@ export const apiRoute = {
     cancelOrders: '/orders/cancel-orders',
     orderDetail: '/order-detail/get-list-order-detail-by-order-id',
   },
+  address: {
+    addressProvince: '/address/get-list-province',
+    addressDistrict: '/address/get-list-district-by-province-code',
+  },
 }

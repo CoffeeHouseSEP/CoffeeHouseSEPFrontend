@@ -105,6 +105,10 @@ export const DefaultBranch: BranchRequest = {
   status: 0,
   createdDate: '',
   cancelledDate: '',
+  district: '',
+  province: '',
+  ward: '',
+  street: '',
   image: {
     id: 0,
     objectId: '',

@@ -84,12 +84,12 @@ button {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: #0072f5;
+  background: #b22830;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #0072f5;
+  background: #b22830;
 }
 
 .line-clamp-2 {

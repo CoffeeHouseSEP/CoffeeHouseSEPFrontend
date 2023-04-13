@@ -43,6 +43,9 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
     {
       mainItem: { label: 'NewsManagement', path: '/admin/news/management', icon: '' },
     },
+    {
+      mainItem: { label: 'OrderManagement', path: '/admin/orders/management', icon: '' },
+    },
   ]
 
   if (cookies.role === 'ADMIN') {
@@ -65,9 +68,6 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
           path: '/admin/request-branch/management',
           icon: '',
         },
-      },
-      {
-        mainItem: { label: 'OrderManagement', path: '/admin/orders/management', icon: '' },
       },
     ]
   }
