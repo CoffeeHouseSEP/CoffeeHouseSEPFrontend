@@ -71,8 +71,8 @@ export default function StoreDetail() {
               <div
                 style={{
                   margin: pixel <= 980 ? '10px 0' : '20px 0',
-                  width: pixel <= 980 ? `${pixel}px` : '806px',
-                  height: pixel <= 980 ? `${pixel}px` : '537px',
+                  width: pixel <= 980 ? '100%' : '806px',
+                  height: pixel <= 980 ? '100%' : '537px',
                   aspectRatio: '1',
                   position: 'relative',
                   cursor: 'pointer',

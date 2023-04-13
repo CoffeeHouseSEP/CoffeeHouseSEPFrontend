@@ -4,9 +4,10 @@ import { useState } from 'react'
 
 interface IGridCategory {
   list: CategoryItem[]
+  handleMenu: Function
 }
 
-export const GridCategoryMobile = ({ list }: IGridCategory) => {
+export const GridCategoryMobile = ({ list, handleMenu }: IGridCategory) => {
   const router = useRouter()
   const [isHover, setIsHover] = useState<string>()
 
@@ -32,7 +33,10 @@ export const GridCategoryMobile = ({ list }: IGridCategory) => {
             onMouseEnter={() => handleMouseEnter(item.name)}
             onMouseLeave={() => handleMouseLeave()}
             key={item.categoryId}
-            onClick={() => router.push('/menu')}
+            onClick={() => {
+              router.push('/menu')
+              handleMenu(false)
+            }}
           >
             {item.name}
           </div>

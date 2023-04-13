@@ -37,7 +37,10 @@ export const MenuMobile = () => {
   const [cateItem, setCateItem] = useState<CategoryItem[]>([])
   const [search, setSearch] = useState<string>('')
   const router = useRouter()
-
+  const handleMenu = (menu: boolean) => {
+    setMenu(menu)
+    setIsOpen(menu)
+  }
   const category = useApiCall<CommonListResultType<CategoryItem>, String>({
     callApi: () =>
       getMethod({
@@ -63,7 +66,7 @@ export const MenuMobile = () => {
     },
     {
       label: 'THỰC ĐƠN',
-      menu: <GridCategoryMobile list={cateItem} />,
+      menu: <GridCategoryMobile list={cateItem} handleMenu={handleMenu} />,
       link: '/menu',
     },
     {
@@ -287,7 +290,9 @@ export const MenuMobile = () => {
             zIndex: 2,
           }}
         >
-          <div style={{ width: 1280 }}>{isOpen && <GridCategoryMobile list={cateItem} />}</div>
+          <div style={{ width: 1280 }}>
+            {isOpen && <GridCategoryMobile list={cateItem} handleMenu={handleMenu} />}
+          </div>
         </div>
         {menuHover && (
           <div

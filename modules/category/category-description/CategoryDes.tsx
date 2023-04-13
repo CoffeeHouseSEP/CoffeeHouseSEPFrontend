@@ -46,7 +46,7 @@ export default function CategoryDes() {
   return (
     <>
       {!loading && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <CategoryItemView goodList={goodList} list={cateItem} />
         </div>
       )}

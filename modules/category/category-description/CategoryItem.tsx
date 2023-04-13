@@ -23,6 +23,14 @@ export default function CategoryItemView({ list, goodList }: IGridCategory) {
   const handleMouseLeave = () => {
     setIsHover(-1)
   }
+  const [isHover1, setIsHover1] = useState<boolean>(false)
+
+  const handleMouseEnter1 = () => {
+    setIsHover1(true)
+  }
+  const handleMouseLeave1 = () => {
+    setIsHover1(false)
+  }
 
   return (
     <div>
@@ -32,10 +40,9 @@ export default function CategoryItemView({ list, goodList }: IGridCategory) {
           <div
             key={item.categoryId}
             style={{
-              background: 'linear-gradient(to right, #232526, #414345)',
+              backgroundImage: 'url("/asset/menu-PSD-bg.jpg")',
               width: '100%',
               height: '100%',
-              padding: 20,
             }}
           >
             <div
@@ -43,9 +50,8 @@ export default function CategoryItemView({ list, goodList }: IGridCategory) {
                 display: 'flex',
                 flexDirection: pixel <= 980 ? 'column' : 'row',
                 alignItems: 'center',
-                gap: pixel <= 980 ? 0 : 100,
-                marginBottom: '15px',
-                marginLeft: pixel <= 980 ? '0' : '200px',
+                gap: pixel <= 980 ? 0 : 80,
+                marginLeft: pixel <= 980 ? '0' : '180px',
               }}
             >
               <div style={{ width: '100%' }}>
@@ -90,14 +96,19 @@ export default function CategoryItemView({ list, goodList }: IGridCategory) {
                       style={{
                         marginTop: 10,
                         padding: '7px 50px',
-                        background: 'transparent',
-                        color: '#FAEBD7',
+                        background: isHover1 ? '#b22830' : 'transparent',
+                        color: '#ffffff',
+                        borderColor: isHover1 ? '#b22830' : '',
                         cursor: 'pointer',
                         fontSize: '16px',
                         lineHeight: '24px',
                         border: '1px solid #fff',
+                        borderRadius: '5px',
                         marginBottom: pixel <= 960 ? 'auto' : '0',
                       }}
+                      onMouseEnter={() => handleMouseEnter1()}
+                      onMouseLeave={() => handleMouseLeave1()}
+                      onClick={() => router.push(`/goods/listgoods`)}
                     >
                       KHÁM PHÁ THÊM
                     </button>
@@ -109,8 +120,8 @@ export default function CategoryItemView({ list, goodList }: IGridCategory) {
                   <div
                     style={{
                       margin: pixel <= 980 ? '10px 0' : '20px 0',
-                      width: '250px',
-                      height: '100%',
+                      width: '400px',
+                      height: '150%',
                       aspectRatio: '1',
                       position: 'relative',
                       cursor: 'pointer',
