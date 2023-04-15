@@ -61,4 +61,7 @@ export const apiRoute = {
     addressProvince: '/address/get-list-province',
     addressDistrict: '/address/get-list-district-by-province-code',
   },
+  appParams: {
+    getAppPrams: '/app-param/get-list-app-param-by-par-type',
+  },
 }

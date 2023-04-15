@@ -11,14 +11,22 @@ interface ISelectProvince {
   setValue: (val: string) => void
   buttonProps: Partial<any>
   type: 'read' | 'update'
+  preventLoading?: boolean
 }
 
-export const SelectProvince = ({ value, setValue, buttonProps, type }: ISelectProvince) => {
+export const SelectProvince = ({
+  value,
+  setValue,
+  buttonProps,
+  type,
+  preventLoading,
+}: ISelectProvince) => {
   const getProvince = useApiCall<ProvinceResponse, String>({
     callApi: () =>
       getMethod({
         pathName: apiRoute.address.addressProvince,
       }),
+    preventLoadingGlobal: preventLoading,
   })
 
   const optionList: OptionsType<string>[] = getProvince.data
@@ -41,7 +49,7 @@ export const SelectProvince = ({ value, setValue, buttonProps, type }: ISelectPr
       onChange={setValue}
       options={optionList}
       buttonProps={buttonProps}
-      disabled={type === 'read'}
+      disabled={type === 'read' || getProvince.loading}
     />
   )
 }

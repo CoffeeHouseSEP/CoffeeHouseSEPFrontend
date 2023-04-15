@@ -5,7 +5,7 @@ import { useApiCall, useGetBreadCrumb, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
-import { OrderRequest } from '@/types/order/order'
+import { OrderResponse } from '@/types/order/order'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
@@ -21,7 +21,7 @@ export const OrderManagement = () => {
 
   const { breakPoint } = useSelector(ShareStoreSelector)
 
-  const result = useApiCall<CommonListResultType<OrderRequest>, String>({
+  const result = useApiCall<CommonListResultType<OrderResponse>, String>({
     callApi: () =>
       getMethod({
         pathName: apiRoute.order.getOrders,

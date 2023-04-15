@@ -1,4 +1,4 @@
-import { themeValue } from '@/lib'
+import { addToCartHandler, themeValue } from '@/lib'
 import ImageItem from '@/modules/news/Image/ImageItem'
 import { GoodsRequest } from '@/types/goods/goods'
 import { useRouter } from 'next/router'
@@ -16,6 +16,7 @@ const Product = ({ items }: PropProduct) => {
   const handleMouseLeave = () => {
     setIsHover('-1')
   }
+
   return (
     <div
       style={{
@@ -82,6 +83,7 @@ const Product = ({ items }: PropProduct) => {
                 }}
                 onMouseEnter={() => handleMouseEnter(menuItem.goodsId)}
                 onMouseLeave={() => handleMouseLeave()}
+                onClick={() => addToCartHandler(1, 'S', menuItem.goodsId)}
               >
                 <span> Chọn Mua</span>
               </div>

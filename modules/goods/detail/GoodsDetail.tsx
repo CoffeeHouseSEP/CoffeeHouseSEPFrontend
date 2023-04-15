@@ -1,6 +1,7 @@
 import { CustomSlider } from '@/components/slider/Slider'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall, useResponsive, useTranslationFunction } from '@/hooks'
+import { addToCartHandler } from '@/lib'
 import { CardGoods } from '@/modules/home-comps/card-goods/CardGoods'
 import ImageItem from '@/modules/news/Image/ImageItem'
 import { getMethod } from '@/services'
@@ -72,9 +73,13 @@ export default function GoodsDetail() {
       newsList.setLetCall(true)
     }
   }, [id])
-  const addToCartHandler = () => {
-    router.push(`/cart/${id}?qty=${qty}`)
+
+  const getSize = () => {
+    if (activeSize === 1) return 'M'
+    if (activeSize === 2) return 'L'
+    return 'S'
   }
+
   const goodList = newsList.data?.result?.data
   return (
     <div
@@ -150,6 +155,7 @@ export default function GoodsDetail() {
                   position: 'relative',
                   boxShadow: '0 2px 4px 0 #b5313a, 0 2px 5px 0 #b5313a',
                 }}
+                onClick={() => addToCartHandler(qty, getSize(), id)}
               >
                 <div
                   style={{
@@ -159,7 +165,6 @@ export default function GoodsDetail() {
                     top: '50%',
                     transform: 'translate(-50%, -50%)',
                   }}
-                  onClick={addToCartHandler}
                 >
                   ĐẶT MUA NGAY
                 </div>

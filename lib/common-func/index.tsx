@@ -93,3 +93,57 @@ export const ParseValueForTable = (): any => {
     },
   }
 }
+
+export const addToCartHandler = (qty: number, size: 'M' | 'S' | 'L', id?: string) => {
+  if (!id) return
+  if (typeof window !== 'undefined') {
+    const cart = localStorage.getItem('cart')
+    if (cart) {
+      const productList: {
+        id: string
+        qty: number
+        size: string
+      }[] = JSON.parse(cart)
+      const findItem = productList.find((item) => item.id === id && item.size === size)
+      if (findItem) {
+        localStorage.setItem(
+          'cart',
+          JSON.stringify(
+            productList.map((item) => {
+              if (item.id === id && item.size === size) {
+                return {
+                  ...item,
+                  qty: qty + item.qty,
+                }
+              }
+              return item
+            })
+          )
+        )
+      } else {
+        localStorage.setItem(
+          'cart',
+          JSON.stringify([
+            ...productList,
+            {
+              id,
+              qty,
+              size,
+            },
+          ])
+        )
+      }
+    } else {
+      localStorage.setItem(
+        'cart',
+        JSON.stringify([
+          {
+            id,
+            qty,
+            size,
+          },
+        ])
+      )
+    }
+  }
+}

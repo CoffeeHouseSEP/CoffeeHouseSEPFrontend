@@ -3,7 +3,7 @@ import { BranchRequest } from '@/types/branch/branch'
 import { CategoryResponse } from '@/types/category/category'
 import { GoodsRequest } from '@/types/goods/goods'
 import { NewsRequest } from '@/types/news/news'
-import { OrderRequest } from '@/types/order/order'
+import { OrderResponse } from '@/types/order/order'
 import { RequestBranchRequest } from '@/types/request/request'
 import { RequestCreateResponse } from '@/types/requestDetail/requestDetail'
 
@@ -20,7 +20,7 @@ export const DefaultUserRequest: UserRequest = {
   address: '',
   email: '',
 }
-export const DefaultOrder: OrderRequest = {
+export const DefaultOrder: OrderResponse = {
   ordersId: '',
   customerId: '',
   customerName: '',
@@ -37,16 +37,6 @@ export const DefaultOrder: OrderRequest = {
   approvedDate: '',
   cancelledDate: '',
   reason: '',
-  listOrderDetail: [
-    {
-      orderDetailId: '',
-      ordersId: '',
-      goodsId: '',
-      quantity: 0,
-      size: '',
-      applyPrice: 0,
-    },
-  ],
 }
 export const DefaultCreateRequest: RequestCreateResponse = {
   goodsId: '',

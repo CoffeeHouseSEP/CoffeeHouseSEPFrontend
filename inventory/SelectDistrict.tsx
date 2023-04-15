@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { SelectCustom } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall } from '@/hooks'
@@ -11,11 +12,12 @@ interface ISelectProvince {
   setValueD: (val: string) => void
   valueW: string
   setValueW: (val: string) => void
-  valueS: string
-  setValueS: (val: string) => void
+  valueS?: string
+  setValueS?: (val: string) => void
   buttonPropsD: Partial<any>
   buttonPropsW: Partial<any>
-  buttonPropsS: Partial<any>
+  buttonPropsS?: Partial<any>
+  isNotStreet?: boolean
   type: 'read' | 'update'
   province: string
 }
@@ -31,6 +33,7 @@ export const SelectDistrict = ({
   valueS,
   setValueS,
   province,
+  isNotStreet,
   type,
 }: ISelectProvince) => {
   const getDistricts = useApiCall<DistrictResponse, String>({
@@ -44,6 +47,7 @@ export const SelectDistrict = ({
     handleSuccess() {
       setValueD('')
     },
+    preventLoadingGlobal: isNotStreet,
   })
 
   const optionList: OptionsType<string>[] = getDistricts.data
@@ -86,7 +90,7 @@ export const SelectDistrict = ({
   }, [valueD])
 
   useEffect(() => {
-    if (valueW === '') setValueS('')
+    if (valueW === '' && setValueS) setValueS('')
   }, [valueW])
 
   return (
@@ -100,7 +104,7 @@ export const SelectDistrict = ({
               onChange={setValueD}
               options={optionList}
               buttonProps={buttonPropsD}
-              disabled={type === 'read'}
+              disabled={type === 'read' || getDistricts.loading}
             />
           ),
           [optionList, valueD]
@@ -115,27 +119,29 @@ export const SelectDistrict = ({
               onChange={setValueW}
               options={optionWardList}
               buttonProps={buttonPropsW}
-              disabled={type === 'read'}
+              disabled={type === 'read' || getDistricts.loading}
             />
           ),
           [optionWardList, valueW]
         )}
       </div>
-      <div style={{ gridColumn: 'span 1 / span 1' }}>
-        {useMemo(
-          () => (
-            <SelectCustom
-              label="Street"
-              value={valueS}
-              onChange={setValueS}
-              options={optionStreetList}
-              buttonProps={buttonPropsS}
-              disabled={type === 'read'}
-            />
-          ),
-          [optionStreetList, valueS]
-        )}
-      </div>
+      {!isNotStreet && buttonPropsS && valueS && setValueS && (
+        <div style={{ gridColumn: 'span 1 / span 1' }}>
+          {useMemo(
+            () => (
+              <SelectCustom
+                label="Street"
+                value={valueS}
+                onChange={setValueS}
+                options={optionStreetList}
+                buttonProps={buttonPropsS}
+                disabled={type === 'read' || getDistricts.loading}
+              />
+            ),
+            [optionStreetList, valueS]
+          )}
+        </div>
+      )}
     </>
   )
 }

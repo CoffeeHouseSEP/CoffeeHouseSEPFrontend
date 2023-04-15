@@ -1,5 +1,3 @@
-import { OrderDetailResponse } from '../orderDetail/orderDetail'
-
 export interface OrderResponse {
   ordersId: string
   customerId: string
@@ -24,23 +22,17 @@ export interface OrderCancel {
 }
 
 export interface OrderRequest {
-  ordersId: string
-  customerId: string
-  customerName: string
   branchId: string
-  createdDate: string
-  totalPrice: number
-  shippedDate: string
   address: string
   province: string
   ward: string
   district: string
-  couponId: number
-  status: string
-  approvedDate: string
-  cancelledDate: string
-  reason: string
-  listOrderDetail: OrderDetailResponse[]
+  couponId: string
+  listOrderDetail: {
+    goodsId: string
+    quantity: number
+    size: string
+  }[]
 }
 export interface BranchResponseSuccess {}
 
