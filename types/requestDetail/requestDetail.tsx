@@ -10,3 +10,4 @@ export interface RequestCreateResponse {
   quantity: number
   applyPrice: number
 }
+export type RequestCreateFailure = Record<keyof RequestCreateResponse, string>
