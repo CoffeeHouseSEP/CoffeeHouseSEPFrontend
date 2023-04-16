@@ -31,7 +31,7 @@ export interface OrderRequest {
   listOrderDetail: {
     goodsId: string
     quantity: number
-    size: string
+    size: 'S' | 'M' | 'L'
   }[]
 }
 export interface BranchResponseSuccess {}

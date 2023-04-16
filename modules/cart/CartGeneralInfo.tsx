@@ -17,11 +17,13 @@ export const CartGeneralInfo = ({
   order,
   onChangeOrder,
   error,
+  coupon,
 }: {
   item: { id: string; qty: number; size: 'M' | 'S' | 'L' }[]
   order: OrderRequest
   onChangeOrder: (value: Partial<OrderRequest>) => void
   error?: Partial<OrderFailure>
+  coupon: { maxApply: number; value: number }
 }) => {
   const [total, setTotal] = useState<
     {
@@ -53,7 +55,7 @@ export const CartGeneralInfo = ({
   }
 
   if (order.district) {
-    paramBr = { ...paramBr, district: order.province }
+    paramBr = { ...paramBr, district: order.district }
   }
 
   if (order.ward) {
@@ -85,7 +87,6 @@ export const CartGeneralInfo = ({
   }, [page, order.province, order.district, order.ward])
 
   const [loading, setLoading] = useState(false)
-  const [selectBranch, setSelectBranch] = useState([''])
 
   const getPrice = async (id: string) => {
     setLoading(true)
@@ -152,23 +153,21 @@ export const CartGeneralInfo = ({
     }
     return priceTotal
   }
-
-  useEffect(() => {
-    if (selectBranch.length) {
-      onChangeOrder({ branchId: selectBranch[0] })
-    } else {
-      onChangeOrder({ branchId: '' })
+  const getTotalCart = () => {
+    if (coupon.maxApply && coupon.value && getTotalPrice() >= coupon.maxApply) {
+      return Math.round((getTotalPrice() * coupon.value) / 100)
     }
-  }, [selectBranch])
+    return Math.round(getTotalPrice())
+  }
 
   return (
     <>
-      <h3>Thông tin giỏ hàng</h3>
+      <h3>Thông tin đặt hàng</h3>
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-          gap: 4,
+          gap: 30,
         }}
       >
         <SelectProvince
@@ -198,7 +197,10 @@ export const CartGeneralInfo = ({
       </div>
       <Button
         style={{ marginBottom: 10 }}
-        onClick={() => onChangeOrder({ ward: '', district: '', province: '' })}
+        onClick={() => {
+          onChangeOrder({ ward: '', district: '', province: '', branchId: '' })
+        }}
+        styleType="light"
       >
         Cancel select address
       </Button>
@@ -213,11 +215,14 @@ export const CartGeneralInfo = ({
           <div style={{ marginTop: 10 }}>Branch</div>
           <CustomTable
             selectionMode="single"
-            selectedKeys={selectBranch}
-            handleChangeSelection={setSelectBranch}
+            selectedKeys={[order.branchId]}
+            handleChangeSelection={(value: string[]) => {
+              onChangeOrder({ branchId: value[0] })
+            }}
             idFiled="branchId"
             detailPath="admin/branch/"
             header={dataField ?? []}
+            listActions={[]}
             body={
               data
                 ? data.result.data.map((cate) => {
@@ -244,7 +249,7 @@ export const CartGeneralInfo = ({
       <div style={{ ...itemStyle, justifyContent: 'start' }}>
         Tổng giá trị đơn hàng:
         <span style={{ marginLeft: 10 }}>
-          {loading ? <Loading size={40} /> : <strong>{String(getTotalPrice())} VND</strong>}
+          {loading ? <Loading size={40} /> : <strong>{String(getTotalCart())} VND</strong>}
         </span>
       </div>
     </>

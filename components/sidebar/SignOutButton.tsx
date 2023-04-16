@@ -51,6 +51,7 @@ export const SignOutButton = ({ style }: { style?: object }) => {
         alignItems: 'center',
         justifyContent: 'center',
         gap: 20,
+        whiteSpace: 'nowrap',
         padding: '0px 20px',
         cursor: 'pointer',
         position: 'relative',
@@ -68,7 +69,7 @@ export const SignOutButton = ({ style }: { style?: object }) => {
         result.setLetCall(true)
       }}
     >
-      {translate('signOut')}
+      ĐĂNG XUẤT
     </div>
   )
 }
