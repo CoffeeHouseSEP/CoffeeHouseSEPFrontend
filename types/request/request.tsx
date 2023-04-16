@@ -23,6 +23,10 @@ export interface RequestCancel {
 export interface RequestCreateBranchRequest {
   listRequestDetail: RequestCreateResponse[]
 }
+export interface RequestUpdateBranchRequest {
+  requestId: string
+  listRequestDetail: RequestCreateResponse[]
+}
 export interface RequestBranchRequest {
   requestId: string
   branchId: string

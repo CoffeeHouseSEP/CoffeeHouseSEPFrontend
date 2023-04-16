@@ -1,13 +1,19 @@
-import { Button, Loading } from '@/components'
+import { Button, CustomTable, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
-import { DefaultRequest } from '@/inventory'
+import { DefaultCreateRequest, DefaultListDetail, DefaultRequest } from '@/inventory'
 import { RequestBranchForm } from '@/inventory/RequestBranchForm'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
-import { CommonListResultType, UserRequest } from '@/types'
-import { RequestBranchRequest, RequestCancel, RequestFailure } from '@/types/request/request'
+import { CommonListResultType, ViewPointType } from '@/types'
+import {
+  RequestBranchRequest,
+  RequestCancel,
+  RequestFailure,
+  RequestUpdateBranchRequest,
+} from '@/types/request/request'
+import { RequestCreateResponse, RequestDetailResponse } from '@/types/requestDetail/requestDetail'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
@@ -24,6 +30,8 @@ export const RequestBranchDetail = () => {
   const [showReason, setShowReason] = useState<boolean>(false)
   const [cancelReason, setCancelReason] = useState<string>('')
   const [request, setRequest] = useState<RequestBranchRequest>(DefaultRequest)
+  const [requestState, setRequestState] = useState<RequestCreateResponse>(DefaultCreateRequest)
+  const [requestDetail, setRequestDetail] = useState<RequestCreateResponse[]>(DefaultListDetail)
   const id = router?.query?.id?.toString()
   const { breakPoint } = useSelector(ShareStoreSelector)
 
@@ -48,13 +56,52 @@ export const RequestBranchDetail = () => {
       }
     },
   })
-  const updateResult = useApiCall<RequestBranchRequest, RequestFailure>({
+  const result = useApiCall<CommonListResultType<RequestDetailResponse>, String>({
     callApi: () =>
-      putMethod<RequestBranchRequest>({
+      getMethod({
+        pathName: apiRoute.request.requestDetailRequest,
+        token: cookies.token,
+        params: { requestId: id || '' },
+      }),
+    handleError(status, message) {
+      if (status) {
+        toast.error(translate(message))
+      }
+    },
+  })
+  useEffect(() => {
+    if (result.data) {
+      const listDetail: RequestCreateResponse[] = result.data?.result.data.map((item) => {
+        return {
+          goodsId: item.goodsId,
+          quantity: item.quantity,
+          applyPrice: item.applyPrice,
+        }
+      })
+      setRequestDetail(listDetail)
+    }
+  }, [result.data])
+  const onchangeUserState = (newUpdate: Partial<RequestCreateResponse>) => {
+    const newUserState = { ...requestState }
+    setRequestState({ ...newUserState, ...newUpdate })
+  }
+  const confirmChoice = () => {
+    setRequestDetail([
+      ...requestDetail.filter(
+        (item) => item.goodsId !== requestState.goodsId && item.goodsId !== ''
+      ),
+      requestState,
+    ])
+    setRequestState(DefaultCreateRequest)
+    toast.info('Selected goods successfully!')
+  }
+  const updateResult = useApiCall<RequestUpdateBranchRequest, RequestFailure>({
+    callApi: () =>
+      putMethod<RequestUpdateBranchRequest>({
         pathName: apiRoute.request.updateRequest,
         token: cookies.token,
         params: { requestId: request.requestId },
-        request,
+        request: { requestId: id || '', listRequestDetail: requestDetail },
       }),
     handleError(status, message) {
       if (status) {
@@ -122,14 +169,11 @@ export const RequestBranchDetail = () => {
 
   useEffect(() => {
     if (!!id) {
+      result.setLetCall(true)
       viewResult.setLetCall(true)
     }
   }, [id])
 
-  const onchangeUserState = (newUpdate: Partial<UserRequest>) => {
-    const newUserState = { ...request }
-    setRequest({ ...newUserState, ...newUpdate })
-  }
   const handleSetTypeUpdate = () => {
     setType('update')
   }
@@ -152,6 +196,16 @@ export const RequestBranchDetail = () => {
     setType('read')
     updateResult.handleReset()
   }
+  const dataGoodsField: ViewPointType[] = [
+    {
+      key: 'goodsId',
+      label: 'goodsId',
+    },
+    {
+      key: 'quantity',
+      label: 'quantity',
+    },
+  ]
   const completeLabel = useTranslation('CompleteRequest')
   const cancelRequestLabel = useTranslation('CancelRequest')
   const saveLabel = useTranslation('Save')
@@ -159,6 +213,7 @@ export const RequestBranchDetail = () => {
   const breadCrumb = useGetBreadCrumb()
   const cancelLabel = useTranslation('cancel')
   const sendLabel = useTranslation('SendRequest')
+  const confirmLabel = useTranslation('Confirm')
 
   if (viewResult.loading)
     return (
@@ -462,16 +517,40 @@ export const RequestBranchDetail = () => {
       <div style={{ paddingTop: 20 }}>
         <RequestBranchForm
           request={request}
+          requestBody={requestState}
           onchangeUserState={onchangeUserState}
           type={type}
+          type1={type}
           errorState={updateResult.error?.result}
         />
       </div>
-      <div style={{ float: 'right' }}>
-        <Button color="primary" onClick={callSendRequest} disabled={viewResult.loading}>
-          {viewResult.loading ? <Loading /> : <>{sendLabel}</>}
-        </Button>
-      </div>
+
+      {type === 'read' ? (
+        <div style={{ float: 'right' }}>
+          <Button color="primary" onClick={callSendRequest} disabled={viewResult.loading}>
+            {viewResult.loading ? <Loading /> : <>{sendLabel}</>}
+          </Button>
+        </div>
+      ) : (
+        <div>
+          <div style={{ fontSize: '25px', fontWeight: 'bold', padding: 20 }}>
+            Goods is Selected:
+          </div>
+          <CustomTable
+            idFiled="goodsId"
+            detailPath="admin/request/"
+            header={dataGoodsField ?? []}
+            body={requestDetail}
+          >
+            <>{null}</>
+          </CustomTable>
+          <div style={{ float: 'right' }}>
+            <Button color="primary" onClick={confirmChoice} disabled={updateResult.loading}>
+              {updateResult.loading ? <Loading /> : <>{confirmLabel}</>}
+            </Button>
+          </div>
+        </div>
+      )}
     </>
   )
 }

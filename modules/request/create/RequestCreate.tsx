@@ -1,4 +1,4 @@
-import { Button, Loading } from '@/components'
+import { Button, CustomTable, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
@@ -7,6 +7,7 @@ import { DefaultCreateRequest, DefaultListDetail } from '@/inventory'
 import { RequestCreateBranchForm } from '@/inventory/RequestCreateBranchForm'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { postMethod } from '@/services'
+import { ViewPointType } from '@/types'
 import { RequestCreateBranchRequest, RequestFailure } from '@/types/request/request'
 import { RequestCreateResponse } from '@/types/requestDetail/requestDetail'
 import { useRouter } from 'next/router'
@@ -69,7 +70,16 @@ export default function RequestCreate() {
     setRequestState(DefaultCreateRequest)
     toast.info('Selected goods successfully!')
   }
-
+  const dataField: ViewPointType[] = [
+    {
+      key: 'goodsId',
+      label: 'goodsId',
+    },
+    {
+      key: 'quantity',
+      label: 'quantity',
+    },
+  ]
   const directManagement = () => {
     router.push('/admin/request-branch/management')
   }
@@ -111,6 +121,15 @@ export default function RequestCreate() {
           errorState={createResult.error?.result}
         />
       </div>
+      <div style={{ fontSize: '25px', fontWeight: 'bold', padding: 20 }}>Goods is Selected:</div>
+      <CustomTable
+        idFiled="goodsId"
+        detailPath="admin/request/"
+        header={dataField ?? []}
+        body={request}
+      >
+        <>{null}</>
+      </CustomTable>
       <div style={{ float: 'right' }}>
         <Button color="primary" onClick={confirmChoice} disabled={createResult.loading}>
           {createResult.loading ? <Loading /> : <>{confirmLabel}</>}

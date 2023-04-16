@@ -86,6 +86,7 @@ const initialState: ShareStoreTypes = {
     Save: 'Save',
     RequestCreatePascal: 'Create Request',
     SendRequest: 'Send Request',
+    Confirm: 'Confirm',
   },
 }
 
