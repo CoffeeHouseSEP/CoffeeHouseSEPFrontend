@@ -13,6 +13,7 @@ export const apiRoute = {
     getListGoods: '/goods/get-list-goods',
     createGoods: '/goods/add-new-goods',
     updateGoods: '/goods/update-goods',
+    getListGoodsByAuthorized: '/goods/get-list-goods-authorized',
   },
   branch: {
     getListBranch: '/branch/get-list-branch',

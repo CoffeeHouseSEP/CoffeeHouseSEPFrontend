@@ -6,8 +6,9 @@ import { inputStyles } from '@/inventory'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
+import { GoodsResponse } from '@/types/goods/goods'
 import { RequestBranchRequest, RequestFailure } from '@/types/request/request'
-import { RequestDetailResponse } from '@/types/requestDetail/requestDetail'
+import { RequestCreateResponse, RequestDetailResponse } from '@/types/requestDetail/requestDetail'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
@@ -15,23 +16,30 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 interface IRequestForm {
+  requestBody: RequestCreateResponse
   request: RequestBranchRequest
   onchangeUserState: Function
   type: 'read' | 'update'
+  type1: 'read' | 'update'
   errorState?: Partial<RequestFailure>
+  selectGoods?: string
 }
 
 export const RequestBranchForm = ({
   request,
   onchangeUserState,
   type,
+  type1,
   errorState,
+  selectGoods,
+  requestBody,
 }: IRequestForm) => {
   const router = useRouter()
   const { breakPoint } = useSelector(ShareStoreSelector)
   const translate = useTranslationFunction()
   const [cookies] = useCookies([TOKEN_AUTHENTICATION])
   const [page, setPage] = useState<number>(1)
+  const [selectId, setSelectId] = useState<string[]>(selectGoods ? [selectGoods] : [''])
   const id = router?.query?.id?.toString()
 
   const requestIdLabel = useTranslation('requestId')
@@ -40,6 +48,8 @@ export const RequestBranchForm = ({
   const createdDateLabel = useTranslation('createdDate')
   const totalPriceLabel = useTranslation('totalPrice')
   const statusLabel = useTranslation('status')
+  const GoodsIdLabel = useTranslation('goodsId')
+  const QuantityLabel = useTranslation('quantity')
 
   const result = useApiCall<CommonListResultType<RequestDetailResponse>, String>({
     callApi: () =>
@@ -54,10 +64,52 @@ export const RequestBranchForm = ({
       }
     },
   })
+  const result1 = useApiCall<CommonListResultType<GoodsResponse>, String>({
+    callApi: () =>
+      getMethod({
+        pathName: apiRoute.goods.getListGoodsByAuthorized,
+        token: cookies.token,
+        params: { page: String(page), sortField: 'goodsId', isTransfer: '1' },
+      }),
+    handleError(status, message) {
+      if (status) {
+        toast.error(translate(message))
+      }
+    },
+  })
   const { data, loading, setLetCall } = result
+
   useEffect(() => {
+    result1.setLetCall(true)
     setLetCall(true)
   }, [page])
+
+  useEffect(() => {
+    if (selectId.length) {
+      onchangeUserState({
+        goodsId: selectId[0],
+      })
+    } else {
+      onchangeUserState({
+        goodsId: '',
+      })
+    }
+  }, [selectId])
+  const dataListGoodField: ViewPointType[] = [
+    {
+      key: 'goodsId',
+      label: 'goodsId',
+    },
+    {
+      key: 'name',
+      label: 'name',
+    },
+    {
+      key: 'applyPrice',
+      label: 'applyPrice',
+    },
+  ]
+
   const dataField: ViewPointType[] = [
     {
       key: 'requestDetailId',
@@ -180,21 +232,88 @@ export const RequestBranchForm = ({
           />
         </div>
       </div>
-      <CustomTable
-        idFiled="requestId"
-        detailPath="admin/request/"
-        header={dataField ?? []}
-        body={data?.result.data ? data?.result.data : []}
-      >
-        <>{null}</>
-      </CustomTable>
-      {!loading && (
-        <Pagination
-          total={data?.result?.totalRows ?? 0}
-          onChange={(number) => setPage(number)}
-          page={page}
-          paginationStyle={{ marginTop: 20 }}
-        />
+
+      {type === 'update' ? (
+        <div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: `repeat(${breakPoint}, minmax(0, 1fr))`,
+              gap: 16,
+            }}
+          >
+            <div>
+              <Input
+                readOnly
+                value={requestBody.goodsId}
+                label={GoodsIdLabel}
+                onChange={() => {}}
+                {...inputStyles({
+                  error: errorState?.branchId && translate(errorState.branchId),
+                })}
+              />
+            </div>
+            <div>
+              <Input
+                label={QuantityLabel}
+                value={requestBody.quantity}
+                onChange={(event) => {
+                  onchangeUserState({
+                    quantity: event.currentTarget.value,
+                  })
+                }}
+                {...inputStyles({
+                  error: errorState?.branchId && translate(errorState.branchId),
+                })}
+              />
+            </div>
+          </div>
+          <CustomTable
+            idFiled="goodsId"
+            detailPath="admin/good/"
+            header={dataListGoodField ?? []}
+            body={
+              result1.data
+                ? result1?.data?.result?.data.map((user) => {
+                    return { ...user, status: user.status === 1 ? 'active' : 'deactivate' }
+                  })
+                : []
+            }
+            selectionMode={type1 === 'read' ? 'none' : 'single'}
+            selectedKeys={selectId}
+            loading={loading}
+            handleChangeSelection={setSelectId}
+          >
+            <>{null}</>
+          </CustomTable>
+          {!loading && (
+            <Pagination
+              total={result1?.data?.result?.totalRows ?? 0}
+              onChange={(number) => setPage(number)}
+              page={page}
+              paginationStyle={{ marginTop: 20 }}
+            />
+          )}
+        </div>
+      ) : (
+        <div>
+          <CustomTable
+            idFiled="requestId"
+            detailPath="admin/request-branch/"
+            header={dataField ?? []}
+            body={data?.result.data ? data?.result.data : []}
+          >
+            <>{null}</>
+          </CustomTable>
+          {!loading && (
+            <Pagination
+              total={data?.result?.totalRows ?? 0}
+              onChange={(number) => setPage(number)}
+              page={page}
+              paginationStyle={{ marginTop: 20 }}
+            />
+          )}
+        </div>
       )}
     </>
   )

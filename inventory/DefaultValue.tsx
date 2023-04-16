@@ -5,6 +5,7 @@ import { GoodsRequest } from '@/types/goods/goods'
 import { NewsRequest } from '@/types/news/news'
 import { OrderRequest } from '@/types/order/order'
 import { RequestBranchRequest } from '@/types/request/request'
+import { RequestCreateResponse } from '@/types/requestDetail/requestDetail'
 
 export const DefaultCategory: CategoryResponse = {
   categoryId: '',
@@ -47,6 +48,12 @@ export const DefaultOrder: OrderRequest = {
     },
   ],
 }
+export const DefaultCreateRequest: RequestCreateResponse = {
+  goodsId: '',
+  quantity: 1,
+  applyPrice: 0,
+}
+export const DefaultListDetail: RequestCreateResponse[] = []
 export const DefaultRequest: RequestBranchRequest = {
   requestId: '',
   branchId: '',

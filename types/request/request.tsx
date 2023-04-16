@@ -20,7 +20,13 @@ export interface RequestCancel {
   requestId: string
   cancelReason: string
 }
-
+export interface RequestCreateBranchRequest {
+  listRequestDetail: RequestCreateResponse[]
+}
+export interface RequestUpdateBranchRequest {
+  requestId: string
+  listRequestDetail: RequestCreateResponse[]
+}
 export interface RequestBranchRequest {
   requestId: string
   branchId: string

@@ -52,13 +52,14 @@ export const RequestManagement = () => {
       key: 'createdBy',
       label: 'createdBy',
     },
-    {
-      key: 'createdDate',
-      label: 'createdDate',
-    },
+
     {
       key: 'approvedBy',
       label: 'approvedBy',
+    },
+    {
+      key: 'createdDate',
+      label: 'createdDate',
     },
     {
       key: 'completedDate',
