@@ -113,8 +113,7 @@ export const CouponCart = ({
           </CustomTable>
         )}
       {!getCoupon.loading &&
-        getCoupon.data?.result.data &&
-        getCoupon.data?.result.data.length === 0 && (
+        (!getCoupon.data?.result.data || getCoupon.data?.result.data.length === 0) && (
           <>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
               <div>

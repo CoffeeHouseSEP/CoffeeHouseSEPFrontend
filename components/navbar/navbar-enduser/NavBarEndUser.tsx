@@ -4,12 +4,13 @@ import { useResponsive } from '@/hooks'
 import { themeValue } from '@/lib'
 import { authenticationSelector } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
+import { ShareStoreSelector, setReloadCrt } from '@/redux/share-store'
 import { OptionsType } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Input } from '../../form'
 import { Menu } from './Menu'
 import { MenuMobile } from './MenuMobile'
@@ -19,6 +20,9 @@ export const NavBarEndUser = () => {
   const [search, setSearch] = useState<string>('')
   const { darkTheme } = useSelector(GeneralSettingsSelector)
   const { isLoggedIn } = useSelector(authenticationSelector)
+  const { reloadCart } = useSelector(ShareStoreSelector)
+
+  const dispatch = useDispatch()
 
   const languageList: OptionsType<string>[] = [
     {
@@ -31,6 +35,21 @@ export const NavBarEndUser = () => {
     },
   ]
   const [language, setLanguage] = useState<string>(languageList[0].value)
+
+  const [cart, setCart] = useState<{ id: string; qty: number; size: 'M' | 'S' | 'L' }[]>([])
+
+  useEffect(() => {
+    if (reloadCart && typeof window !== 'undefined') {
+      const cartLocal = localStorage.getItem('cart')
+      if (cartLocal) {
+        const list: { id: string; qty: number; size: 'M' | 'S' | 'L' }[] = JSON.parse(cartLocal)
+        setCart(list)
+      } else {
+        setCart([])
+      }
+      dispatch(setReloadCrt(false))
+    }
+  }, [reloadCart])
 
   return (
     <div
@@ -123,7 +142,7 @@ export const NavBarEndUser = () => {
           </div>
           {pixel <= 980 ? (
             <div style={{ position: 'absolute', top: 65, right: 40 }}>
-              <MenuMobile />
+              <MenuMobile cartLength={cart.length} />
             </div>
           ) : (
             <div
@@ -134,7 +153,7 @@ export const NavBarEndUser = () => {
                 alignItems: 'end',
               }}
             >
-              <Menu />
+              <Menu cartLength={cart.length} />
             </div>
           )}
         </div>

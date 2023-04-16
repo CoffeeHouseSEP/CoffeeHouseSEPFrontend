@@ -154,8 +154,10 @@ export const CartGeneralInfo = ({
     return priceTotal
   }
   const getTotalCart = () => {
-    if (coupon.maxApply && coupon.value && getTotalPrice() >= coupon.maxApply) {
-      return Math.round((getTotalPrice() * coupon.value) / 100)
+    if (coupon.maxApply && coupon.value) {
+      const discount = Math.round((getTotalPrice() * coupon.value) / 100)
+      if (discount > coupon.maxApply) return Math.round(getTotalPrice()) - coupon.maxApply
+      return Math.round(getTotalPrice()) - discount
     }
     return Math.round(getTotalPrice())
   }

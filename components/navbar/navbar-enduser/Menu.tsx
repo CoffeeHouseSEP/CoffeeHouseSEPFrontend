@@ -16,7 +16,7 @@ interface MenuItem {
   link: string
 }
 
-export const Menu = () => {
+export const Menu = ({ cartLength }: { cartLength: number }) => {
   const [goodList, setGoodList] = useState<GoodsItem[]>([])
   const pageSize = '10'
   const { isLoggedIn } = useSelector(authenticationSelector)
@@ -93,7 +93,7 @@ export const Menu = () => {
         link: '/account',
       },
       {
-        label: 'GIỎ HÀNG',
+        label: `GIỎ HÀNG (${cartLength})`,
         link: '/cart',
       },
       {
