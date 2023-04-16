@@ -69,7 +69,7 @@ export const AccessStatus = () => {
   ] as OptionsType<number>[]
 }
 
-export const formatDate = 'yyyy-MM-dd'
+export const formatDateTime = 'yyyy-MM-dd'
 
 export const formatSVGBase64 = 'data:image/svg+xml;base64,'
 export const formatPNGBase = 'data:image/png;base64,'

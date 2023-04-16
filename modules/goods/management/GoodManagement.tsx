@@ -113,7 +113,7 @@ export const GoodManagement = () => {
                 return {
                   ...good,
                   status: good.status === 1 ? 'active' : 'deactivate',
-                  isSold: good.isSold ? 'isSold' : 'Out of Stock',
+                  isSold: good.isSold ? 'Is selling' : 'Out of Stock',
                 }
               })
             : []

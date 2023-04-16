@@ -110,7 +110,7 @@ export const NavBarEndUser = () => {
                 <AiOutlineSearch />
               </div>
             </div>
-            {isLoggedIn && (
+            {isLoggedIn && pixel > 980 && (
               <div style={{ width: '100px' }}>
                 <SignOutButton
                   style={{

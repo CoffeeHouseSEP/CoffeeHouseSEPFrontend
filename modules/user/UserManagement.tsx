@@ -42,6 +42,10 @@ export const UserManagement = () => {
 
   const dataField: ViewPointType[] = [
     {
+      key: 'id',
+      label: 'userId',
+    },
+    {
       key: 'loginName',
       label: 'loginName',
     },

@@ -123,8 +123,13 @@ export const GoodDetail = () => {
   }
 
   const handleSetTypeRead = () => {
-    if (viewResult?.data?.result)
-      setGoodState({ ...DefaultGoods, ...viewResult.data.result.data[0] })
+    if (viewResult?.data?.result && imageResult?.data?.result) {
+      setGoodState({
+        ...DefaultGoods,
+        ...viewResult.data.result.data[0],
+        image: imageResult.data?.result,
+      })
+    }
     setType('read')
     updateResult.handleReset()
   }

@@ -56,5 +56,19 @@ export const apiRoute = {
     approveOrders: '/orders/approve-orders',
     cancelOrders: '/orders/cancel-orders',
     orderDetail: '/order-detail/get-list-order-detail-by-order-id',
+    createOrder: '/orders/create-orders',
+  },
+  address: {
+    addressProvince: '/address/get-list-province',
+    addressDistrict: '/address/get-list-district-by-province-code',
+  },
+  appParams: {
+    getAppPrams: '/app-param/get-list-app-param-by-par-type',
+  },
+  coupon: {
+    getCouponForCart: '/coupon/get-list-coupon-by-cart-info',
+  },
+  disableGoodsBranch: {
+    getListDisable: '/branch-goods-disable/get-list-goods-disable',
   },
 }

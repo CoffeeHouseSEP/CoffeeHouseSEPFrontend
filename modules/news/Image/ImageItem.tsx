@@ -1,12 +1,11 @@
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useTranslationFunction } from '@/hooks'
+import { useApiCall } from '@/hooks'
 import { getMethod } from '@/services'
 import { ImageResponse } from '@/types/image'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
-import { toast } from 'react-toastify'
 
 interface IitemImage {
   id?: string
@@ -21,7 +20,6 @@ export default function ImageItem({ id, altname }: IitemImage) {
     setIsHover('-1')
   }
 
-  const translate = useTranslationFunction()
   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
   const imageResult = useApiCall<ImageResponse, string>({
     callApi: () =>
@@ -32,11 +30,6 @@ export default function ImageItem({ id, altname }: IitemImage) {
           objectId: id ?? '1',
         },
       }),
-    handleError(status, message) {
-      if (status) {
-        toast.error(translate(message))
-      }
-    },
     preventLoadingGlobal: true,
   })
   useEffect(() => {

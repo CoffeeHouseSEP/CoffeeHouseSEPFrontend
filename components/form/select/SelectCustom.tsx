@@ -53,10 +53,12 @@ export const SelectCustom = <T,>({
     return ''
   }
 
+  const display = options.find((item) => item.value === value)
+
   return (
     <div ref={divRef} style={{ width: '100%' }}>
       <Input
-        value={options.find((item) => item.value === value)?.label}
+        value={display ? display.label : ''}
         label={label}
         readOnly
         onFocus={handleOpen}

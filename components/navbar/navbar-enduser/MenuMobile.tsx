@@ -1,16 +1,19 @@
 import { Input } from '@/components/form'
 import { apiRoute } from '@/constants/apiRoutes'
+import { ROLE_COOKIE, TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall } from '@/hooks'
 import { themeValue } from '@/lib'
-import { authenticationSelector } from '@/redux/authentication'
+import { authenticationSelector, setIsLoggedIn } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { getMethod } from '@/services'
 import { CategoryItem, CommonListResultType } from '@/types'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
 import { AiOutlineDown, AiOutlineRight, AiOutlineSearch } from 'react-icons/ai'
 import { BiExit } from 'react-icons/bi'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import { GridCategoryMobile } from './GridCategoryMobile'
 
 interface MenuItem {
@@ -105,6 +108,31 @@ export const MenuMobile = () => {
       },
     ]
   }
+
+  const dispatch = useDispatch()
+
+  const [cookies, , removeCookie] = useCookies([TOKEN_AUTHENTICATION, USER_ID, ROLE_COOKIE])
+
+  const signoutResult = useApiCall<string, string>({
+    callApi: () =>
+      getMethod({
+        pathName: apiRoute.auth.logout,
+        token: cookies.token,
+      }),
+    handleSuccess(message) {
+      toast.success(message)
+      removeCookie(TOKEN_AUTHENTICATION)
+      removeCookie(USER_ID)
+      removeCookie(ROLE_COOKIE)
+      dispatch(setIsLoggedIn(false))
+      router.push('/')
+    },
+    handleError(status, message) {
+      if (status) {
+        toast.error(message)
+      }
+    },
+  })
 
   return (
     <div>
@@ -277,6 +305,35 @@ export const MenuMobile = () => {
             </div>
           )
         })}
+        {isLoggedIn && (
+          <div
+            onClick={() => {
+              signoutResult.setLetCall(true)
+              setMenu(false)
+            }}
+            onMouseEnter={() => {
+              setHover('signout')
+              setMenuHover('signout')
+            }}
+            onMouseLeave={() => setHover('')}
+            style={{
+              color: isHover === 'signout' || menuHover === 'signout' ? '#fff' : '#333333',
+              padding: '13px 15px',
+              fontSize: '16px',
+              lineHeight: '24px',
+              border: 'solid 1px rgba(0,0,0,0.2)',
+              cursor: 'pointer',
+              position: 'relative',
+              backgroundColor:
+                isHover === 'signout' || menuHover === 'signout'
+                  ? themeValue[darkTheme].colors.brownHoverHighLand
+                  : undefined,
+              zIndex: 2,
+            }}
+          >
+            ĐĂNG XUẤT
+          </div>
+        )}
         <div
           style={{
             position: 'fixed',

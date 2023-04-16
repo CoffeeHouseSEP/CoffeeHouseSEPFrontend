@@ -1,6 +1,6 @@
 import { themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
-import { ReactNode, RefObject, useRef, HTMLAttributes, CSSProperties } from 'react'
+import { CSSProperties, HTMLAttributes, ReactNode, RefObject, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
 interface IDropdownBase extends HTMLAttributes<HTMLDivElement> {
@@ -69,7 +69,8 @@ export const DropdownBase = ({
         boxShadow: themeValue[darkTheme].shadows.lg,
         zIndex: zIndex ?? 10,
         borderRadius: 10,
-        overflow: 'hidden',
+        overflow: 'auto',
+        maxHeight: 200,
         ...style,
       }}
       onClick={onClick}

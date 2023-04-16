@@ -1,12 +1,12 @@
 import { useResponsive } from '@/hooks'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   AiFillFacebook,
-  AiFillYoutube,
   AiFillInstagram,
-  AiOutlineSend,
+  AiFillYoutube,
   AiOutlineMail,
+  AiOutlineSend,
 } from 'react-icons/ai'
 
 export default function FooterEndUser() {

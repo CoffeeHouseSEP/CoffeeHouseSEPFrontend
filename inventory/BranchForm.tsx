@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { SelectDistrict } from './SelectDistrict'
+import { SelectProvince } from './SelectProvice'
 
 interface IBranchForm {
   branch: BranchRequest
@@ -209,6 +211,51 @@ export const BranchForm = ({
             {branch.status ? 'active' : 'deactivate'}
           </Checkbox>
         </div>
+        <div style={{ gridColumn: 'span 1 / span 1' }}>
+          <SelectProvince
+            value={branch.province}
+            setValue={(value: string) => {
+              onchangeUserState({ province: value })
+            }}
+            buttonProps={{
+              ...inputStyles({
+                error: errorState?.province && translate(errorState.province),
+              }),
+            }}
+            type={type}
+          />
+        </div>
+        <SelectDistrict
+          valueD={branch.district}
+          valueW={branch.ward}
+          valueS={branch.street}
+          setValueD={(value: string) => {
+            onchangeUserState({ district: value })
+          }}
+          setValueW={(value: string) => {
+            onchangeUserState({ ward: value })
+          }}
+          setValueS={(value: string) => {
+            onchangeUserState({ street: value })
+          }}
+          buttonPropsD={{
+            ...inputStyles({
+              error: errorState?.district && translate(errorState.district),
+            }),
+          }}
+          buttonPropsW={{
+            ...inputStyles({
+              error: errorState?.ward && translate(errorState.ward),
+            }),
+          }}
+          buttonPropsS={{
+            ...inputStyles({
+              error: errorState?.street && translate(errorState.street),
+            }),
+          }}
+          province={branch.province}
+          type={type}
+        />
         <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10 }}>
           <UploadFileBase64
             handleUploadFile={handleUploadImage}

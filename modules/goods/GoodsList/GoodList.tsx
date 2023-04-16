@@ -35,7 +35,14 @@ export default function GoodList() {
     callApi: () =>
       getMethod({
         pathName: apiRoute.goods.getListGoods,
-        params: { page: page.toString(), pageSize, status: 1, categoryId: categoryId || '' },
+        params: {
+          page: page.toString(),
+          pageSize,
+          status: 1,
+          categoryId: categoryId || '',
+          keySort: 'DESC',
+          sortField: 'categoryId',
+        },
       }),
     handleError(status, message) {
       toast.error(translate(message))

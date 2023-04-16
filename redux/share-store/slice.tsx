@@ -87,6 +87,10 @@ const initialState: ShareStoreTypes = {
     RequestCreatePascal: 'Create Request',
     SendRequest: 'Send Request',
     Confirm: 'Confirm',
+    couponCOde: 'Mã giảm giá',
+    expiredDateCoupon: 'Ngày hết hạn',
+    percentCoupon: 'Giảm',
+    maxValuePromotion: 'Giá trị đơn hàng tối thiểu',
   },
 }
 

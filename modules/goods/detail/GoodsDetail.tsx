@@ -1,6 +1,7 @@
 import { CustomSlider } from '@/components/slider/Slider'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall, useResponsive, useTranslationFunction } from '@/hooks'
+import { addToCartHandler } from '@/lib'
 import { CardGoods } from '@/modules/home-comps/card-goods/CardGoods'
 import ImageItem from '@/modules/news/Image/ImageItem'
 import { getMethod } from '@/services'
@@ -24,7 +25,13 @@ export default function GoodsDetail() {
     callApi: () =>
       getMethod({
         pathName: apiRoute.goods.getListGoods,
-        params: { page: '1', pageSize: '1', goodsId: id || '' },
+        params: {
+          page: '1',
+          pageSize: '1',
+          goodsId: id || '',
+          keySort: 'desc',
+          sortField: 'goodsId',
+        },
       }),
     handleError(status, message) {
       toast.error(translate(message))
@@ -51,6 +58,7 @@ export default function GoodsDetail() {
           pageSize: '5',
           categoryId: goodDetail?.categoryId || 1,
           keySort: 'desc',
+          sortField: 'goodsId',
         },
       }),
     handleError(status, message) {
@@ -65,15 +73,18 @@ export default function GoodsDetail() {
       newsList.setLetCall(true)
     }
   }, [id])
-  const addToCartHandler = () => {
-    router.push(`/cart/${id}?qty=${qty}`)
+
+  const getSize = () => {
+    if (activeSize === 1) return 'M'
+    if (activeSize === 2) return 'L'
+    return 'S'
   }
+
   const goodList = newsList.data?.result?.data
   return (
     <div
       style={{
         width: '100vw',
-        maxWidth: '100%',
         overflow: 'hidden',
         marginBottom: '50px',
       }}
@@ -82,139 +93,148 @@ export default function GoodsDetail() {
         <div
           style={{
             display: 'flex',
+            width: '100vw',
             alignItems: 'center',
             justifyContent: 'center',
             flexDirection: pixel <= 960 ? 'column' : 'row',
           }}
         >
-          <div>
-            <h5
-              style={{
-                marginBottom: '0.5rem',
-                cursor: 'pointer',
-                fontSize: '34px',
-                lineHeight: '44px',
-                textTransform: 'uppercase',
-                color: '#53382c',
-                display: 'block',
-              }}
-              onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
-            >
-              {goodDetail?.name}
-            </h5>
-            <div
-              style={{
-                aspectRatio: '1/1',
-                width: '200px',
-                cursor: 'pointer',
-                position: 'relative',
-                background: '#ffffff',
-                border: 'solid 1px #eeeeee',
-                transition: 'linear 1s',
-              }}
-              onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
-            >
-              <ImageItem altname={goodDetail?.name} id={goodDetail?.goodsId} />
-            </div>
-          </div>
-          <div style={{ marginLeft: '15px' }}>
-            <p
-              style={{
-                marginBottom: 0,
-                paddingTop: '0.5rem',
-                fontSize: '14px',
-                lineHeight: '24px',
-                color: ' #53382c',
-                fontWeight: 'normal',
-                width: pixel <= 960 ? '100%' : '50%',
-              }}
-            >
-              {goodDetail?.description}
-            </p>
-            <div
-              style={{
-                marginTop: '10px',
-                backgroundColor: '#333',
-                color: '#fff',
-                width: pixel <= 500 ? '100%' : '375px',
-                height: pixel <= 500 ? '50px' : '93px',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                position: 'relative',
-                boxShadow: '0 2px 4px 0 #b5313a, 0 2px 5px 0 #b5313a',
-              }}
-            >
+          <div style={{ display: 'flex', gap: 20, width: '1000' }}>
+            <div>
+              <h5
+                style={{
+                  marginBottom: '0.5rem',
+                  cursor: 'pointer',
+                  fontSize: '34px',
+                  lineHeight: '44px',
+                  textTransform: 'uppercase',
+                  color: '#53382c',
+                  display: 'block',
+                }}
+                onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
+              >
+                {goodDetail?.name}
+              </h5>
               <div
                 style={{
-                  fontSize: pixel <= 500 ? '0.6rem' : '1.5rem',
-                  position: 'absolute',
-                  left: '50%',
-                  top: '50%',
-                  transform: 'translate(-50%, -50%)',
+                  aspectRatio: '1/1',
+                  width: '200px',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  background: '#ffffff',
+                  transition: 'linear 1s',
                 }}
-                onClick={addToCartHandler}
+                onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
               >
-                ĐẶT MUA NGAY
+                <ImageItem altname={goodDetail?.name} id={goodDetail?.goodsId} />
               </div>
             </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                background: '#f7f8fa',
-                padding: '10px',
-              }}
-            >
-              <button type="button" onClick={() => setQuantity(qty)}>
-                <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-              </button>
-              {/* amount */}
-              <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{qty}</p>
-              {/* decrease amount */}
-              <button type="button" onClick={() => setQty(qty + 1)}>
-                <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-              </button>
-            </div>
-            {/* <div style={{ margin: '10px 0' }}> Size : {goodDetail?.isSize === 0 ? 'M' : 'L'}</div>
-             */}
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span>Size :</span>
-              <div style={{ display: 'flex' }}>
+            <div style={{ marginLeft: '15px' }}>
+              <p
+                style={{
+                  marginBottom: 0,
+                  paddingTop: '0.5rem',
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  color: ' #53382c',
+                  fontWeight: 'normal',
+                  width: pixel <= 960 ? '100%' : '50%',
+                }}
+              >
+                {goodDetail?.description}
+              </p>
+              <div
+                style={{
+                  marginTop: '10px',
+                  backgroundColor: '#333',
+                  color: '#fff',
+                  width: pixel <= 500 ? '95%' : '250px',
+                  height: pixel <= 500 ? '50px' : '50px',
+                  cursor: 'pointer',
+                  borderRadius: '5px',
+                  position: 'relative',
+                  boxShadow: '0 2px 4px 0 #b5313a, 0 2px 5px 0 #b5313a',
+                }}
+                onClick={() => addToCartHandler(qty, getSize(), id)}
+              >
                 <div
                   style={{
-                    display: 'block',
-                    margin: '0 10px',
-                    padding: '5px 10px',
-                    border: activeSize === 1 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
-                    color: activeSize === 1 ? '#b22830' : '#000',
-                    cursor: 'pointer',
+                    fontSize: pixel <= 500 ? '0.6rem' : '1.0rem',
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
                   }}
-                  onClick={() => setActiveSize(1)}
                 >
-                  <span>M</span>
-                </div>
-                <div
-                  style={{
-                    display: 'block',
-                    padding: '5px 10px',
-                    cursor: 'pointer',
-                    border: activeSize === 2 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
-                    color: activeSize === 2 ? '#b22830' : '#000',
-                  }}
-                  onClick={() => setActiveSize(2)}
-                >
-                  <span>L</span>
+                  ĐẶT MUA NGAY
                 </div>
               </div>
-            </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '10px',
+                }}
+              >
+                <button
+                  style={{ backgroundColor: 'transparent' }}
+                  type="button"
+                  onClick={() => setQuantity(qty)}
+                >
+                  <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+                </button>
+                {/* amount */}
+                <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{qty}</p>
+                {/* decrease amount */}
+                <button
+                  style={{ backgroundColor: 'transparent' }}
+                  type="button"
+                  onClick={() => setQty(qty + 1)}
+                >
+                  <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+                </button>
+              </div>
+              {/* <div style={{ margin: '10px 0' }}> Size : {goodDetail?.isSize === 0 ? 'M' : 'L'}</div>
+               */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <span>Size :</span>
+                <div style={{ display: 'flex' }}>
+                  <div
+                    style={{
+                      display: 'block',
+                      margin: '0 10px',
+                      padding: '5px 10px',
+                      border: activeSize === 1 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
+                      color: activeSize === 1 ? '#b22830' : '#000',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => setActiveSize(1)}
+                  >
+                    <span>M</span>
+                  </div>
+                  <div
+                    style={{
+                      display: 'block',
+                      padding: '5px 10px',
+                      cursor: 'pointer',
+                      border: activeSize === 2 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
+                      color: activeSize === 2 ? '#b22830' : '#000',
+                    }}
+                    onClick={() => setActiveSize(2)}
+                  >
+                    <span>L</span>
+                  </div>
+                </div>
 
-            <h4 style={{ fontSize: 18, fontWeight: 700, color: '#53382c' }}>
-              <span style={{ marginRight: ' 5px' }}> Price :</span>
-              {activeSize === 1
-                ? goodDetail?.applyPrice
-                : goodDetail?.applyPrice && goodDetail.applyPrice + 6}
-              ${' '}
-            </h4>
+                <h4 style={{ fontSize: 18, fontWeight: 700, color: '#53382c' }}>
+                  <span style={{ marginRight: ' 5px' }}> Price :</span>
+                  {activeSize === 1
+                    ? goodDetail?.applyPrice
+                    : goodDetail?.applyPrice && goodDetail.applyPrice + 6}
+                  ${' '}
+                </h4>
+              </div>
+            </div>
           </div>
         </div>
       )}
