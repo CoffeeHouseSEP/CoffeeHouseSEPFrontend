@@ -4,4 +4,5 @@ export interface ShareStoreTypes {
   language: {
     [key: string]: string
   }
+  reloadCart: boolean
 }

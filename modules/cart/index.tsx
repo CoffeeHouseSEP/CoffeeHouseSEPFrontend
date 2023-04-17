@@ -4,6 +4,7 @@ import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useResponsive } from '@/hooks'
 import { themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
+import { setReloadCrt } from '@/redux/share-store'
 import { postMethod } from '@/services'
 import { OrderRequest } from '@/types/order/order'
 import { useRouter } from 'next/router'
@@ -11,7 +12,7 @@ import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { BsFillCartCheckFill } from 'react-icons/bs'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { CartGeneralInfo } from './CartGeneralInfo'
 import { CouponCart } from './CouponCart'
@@ -58,12 +59,15 @@ export const CartContainer = () => {
     setOrder({ ...order, ...value })
   }
 
+  const dispatch = useDispatch()
+
   const takeOrder = useApiCall({
     callApi: () =>
       postMethod({ pathName: apiRoute.order.createOrder, token: cookies.token, request: order }),
     handleSuccess() {
       localStorage.setItem('cart', JSON.stringify([]))
       setOrderSuccess(true)
+      dispatch(setReloadCrt(true))
     },
     handleError(message) {
       toast.error(message)
@@ -122,18 +126,7 @@ export const CartContainer = () => {
   }
 
   return (
-    <div
-      style={{
-        width: '100%',
-        minHeight: '100%',
-        justifyContent: 'center',
-        display: 'grid',
-        gridTemplateColumns: `repeat(${pixel >= 1000 ? '2' : '1'}, minmax(0, 1fr))`,
-        gap: 20,
-        maxWidth: 1024,
-        margin: pixel >= 1000 ? 'auto' : '10px 20px',
-      }}
-    >
+    <>
       {!cart.length ? (
         <div
           style={{
@@ -170,69 +163,89 @@ export const CartContainer = () => {
         </div>
       ) : (
         <>
-          <HandleDisableGoods
-            onChangeOrder={onChangeOrder}
-            setReloadCart={setReloadCart}
-            cart={cart}
-            branchId={order.branchId}
-          />
-          <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10 }}>
-            <h3>Sản phẩm</h3>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(8, minmax(0, 1fr))',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: 10,
-                gap: 10,
-              }}
-            >
+          <div
+            style={{
+              width: '100%',
+              minHeight: '100%',
+              justifyContent: 'center',
+              display: 'grid',
+              gridTemplateColumns: `repeat(${pixel >= 1000 ? 2 : 1}, minmax(0, 1fr))`,
+              gap: 20,
+              maxWidth: 1024,
+              margin: pixel >= 1000 ? 'auto' : '10px 20px',
+            }}
+          >
+            <HandleDisableGoods
+              onChangeOrder={onChangeOrder}
+              setReloadCart={setReloadCart}
+              cart={cart}
+              branchId={order.branchId}
+            />
+            <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10 }}>
+              <h3>Sản phẩm</h3>
               <div
                 style={{
-                  cursor: 'pointer',
-                  gridColumn: 'span 1 / span 1',
-                  marginBottom: 10,
-                  ...itemStyle,
-                }}
-              />
-              <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10, ...itemStyle }}>
-                Qty
-              </div>
-              <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10, ...itemStyle }}>
-                Ảnh
-              </div>
-              <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10, ...itemStyle }}>
-                Size
-              </div>
-              <div
-                style={{
-                  overflow: 'hidden',
-                  maxWidth: '150px',
-                  gridColumn: 'span 2 / span 2',
-                  marginBottom: 10,
-                  ...itemStyle,
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(8, minmax(0, 1fr))',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 10,
+                  gap: 10,
                 }}
               >
-                Tên sản phẩm
+                <div
+                  style={{
+                    cursor: 'pointer',
+                    gridColumn: 'span 1 / span 1',
+                    marginBottom: 10,
+                    ...itemStyle,
+                  }}
+                />
+                <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10, ...itemStyle }}>
+                  Qty
+                </div>
+                <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10, ...itemStyle }}>
+                  Ảnh
+                </div>
+                <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10, ...itemStyle }}>
+                  Size
+                </div>
+                <div
+                  style={{
+                    overflow: 'hidden',
+                    maxWidth: '150px',
+                    gridColumn: 'span 2 / span 2',
+                    marginBottom: 10,
+                    ...itemStyle,
+                  }}
+                >
+                  Tên sản phẩm
+                </div>
+                <div style={{ gridColumn: 'span 2 / span 2', marginBottom: 10, ...itemStyle }}>
+                  Đơn gía
+                </div>
+                {cart.map((item) => (
+                  <ProductCart setReloadCart={setReloadCart} item={item} />
+                ))}
               </div>
-              <div style={{ gridColumn: 'span 2 / span 2', marginBottom: 10, ...itemStyle }}>
-                Đơn gía
-              </div>
-              {cart.map((item) => (
-                <ProductCart setReloadCart={setReloadCart} item={item} />
-              ))}
+            </div>
+            <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10 }}>
+              <CouponCart
+                setCouponSelect={setCouponSelect}
+                order={order}
+                onChangeOrder={onChangeOrder}
+                cartInfo={order.listOrderDetail}
+              />
             </div>
           </div>
-          <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10 }}>
-            <CouponCart
-              setCouponSelect={setCouponSelect}
-              order={order}
-              onChangeOrder={onChangeOrder}
-              cartInfo={order.listOrderDetail}
-            />
-          </div>
-          <div style={{ gridColumn: 'span 2 / span 2', marginBottom: 10, padding: '0px 40px' }}>
+          <div
+            style={{
+              width: '100%',
+              minHeight: '100%',
+              maxWidth: 1024,
+              margin: pixel >= 1000 ? 'auto' : '10px 20px',
+            }}
+          >
             <CartGeneralInfo
               coupon={couponSelect}
               order={order}
@@ -263,6 +276,6 @@ export const CartContainer = () => {
           </div>
         </>
       )}
-    </div>
+    </>
   )
 }

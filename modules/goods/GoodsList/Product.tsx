@@ -1,8 +1,11 @@
 import { addToCartHandler, themeValue } from '@/lib'
 import ImageItem from '@/modules/news/Image/ImageItem'
+import { setReloadCrt } from '@/redux/share-store'
 import { GoodsRequest } from '@/types/goods/goods'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 
 interface PropProduct {
   items: GoodsRequest[]
@@ -16,6 +19,8 @@ const Product = ({ items }: PropProduct) => {
   const handleMouseLeave = () => {
     setIsHover('-1')
   }
+
+  const dispatch = useDispatch()
 
   return (
     <div
@@ -83,7 +88,11 @@ const Product = ({ items }: PropProduct) => {
                 }}
                 onMouseEnter={() => handleMouseEnter(menuItem.goodsId)}
                 onMouseLeave={() => handleMouseLeave()}
-                onClick={() => addToCartHandler(1, 'S', menuItem.goodsId)}
+                onClick={() => {
+                  addToCartHandler(1, 'S', menuItem.goodsId)
+                  toast.success('Thêm vào giỏ hàng thành công')
+                  dispatch(setReloadCrt(true))
+                }}
               >
                 <span> Chọn Mua</span>
               </div>

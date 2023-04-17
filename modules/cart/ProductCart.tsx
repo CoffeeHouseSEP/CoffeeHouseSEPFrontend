@@ -2,6 +2,7 @@ import { Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall } from '@/hooks'
 import { themeValue } from '@/lib'
+import { setReloadCrt } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType } from '@/types'
 import { GoodsResponse } from '@/types/goods/goods'
@@ -9,6 +10,7 @@ import { ImageResponse } from '@/types/image'
 import Image from 'next/image'
 import { CSSProperties, useEffect } from 'react'
 import { AiFillCloseCircle } from 'react-icons/ai'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 
 export const itemStyle: CSSProperties = {
@@ -35,6 +37,8 @@ export const ProductCart = ({
       }),
     preventLoadingGlobal: true,
   })
+
+  const dispatch = useDispatch()
 
   const goods = useApiCall<CommonListResultType<GoodsResponse>, String>({
     callApi: () =>
@@ -78,6 +82,7 @@ export const ProductCart = ({
           localStorage.setItem('cart', JSON.stringify(newList))
         }
       }
+      dispatch(setReloadCrt(true))
       setReloadCart(true)
     }
   }

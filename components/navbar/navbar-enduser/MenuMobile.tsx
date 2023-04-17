@@ -22,7 +22,7 @@ interface MenuItem {
   link: string
 }
 
-export const MenuMobile = () => {
+export const MenuMobile = ({ cartLength }: { cartLength: number }) => {
   const [isHover1, setIsHover1] = useState<boolean>(false)
   const handleMouseEnter = () => {
     setIsHover1(true)
@@ -91,7 +91,7 @@ export const MenuMobile = () => {
         link: '/account',
       },
       {
-        label: 'GIỎ HÀNG',
+        label: `GIỎ HÀNG (${cartLength})`,
         link: '/cart',
       },
       {

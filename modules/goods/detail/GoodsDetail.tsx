@@ -4,12 +4,14 @@ import { useApiCall, useResponsive, useTranslationFunction } from '@/hooks'
 import { addToCartHandler } from '@/lib'
 import { CardGoods } from '@/modules/home-comps/card-goods/CardGoods'
 import ImageItem from '@/modules/news/Image/ImageItem'
+import { setReloadCrt } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType } from '@/types'
 import { GoodsRequest } from '@/types/goods/goods'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 
 export default function GoodsDetail() {
@@ -66,6 +68,8 @@ export default function GoodsDetail() {
     },
     preventLoadingGlobal: true,
   })
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (!!id) {
@@ -155,7 +159,11 @@ export default function GoodsDetail() {
                   position: 'relative',
                   boxShadow: '0 2px 4px 0 #b5313a, 0 2px 5px 0 #b5313a',
                 }}
-                onClick={() => addToCartHandler(qty, getSize(), id)}
+                onClick={() => {
+                  addToCartHandler(qty, getSize(), id)
+                  toast.success('Thêm vào giỏ hàng thành công')
+                  dispatch(setReloadCrt(true))
+                }}
               >
                 <div
                   style={{

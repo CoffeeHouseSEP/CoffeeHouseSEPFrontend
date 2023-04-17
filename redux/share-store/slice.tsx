@@ -4,6 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 const initialState: ShareStoreTypes = {
   loading: 0,
   breakPoint: 1,
+  reloadCart: true,
   language: {
     CategoryCreatePascal: 'Create category',
     cancel: 'cancel',
@@ -90,7 +91,7 @@ const initialState: ShareStoreTypes = {
     couponCOde: 'Mã giảm giá',
     expiredDateCoupon: 'Ngày hết hạn',
     percentCoupon: 'Giảm',
-    maxValuePromotion: 'Giá trị đơn hàng tối thiểu',
+    maxValuePromotion: 'Giá trị giảm tối đa',
   },
 }
 
@@ -116,11 +117,20 @@ const ShareStoreSlice = createSlice({
     resetLoading: (state) => {
       return { ...state, loading: 0 }
     },
+    setReloadCrt: (state, actions: PayloadAction<boolean>) => {
+      state.reloadCart = actions.payload
+    },
     resetShareStore: () => initialState,
   },
 })
 
-export const { resetShareStore, setLoading, setLanguage, setBreakPoint, resetLoading } =
-  ShareStoreSlice.actions
+export const {
+  resetShareStore,
+  setLoading,
+  setLanguage,
+  setBreakPoint,
+  resetLoading,
+  setReloadCrt,
+} = ShareStoreSlice.actions
 
 export default ShareStoreSlice
