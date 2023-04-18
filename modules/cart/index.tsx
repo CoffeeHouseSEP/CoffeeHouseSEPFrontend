@@ -3,6 +3,7 @@ import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useResponsive } from '@/hooks'
 import { themeValue } from '@/lib'
+import { authenticationSelector } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { setReloadCrt } from '@/redux/share-store'
 import { postMethod } from '@/services'
@@ -35,6 +36,8 @@ export const CartContainer = () => {
     maxApply: 0,
     value: 0,
   })
+
+  const { isLoggedIn } = useSelector(authenticationSelector)
 
   const { darkTheme } = useSelector(GeneralSettingsSelector)
 
@@ -269,7 +272,13 @@ export const CartContainer = () => {
                 display: 'flex',
                 alignItems: 'center',
               }}
-              onClick={() => takeOrder.setLetCall(true)}
+              onClick={() => {
+                if (isLoggedIn) {
+                  takeOrder.setLetCall(true)
+                } else {
+                  toast.warn('Bạn phải đăng nhập để đặt hàng')
+                }
+              }}
             >
               {takeOrder.loading ? <Loading /> : 'Đặt hàng'}
             </Button>

@@ -248,7 +248,7 @@ export default function GoodsDetail() {
       )}
       <hr />
 
-      {goodList && (
+      {!!goodList && (
         <div
           style={{
             display: 'flex',

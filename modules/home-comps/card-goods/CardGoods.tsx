@@ -40,43 +40,44 @@ export const CardGoods = ({ data }: CardGoodsProps) => {
   if (!data) return null
   return (
     <>
-      {!!imageResult.data?.result.base64 && (
-        <CardBase
-          image={{
-            content: `${imageResult.data.result.prefix}${imageResult.data.result.base64}`,
-            style: {
-              aspectRatio: '1/1',
-              cursor: 'pointer',
-              width: pixel <= 500 ? '40%' : '50%',
-              height: '100%',
-              background: '#fff',
-              position: 'relative',
-              border: 'solid 1px #eeeeee',
-              transition: 'linear 1s',
-              margin: '0 auto',
-            },
-            hoveredStyle: { scale: '110%' },
-          }}
-          title={{
-            content: data.name,
-            style: {
-              fontSize: pixel <= 500 ? 12 : 20,
-              fontWeight: 700,
-              color: '#53382c',
-              margin: '0 auto',
-            },
-          }}
-          description={{
-            content: data.applyPrice.toString(),
-            style: {
-              fontSize: pixel <= 500 ? 12 : 18,
-              fontWeight: 700,
-              color: '#53382c',
-              margin: '0 auto',
-            },
-          }}
-        />
-      )}
+      {!!imageResult.data?.result.base64 &&
+        !!imageResult.data?.result.base64.includes('base64') && (
+          <CardBase
+            image={{
+              content: `${imageResult.data.result.prefix}${imageResult.data.result.base64}`,
+              style: {
+                aspectRatio: '1/1',
+                cursor: 'pointer',
+                width: pixel <= 500 ? '40%' : '50%',
+                height: '100%',
+                background: '#fff',
+                position: 'relative',
+                border: 'solid 1px #eeeeee',
+                transition: 'linear 1s',
+                margin: '0 auto',
+              },
+              hoveredStyle: { scale: '110%' },
+            }}
+            title={{
+              content: data.name,
+              style: {
+                fontSize: pixel <= 500 ? 12 : 20,
+                fontWeight: 700,
+                color: '#53382c',
+                margin: '0 auto',
+              },
+            }}
+            description={{
+              content: data.applyPrice.toString(),
+              style: {
+                fontSize: pixel <= 500 ? 12 : 18,
+                fontWeight: 700,
+                color: '#53382c',
+                margin: '0 auto',
+              },
+            }}
+          />
+        )}
     </>
   )
 }

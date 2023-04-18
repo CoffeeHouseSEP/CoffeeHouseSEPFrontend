@@ -42,7 +42,7 @@ export const CouponCart = ({
   })
 
   useEffect(() => {
-    if (cartInfo && cartInfo.length > 0) {
+    if (cartInfo && cartInfo.length > 0 && cookies.token) {
       getCoupon.setLetCall(true)
     }
   }, [cartInfo])
