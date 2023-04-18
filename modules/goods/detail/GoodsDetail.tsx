@@ -1,3 +1,4 @@
+import { Button, Loading } from '@/components'
 import { CustomSlider } from '@/components/slider/Slider'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall, useResponsive, useTranslationFunction } from '@/hooks'
@@ -16,11 +17,13 @@ import { toast } from 'react-toastify'
 
 export default function GoodsDetail() {
   const [qty, setQty] = useState<number>(1)
-  const [activeSize, setActiveSize] = useState<number>(1)
+  const [activeSize, setActiveSize] = useState<number>(0)
+  const [loadingP, setLoadingP] = useState(false)
   const router = useRouter()
   const translate = useTranslationFunction()
   const pixel = useResponsive()
   const id = router?.query?.id?.toString()
+  const [price, setPrice] = useState(0)
 
   // const genderLabel = useTranslation('gender')
   const goods = useApiCall<CommonListResultType<GoodsRequest>, String>({
@@ -37,6 +40,9 @@ export default function GoodsDetail() {
       }),
     handleError(status, message) {
       toast.error(translate(message))
+    },
+    handleSuccess(message, data) {
+      setPrice(data.data[0].applyPrice)
     },
     preventLoadingGlobal: true,
   })
@@ -84,15 +90,62 @@ export default function GoodsDetail() {
     return 'S'
   }
 
+  const getSizeUp = async () => {
+    if (goodDetail?.applyPrice) {
+      if (activeSize === 0) {
+        setPrice(goodDetail.applyPrice)
+        return
+      }
+      setLoadingP(true)
+      try {
+        const res = await getMethod({
+          pathName: apiRoute.appParams.getAppPrams,
+          params: {
+            parType: 'UPSIZE_GOODS',
+          },
+        })
+        let sizeString = 'M'
+        if (activeSize === 2) sizeString = 'L'
+        const thisResult = res?.data?.result.data.find((item: any) => item.name === sizeString)
+        if (thisResult) setPrice(goodDetail.applyPrice * parseFloat(thisResult.code))
+        else setPrice(goodDetail.applyPrice)
+        return
+      } catch (err: any) {
+        setPrice(goodDetail.applyPrice)
+        return
+      } finally {
+        setLoadingP(false)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (goodDetail?.applyPrice) {
+      getSizeUp()
+    }
+  }, [activeSize, goodDetail])
+
   const goodList = newsList.data?.result?.data
   return (
     <div
       style={{
         width: '100vw',
         overflow: 'hidden',
-        marginBottom: '50px',
       }}
     >
+      {loading && (
+        <div
+          style={{
+            display: 'flex',
+            width: '100vw',
+            height: 200,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Loading size={50} />
+        </div>
+      )}
       {!loading && (
         <div
           style={{
@@ -103,11 +156,19 @@ export default function GoodsDetail() {
             flexDirection: pixel <= 960 ? 'column' : 'row',
           }}
         >
-          <div style={{ display: 'flex', gap: 20, width: '1000' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: pixel <= 960 ? 'column' : 'row',
+              gap: 20,
+              minWidth: 375,
+              maxWidth: 900,
+              alignItems: 'center',
+            }}
+          >
             <div>
-              <h5
+              <h2
                 style={{
-                  marginBottom: '0.5rem',
                   cursor: 'pointer',
                   fontSize: '34px',
                   lineHeight: '44px',
@@ -118,7 +179,7 @@ export default function GoodsDetail() {
                 onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
               >
                 {goodDetail?.name}
-              </h5>
+              </h2>
               <div
                 style={{
                   aspectRatio: '1/1',
@@ -127,13 +188,21 @@ export default function GoodsDetail() {
                   position: 'relative',
                   background: '#ffffff',
                   transition: 'linear 1s',
+                  borderRadius: 10,
                 }}
                 onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
               >
                 <ImageItem altname={goodDetail?.name} id={goodDetail?.goodsId} />
               </div>
             </div>
-            <div style={{ marginLeft: '15px' }}>
+            <div
+              style={{
+                maxWidth: 500,
+                display: 'flex',
+                flexDirection: 'column',
+                paddingLeft: 30,
+              }}
+            >
               <p
                 style={{
                   marginBottom: 0,
@@ -147,70 +216,26 @@ export default function GoodsDetail() {
               >
                 {goodDetail?.description}
               </p>
-              <div
-                style={{
-                  marginTop: '10px',
-                  backgroundColor: '#333',
-                  color: '#fff',
-                  width: pixel <= 500 ? '95%' : '250px',
-                  height: pixel <= 500 ? '50px' : '50px',
-                  cursor: 'pointer',
-                  borderRadius: '5px',
-                  position: 'relative',
-                  boxShadow: '0 2px 4px 0 #b5313a, 0 2px 5px 0 #b5313a',
-                }}
-                onClick={() => {
-                  addToCartHandler(qty, getSize(), id)
-                  toast.success('Thêm vào giỏ hàng thành công')
-                  dispatch(setReloadCrt(true))
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: pixel <= 500 ? '0.6rem' : '1.0rem',
-                    position: 'absolute',
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)',
-                  }}
-                >
-                  ĐẶT MUA NGAY
-                </div>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '10px',
-                }}
-              >
-                <button
-                  style={{ backgroundColor: 'transparent' }}
-                  type="button"
-                  onClick={() => setQuantity(qty)}
-                >
-                  <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-                </button>
-                {/* amount */}
-                <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{qty}</p>
-                {/* decrease amount */}
-                <button
-                  style={{ backgroundColor: 'transparent' }}
-                  type="button"
-                  onClick={() => setQty(qty + 1)}
-                >
-                  <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-                </button>
-              </div>
               {/* <div style={{ margin: '10px 0' }}> Size : {goodDetail?.isSize === 0 ? 'M' : 'L'}</div>
                */}
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span>Size :</span>
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex', gap: 15, margin: '0px 10px' }}>
                   <div
                     style={{
                       display: 'block',
-                      margin: '0 10px',
+                      padding: '5px 10px',
+                      border: activeSize === 0 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
+                      color: activeSize === 0 ? '#b22830' : '#000',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => setActiveSize(0)}
+                  >
+                    <span>S</span>
+                  </div>
+                  <div
+                    style={{
+                      display: 'block',
                       padding: '5px 10px',
                       border: activeSize === 1 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
                       color: activeSize === 1 ? '#b22830' : '#000',
@@ -233,29 +258,70 @@ export default function GoodsDetail() {
                     <span>L</span>
                   </div>
                 </div>
-
-                <h4 style={{ fontSize: 18, fontWeight: 700, color: '#53382c' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Button
+                    type="button"
+                    onClick={() => setQuantity(qty)}
+                    color="primary"
+                    styleType="light"
+                  >
+                    <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+                  </Button>
+                  {/* amount */}
+                  <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{qty}</p>
+                  {/* decrease amount */}
+                  <Button
+                    color="primary"
+                    type="button"
+                    onClick={() => setQty(qty + 1)}
+                    styleType="light"
+                  >
+                    <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+                  </Button>
+                </div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <Button
+                  onClick={() => {
+                    addToCartHandler(qty, getSize(), id)
+                    toast.success('Thêm vào giỏ hàng thành công')
+                    dispatch(setReloadCrt(true))
+                  }}
+                >
+                  ĐẶT MUA NGAY
+                </Button>
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: 4,
+                    fontSize: 18,
+                    fontWeight: 700,
+                    color: '#53382c',
+                    margin: '10px 0px',
+                  }}
+                >
                   <span style={{ marginRight: ' 5px' }}> Price :</span>
-                  {activeSize === 1
-                    ? goodDetail?.applyPrice
-                    : goodDetail?.applyPrice && goodDetail.applyPrice + 6}
-                  ${' '}
-                </h4>
+                  <span>{loadingP ? <Loading /> : Math.round(price) * qty}</span>
+                  <span>VND</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       )}
-      <hr />
-
-      {!!goodList && (
+      {!!goodList?.length && (
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
-            width: pixel <= 1280 ? '100%' : '400px',
+            width: pixel <= 1280 ? '375px' : '600px',
             height: '100%',
-            margin: '0 auto',
+            margin: '30px auto',
           }}
         >
           <CustomSlider
@@ -263,7 +329,7 @@ export default function GoodsDetail() {
             ItemCard={goodList.map((item: GoodsRequest) => (
               <CardGoods key={item.goodsId} data={item} />
             ))}
-            numberDisplay={1}
+            numberDisplay={pixel > 1200 ? 4 : 1}
           />
         </div>
       )}

@@ -40,20 +40,32 @@ export default function ImageItem({ id, altname }: IitemImage) {
 
   return (
     <>
-      {!!imageResult.data?.result.base64 &&
-        !!imageResult.data?.result.base64.includes('base64') && (
+      {!imageResult.data?.result.base64 ||
+        (!imageResult.data?.result.prefix.includes('base64') && (
           <Image
             style={{
-              scale: isHover === id ? '1.1' : '1',
+              borderRadius: 10,
             }}
             alt={altname}
-            src={`${imageResult.data.result.prefix}${imageResult.data.result.base64}`}
-            onMouseEnter={() => handleMouseEnter(id)}
-            onMouseLeave={() => handleMouseLeave()}
+            src="/no_image_product.png"
             layout="fill"
             objectFit="cover"
           />
-        )}
+        ))}
+      {!!imageResult.data?.result.base64 && imageResult.data.result.prefix.includes('base64') && (
+        <Image
+          style={{
+            scale: isHover === id ? '1.1' : '1',
+            borderRadius: 10,
+          }}
+          alt={altname}
+          src={`${imageResult.data.result.prefix}${imageResult.data.result.base64}`}
+          onMouseEnter={() => handleMouseEnter(id)}
+          onMouseLeave={() => handleMouseLeave()}
+          layout="fill"
+          objectFit="cover"
+        />
+      )}
     </>
   )
 }

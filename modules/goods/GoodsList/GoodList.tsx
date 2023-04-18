@@ -1,6 +1,7 @@
 import { Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall, useTranslationFunction } from '@/hooks'
+import { themeValue } from '@/lib'
 import { getMethod } from '@/services'
 import { CategoryItem, CommonListResultType } from '@/types'
 import { GoodsRequest } from '@/types/goods/goods'
@@ -76,12 +77,12 @@ export default function GoodList() {
       {!loading && (
         <section style={{ padding: '1rem 0', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <h2>OUR MENU</h2>
+            <h2>MENU</h2>
             <div
               style={{
                 width: '5rem',
                 height: '0.25rem',
-                background: '#2c2891',
+                background: themeValue.light.colors.redHighland,
                 margin: '0 auto',
               }}
             />
