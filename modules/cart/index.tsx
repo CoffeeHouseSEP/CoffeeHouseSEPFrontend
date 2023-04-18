@@ -91,6 +91,10 @@ export const CartContainer = () => {
 
   const router = useRouter()
 
+  useEffect(() => {
+    onChangeOrder({ branchId: '' })
+  }, [order.district, order.province, order.ward])
+
   if (orderSuccess) {
     return (
       <div
@@ -127,7 +131,6 @@ export const CartContainer = () => {
       </div>
     )
   }
-
   return (
     <>
       {!cart.length ? (
