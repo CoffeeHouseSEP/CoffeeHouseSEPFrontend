@@ -34,6 +34,7 @@ export const DefaultOrder: OrderResponse = {
   district: '',
   couponId: 0,
   status: '',
+  couponCode: '',
   approvedDate: '',
   cancelledDate: '',
   reason: '',

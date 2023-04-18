@@ -7,7 +7,7 @@ import { authenticationSelector } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { setReloadCrt } from '@/redux/share-store'
 import { postMethod } from '@/services'
-import { OrderRequest } from '@/types/order/order'
+import { OrderFailure, OrderRequest } from '@/types/order/order'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
@@ -64,7 +64,7 @@ export const CartContainer = () => {
 
   const dispatch = useDispatch()
 
-  const takeOrder = useApiCall({
+  const takeOrder = useApiCall<String, OrderFailure>({
     callApi: () =>
       postMethod({ pathName: apiRoute.order.createOrder, token: cookies.token, request: order }),
     handleSuccess() {
@@ -72,8 +72,10 @@ export const CartContainer = () => {
       setOrderSuccess(true)
       dispatch(setReloadCrt(true))
     },
-    handleError(message) {
-      toast.error(message)
+    handleError(status, message) {
+      if (status !== 400) {
+        toast.error(message)
+      }
     },
     preventLoadingGlobal: true,
   })
@@ -100,7 +102,7 @@ export const CartContainer = () => {
       <div
         style={{
           width: '100%',
-          height: '100%',
+          height: 'calc(100vh - 210px)',
           justifyContent: 'center',
           display: 'flex',
           flexDirection: 'column',
@@ -137,7 +139,7 @@ export const CartContainer = () => {
         <div
           style={{
             width: '100%',
-            height: '100%',
+            height: 'calc(100vh - 210px)',
             justifyContent: 'center',
             display: 'flex',
             flexDirection: 'column',
@@ -257,6 +259,7 @@ export const CartContainer = () => {
               order={order}
               onChangeOrder={onChangeOrder}
               item={cart}
+              error={takeOrder.error?.result}
             />
           </div>
           <div

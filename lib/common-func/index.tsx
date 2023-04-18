@@ -65,7 +65,7 @@ export const removeClassBody = (className: string) => {
   }
 }
 
-export const ParseValueForTable = (): any => {
+export const ParseValueForTable = (): object & any => {
   const genderList = GenderList()
 
   return {
@@ -75,6 +75,26 @@ export const ParseValueForTable = (): any => {
           <Image layout="fill" src={value} />
         </div>
       )
+    },
+    status: (value: string) => {
+      if (typeof value === 'string') {
+        let status = <>no content</>
+        switch (value) {
+          case 'PENDING_APPROVED':
+            status = <div style={{ color: 'orange' }}>CHỜ XÁC NHẬN</div>
+            break
+          case 'APPROVED':
+            status = <div style={{ color: 'success' }}>CHỜ XÁC NHẬN</div>
+            break
+          case 'CANCELLED':
+            status = <div style={{ color: 'red' }}>CHỜ XÁC NHẬN</div>
+            break
+          default:
+            status = <>{value}</>
+        }
+        return status
+      }
+      return value
     },
     active: (value: number) => {
       if (value) return <AiOutlineCloseCircle color="red" />
