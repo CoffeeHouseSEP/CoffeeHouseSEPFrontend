@@ -9,7 +9,9 @@ export const EndUserLayout = ({ children }: IEndUserLayout) => {
   return (
     <>
       <NavBarEndUser />
-      <div style={{ marginTop: 122, minHeight: 'calc(100vh - 122px) ' }}>{children}</div>
+      <div style={{ marginTop: 122, minHeight: 'calc(100% - 122px)', overflowX: 'hidden' }}>
+        {children}
+      </div>
       <FooterEndUser />
     </>
   )

@@ -36,6 +36,7 @@ export const HandleDisableGoods = ({
     handleError(message) {
       toast.error(message)
     },
+    preventLoadingGlobal: true,
   })
 
   useEffect(() => {

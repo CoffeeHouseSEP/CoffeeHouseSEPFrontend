@@ -10,7 +10,12 @@ import { CategoryItem, CommonListResultType } from '@/types'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
-import { AiOutlineDown, AiOutlineRight, AiOutlineSearch } from 'react-icons/ai'
+import {
+  AiOutlineDown,
+  AiOutlineRight,
+  AiOutlineSearch,
+  AiOutlineShoppingCart,
+} from 'react-icons/ai'
 import { BiExit } from 'react-icons/bi'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -91,10 +96,6 @@ export const MenuMobile = ({ cartLength }: { cartLength: number }) => {
         link: '/account',
       },
       {
-        label: `GIỎ HÀNG (${cartLength})`,
-        link: '/cart',
-      },
-      {
         label: 'ĐƠN HÀNG',
         link: '/my-order',
       },
@@ -108,6 +109,14 @@ export const MenuMobile = ({ cartLength }: { cartLength: number }) => {
       },
     ]
   }
+
+  menuList = [
+    ...menuList,
+    {
+      label: `GIỎ HÀNG (${cartLength})`,
+      link: '/cart',
+    },
+  ]
 
   const dispatch = useDispatch()
 
@@ -301,7 +310,13 @@ export const MenuMobile = ({ cartLength }: { cartLength: number }) => {
                 zIndex: 2,
               }}
             >
-              {item.label}
+              {item.label.toUpperCase().includes('GIỎ HÀNG') ? (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <AiOutlineShoppingCart size={25} style={{ marginRight: 10 }} /> {item.label}
+                </div>
+              ) : (
+                item.label
+              )}
             </div>
           )
         })}

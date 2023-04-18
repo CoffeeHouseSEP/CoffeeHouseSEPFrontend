@@ -2,12 +2,12 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { CSSProperties, ReactNode, useState } from 'react'
 import {
+  StringCardType,
   initDesCriptionStyle,
   initImageStyle,
   initSubTitleStyle,
   initTitleStyle,
   initWrapperStyle,
-  StringCardType,
 } from './inventory'
 
 interface ICardBase {
@@ -99,7 +99,9 @@ export const CardBase = ({
           <Image src={image.content} layout="fill" />
           {image?.child}
         </div>
-      ) : null}
+      ) : (
+        <Image src="/no_image_product.img" layout="fill" />
+      )}
       {title ? (
         <div
           onMouseEnter={() => {

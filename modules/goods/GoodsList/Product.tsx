@@ -26,11 +26,11 @@ const Product = ({ items }: PropProduct) => {
     <div
       style={{
         width: '100vw',
-        margin: '0 auto',
+        margin: 'auto',
         maxWidth: '1170px',
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(250px,1fr)',
-        gap: '2rem 1rem',
+        gap: '70px 14px',
         justifyItems: 'center',
       }}
     >
@@ -68,14 +68,15 @@ const Product = ({ items }: PropProduct) => {
                   >
                     {name}
                   </h5>
-                  <h4 style={{ color: '#2c2891' }}>₹{Math.floor(applyPrice) * 10}</h4>
                 </header>
+                <h4 style={{ color: themeValue.dark.colors.redHighland }}>
+                  {Math.floor(applyPrice)} VND
+                </h4>
               </div>
               <div
                 style={{
-                  marginTop: '10px',
                   backgroundColor: isHover === menuItem.goodsId ? '#b5313a' : '',
-                  border: '1px solid #b5313a',
+                  border: '2px solid #b5313a',
                   color: isHover === menuItem.goodsId ? '#fff' : '#b5313a',
                   width: '100%',
                   justifyContent: 'center',
@@ -85,6 +86,7 @@ const Product = ({ items }: PropProduct) => {
                   textAlign: 'center',
                   cursor: 'pointer',
                   borderRadius: '5px',
+                  fontWeight: 550,
                 }}
                 onMouseEnter={() => handleMouseEnter(menuItem.goodsId)}
                 onMouseLeave={() => handleMouseLeave()}

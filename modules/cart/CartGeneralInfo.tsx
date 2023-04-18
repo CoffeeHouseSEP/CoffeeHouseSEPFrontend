@@ -81,7 +81,7 @@ export const CartGeneralInfo = ({
   })
   const { data, setLetCall } = resultBranch
   useEffect(() => {
-    if (order.province || order.district || order.ward) {
+    if (order.province && order.district) {
       setLetCall(true)
     }
   }, [page, order.province, order.district, order.ward])

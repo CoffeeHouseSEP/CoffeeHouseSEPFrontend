@@ -7,6 +7,7 @@ import { getMethod } from '@/services'
 import { CategoryItem, CommonListResultType, GoodsItem } from '@/types'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { GridCategory } from './GridCategory'
 
@@ -93,10 +94,6 @@ export const Menu = ({ cartLength }: { cartLength: number }) => {
         link: '/account',
       },
       {
-        label: `GIỎ HÀNG (${cartLength})`,
-        link: '/cart',
-      },
-      {
         label: 'ĐƠN HÀNG',
         link: '/my-order',
       },
@@ -111,6 +108,14 @@ export const Menu = ({ cartLength }: { cartLength: number }) => {
     ]
   }
 
+  menuList = [
+    ...menuList,
+    {
+      label: `GIỎ HÀNG`,
+      link: '/cart',
+    },
+  ]
+
   const styleHover = (label: string) => {
     return {
       backgroundColor:
@@ -124,6 +129,7 @@ export const Menu = ({ cartLength }: { cartLength: number }) => {
       zIndex: 2,
       color: '#fff',
       cursor: 'pointer',
+      fontWeight: 540,
     }
   }
   return (
@@ -153,7 +159,13 @@ export const Menu = ({ cartLength }: { cartLength: number }) => {
             onMouseLeave={() => setHover('')}
             onClick={() => router.push(item.link)}
           >
-            {item.label}
+            {item.label.toUpperCase().includes('GIỎ HÀNG') ? (
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <AiOutlineShoppingCart size={25} style={{ marginRight: 10 }} />( {cartLength} )
+              </div>
+            ) : (
+              item.label
+            )}
           </div>
         )
       })}
