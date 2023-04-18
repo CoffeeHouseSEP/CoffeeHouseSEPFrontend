@@ -26,11 +26,11 @@ const Product = ({ items }: PropProduct) => {
     <div
       style={{
         width: '100vw',
-        margin: '0 auto',
+        margin: 'auto',
         maxWidth: '1170px',
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(250px,1fr)',
-        gap: '2rem 1rem',
+        gap: '70px 14px',
         justifyItems: 'center',
       }}
     >
