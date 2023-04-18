@@ -12,6 +12,7 @@ export interface OrderResponse {
   district: string
   couponId: number
   status: string
+  couponCode: string
   approvedDate: string
   cancelledDate: string
   reason: string

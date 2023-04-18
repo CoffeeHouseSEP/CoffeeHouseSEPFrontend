@@ -8,7 +8,7 @@ import { CommonListResultType } from '@/types'
 import { GoodsResponse } from '@/types/goods/goods'
 import { ImageResponse } from '@/types/image'
 import Image from 'next/image'
-import { CSSProperties, useEffect } from 'react'
+import { CSSProperties, useEffect, useState } from 'react'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -27,6 +27,7 @@ export const ProductCart = ({
   item: { id: string; qty: number; size: 'M' | 'S' | 'L' }
   setReloadCart: (val: boolean) => void
 }) => {
+  const [price, setPrice] = useState(0)
   const imageResult = useApiCall<ImageResponse, string>({
     callApi: () =>
       getMethod({
@@ -67,6 +68,33 @@ export const ProductCart = ({
     }
   }, [item])
 
+  const getSizeUp = async (size: 'S' | 'M' | 'L') => {
+    if (size === 'S') return 1
+    try {
+      const res = await getMethod({
+        pathName: apiRoute.appParams.getAppPrams,
+        params: {
+          parType: 'UPSIZE_GOODS',
+        },
+      })
+      const result = res?.data?.result.data.find((item: any) => item.name === size)
+      return result ? parseFloat(result.code) : 1
+    } catch (err: any) {
+      return 1
+    }
+  }
+
+  const getPrice = async (rootPrice: number) => {
+    const code = await getSizeUp(item.size)
+    setPrice(Math.round(rootPrice * code * item.qty))
+  }
+
+  useEffect(() => {
+    if (goods.data?.result.data[0].applyPrice) {
+      getPrice(goods.data.result.data[0].applyPrice)
+    }
+  }, [goods])
+
   const handleRemoveFromCart = () => {
     if (item.id && typeof window !== 'undefined') {
       const cart = localStorage.getItem('cart')
@@ -76,9 +104,13 @@ export const ProductCart = ({
           qty: number
           size: string
         }[] = JSON.parse(cart)
-        const findItem = productList.find((itemLocal) => item.id === itemLocal.id)
+        const findItem = productList.find(
+          (itemLocal) => item.id === itemLocal.id && item.size === itemLocal.size
+        )
         if (findItem) {
-          const newList = productList.filter((thisItem) => thisItem.id !== item.id)
+          const newList = productList.filter(
+            (thisItem) => thisItem.id !== item.id && thisItem.size !== item.size
+          )
           localStorage.setItem('cart', JSON.stringify(newList))
         }
       }
@@ -147,7 +179,7 @@ export const ProductCart = ({
           ...itemStyle,
         }}
       >
-        {goods.data?.result.data[0]?.applyPrice}
+        {price}
       </div>
     </>
   )

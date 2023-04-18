@@ -1,11 +1,9 @@
-import { Dropdown } from '@/components/dropdown'
 import { SignOutButton } from '@/components/sidebar/SignOutButton'
 import { useResponsive } from '@/hooks'
 import { themeValue } from '@/lib'
 import { authenticationSelector } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { ShareStoreSelector, setReloadCrt } from '@/redux/share-store'
-import { OptionsType } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -23,18 +21,6 @@ export const NavBarEndUser = () => {
   const { reloadCart } = useSelector(ShareStoreSelector)
 
   const dispatch = useDispatch()
-
-  const languageList: OptionsType<string>[] = [
-    {
-      label: 'English',
-      value: 'en',
-    },
-    {
-      label: 'Vietnamese',
-      value: 'vn',
-    },
-  ]
-  const [language, setLanguage] = useState<string>(languageList[0].value)
 
   const [cart, setCart] = useState<{ id: string; qty: number; size: 'M' | 'S' | 'L' }[]>([])
 
@@ -97,13 +83,6 @@ export const NavBarEndUser = () => {
               gap: 10,
             }}
           >
-            <Dropdown
-              options={languageList}
-              onClick={setLanguage}
-              button={languageList.find((item) => item.value === language)?.label || ''}
-              styleType="light"
-              isCloseSelect
-            />
             <div style={{ display: pixel <= 980 ? 'none' : 'flex', gap: 0 }}>
               <Input
                 value={search}
