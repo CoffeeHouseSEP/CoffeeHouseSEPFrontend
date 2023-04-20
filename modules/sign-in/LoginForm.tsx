@@ -42,7 +42,7 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
           toast.warn('Bạn cần đăng nhập bằng màn hình người dùng')
           router.push('/login')
         } else {
-          router.push('/admin')
+          router.push('/')
           toast.success(translate(message))
           setCookie(TOKEN_AUTHENTICATION, `Bearer ${data.token}`)
           setCookie(ROLE_COOKIE, data.role)
@@ -52,9 +52,9 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
       if (!router.asPath.includes('admin')) {
         if (data.role === 'ADMIN' || data.role === 'BRANCH_MANAGER') {
           toast.warn('Bạn không thể đăng nhập ở đây')
-          router.push('/admin')
+          router.push('/login')
         } else {
-          router.push('/')
+          router.push('/admin')
           toast.success(translate(message))
           setCookie(TOKEN_AUTHENTICATION, `Bearer ${data.token}`)
           setCookie(ROLE_COOKIE, data.role)
