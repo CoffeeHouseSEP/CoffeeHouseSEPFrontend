@@ -71,4 +71,7 @@ export const apiRoute = {
   disableGoodsBranch: {
     getListDisable: '/branch-goods-disable/get-list-goods-disable',
   },
+  dashboard: {
+    getDashboard: '/admin-dashboard/get-list-branch-revenue',
+  },
 }

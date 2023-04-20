@@ -54,7 +54,7 @@ export const useApiCall = <T, E>({
           dispatch(setIsLoggedIn(false))
         }
         if (statusCode === 403) {
-          router.push('/403')
+          router.push('/')
         }
       }
     } finally {
