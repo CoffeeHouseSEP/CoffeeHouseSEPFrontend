@@ -1,11 +1,11 @@
-import { Button, CustomTable, Pagination } from '@/components'
+import { Button, CustomTable, Dropdown, Pagination } from '@/components'
 import { FloatButton } from '@/components/button/FloatButton'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
-import { CommonListResultType, UserResponseSuccess, ViewPointType } from '@/types'
+import { CommonListResultType, OptionsType, UserResponseSuccess, ViewPointType } from '@/types'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
@@ -18,6 +18,7 @@ export const UserManagement = () => {
 
   const [page, setPage] = useState<number>(1)
   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
+  const [filter, setFilter] = useState<'USER' | 'BRANCH_MANAGER'>('USER')
 
   const router = useRouter()
 
@@ -30,7 +31,7 @@ export const UserManagement = () => {
       getMethod({
         pathName: apiRoute.user.getListUser,
         token: cookies.token,
-        params: { page: String(page) },
+        params: { page: String(page), role: filter },
       }),
     handleError(status, message) {
       if (status) {
@@ -68,10 +69,23 @@ export const UserManagement = () => {
   }
 
   useEffect(() => {
-    setLetCall(true)
-  }, [page])
+    if (filter && cookies.token) {
+      setLetCall(true)
+    }
+  }, [page, filter])
 
   const createUserButton = useTranslation('createUserButton')
+
+  const options: OptionsType<'USER' | 'BRANCH_MANAGER'>[] = [
+    {
+      label: 'User',
+      value: 'USER',
+    },
+    {
+      label: 'Branch manager',
+      value: 'BRANCH_MANAGER',
+    },
+  ]
 
   return (
     <>
@@ -95,6 +109,12 @@ export const UserManagement = () => {
           </FloatButton>
         )}
       </div>
+      <Dropdown<'USER' | 'BRANCH_MANAGER'>
+        options={options}
+        button="Filter role"
+        onClick={(value: 'USER' | 'BRANCH_MANAGER') => setFilter(value)}
+        isCloseSelect
+      />
       <CustomTable
         idFiled="id"
         detailPath="admin/user/"
