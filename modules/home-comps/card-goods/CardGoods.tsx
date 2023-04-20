@@ -3,13 +3,13 @@ import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useResponsive } from '@/hooks'
 import { getMethod } from '@/services'
-import { GoodsRequest } from '@/types/goods/goods'
+import { GoodsResponse } from '@/types/goods/goods'
 import { ImageResponse } from '@/types/image'
 import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 
 interface CardGoodsProps {
-  data: GoodsRequest
+  data: GoodsResponse
 }
 export const CardGoods = ({ data }: CardGoodsProps) => {
   const pixel = useResponsive()
@@ -33,6 +33,7 @@ export const CardGoods = ({ data }: CardGoodsProps) => {
   if (!data) return null
   return (
     <CardBase
+      Link={data.goodsId}
       image={{
         content:
           !!imageResult.data?.result.base64 && imageResult.data?.result.prefix.includes('base64')
