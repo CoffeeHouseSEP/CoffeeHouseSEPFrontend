@@ -41,7 +41,6 @@ export const GoodsForm = ({
   const applyPriceLabel = useTranslation('applyPrice')
   const innerPriceLabel = useTranslation('innerPrice')
   const descriptionLabel = useTranslation('description')
-  const isSizeLabel = useTranslation('isSize')
   const goodsUnitLabel = useTranslation('goodsUnit')
   const categoryIdLabel = useTranslation('categoryId')
 
@@ -200,19 +199,15 @@ export const GoodsForm = ({
           />
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly={type === 'read'}
-            value={goods.isSize}
-            label={isSizeLabel}
-            onChange={(event) => {
-              onchangeGoodsState({
-                isSize: event.currentTarget.value,
-              })
+          <Checkbox
+            isReadOnly={type === 'read'}
+            isSelected={goods.isSize === 1}
+            onChange={() => {
+              onchangeGoodsState({ isSize: goods.isSize === 1 ? 0 : 1 })
             }}
-            {...inputStyles({
-              error: errorState?.isSize && translate(errorState.isSize),
-            })}
-          />
+          >
+            has size
+          </Checkbox>
         </div>
 
         <div style={{ gridColumn: 'span 1 / span 1' }}>
