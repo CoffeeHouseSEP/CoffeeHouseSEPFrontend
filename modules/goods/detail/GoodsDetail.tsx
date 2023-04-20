@@ -223,75 +223,77 @@ export default function GoodsDetail() {
               </p>
               {/* <div style={{ margin: '10px 0' }}> Size : {goodDetail?.isSize === 0 ? 'M' : 'L'}</div>
                */}
-              {goodDetail?.isSize === 1 && (
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <span>Size :</span>
-                  <div style={{ display: 'flex', gap: 15, margin: '0px 10px' }}>
-                    <div
-                      style={{
-                        display: 'block',
-                        padding: '5px 10px',
-                        border: activeSize === 0 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
-                        color: activeSize === 0 ? '#b22830' : '#000',
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => setActiveSize(0)}
-                    >
-                      <span>S</span>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                {goodDetail?.isSize === 1 && (
+                  <>
+                    <span>Size :</span>
+                    <div style={{ display: 'flex', gap: 15, margin: '0px 10px' }}>
+                      <div
+                        style={{
+                          display: 'block',
+                          padding: '5px 10px',
+                          border: activeSize === 0 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
+                          color: activeSize === 0 ? '#b22830' : '#000',
+                          cursor: 'pointer',
+                        }}
+                        onClick={() => setActiveSize(0)}
+                      >
+                        <span>S</span>
+                      </div>
+                      <div
+                        style={{
+                          display: 'block',
+                          padding: '5px 10px',
+                          border: activeSize === 1 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
+                          color: activeSize === 1 ? '#b22830' : '#000',
+                          cursor: 'pointer',
+                        }}
+                        onClick={() => setActiveSize(1)}
+                      >
+                        <span>M</span>
+                      </div>
+                      <div
+                        style={{
+                          display: 'block',
+                          padding: '5px 10px',
+                          cursor: 'pointer',
+                          border: activeSize === 2 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
+                          color: activeSize === 2 ? '#b22830' : '#000',
+                        }}
+                        onClick={() => setActiveSize(2)}
+                      >
+                        <span>L</span>
+                      </div>
                     </div>
-                    <div
-                      style={{
-                        display: 'block',
-                        padding: '5px 10px',
-                        border: activeSize === 1 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
-                        color: activeSize === 1 ? '#b22830' : '#000',
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => setActiveSize(1)}
-                    >
-                      <span>M</span>
-                    </div>
-                    <div
-                      style={{
-                        display: 'block',
-                        padding: '5px 10px',
-                        cursor: 'pointer',
-                        border: activeSize === 2 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
-                        color: activeSize === 2 ? '#b22830' : '#000',
-                      }}
-                      onClick={() => setActiveSize(2)}
-                    >
-                      <span>L</span>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
+                  </>
+                )}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Button
+                    type="button"
+                    onClick={() => setQuantity(qty)}
+                    color="primary"
+                    styleType="light"
                   >
-                    <Button
-                      type="button"
-                      onClick={() => setQuantity(qty)}
-                      color="primary"
-                      styleType="light"
-                    >
-                      <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-                    </Button>
-                    {/* amount */}
-                    <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{qty}</p>
-                    {/* decrease amount */}
-                    <Button
-                      color="primary"
-                      type="button"
-                      onClick={() => setQty(qty + 1)}
-                      styleType="light"
-                    >
-                      <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-                    </Button>
-                  </div>
+                    <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+                  </Button>
+                  {/* amount */}
+                  <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{qty}</p>
+                  {/* decrease amount */}
+                  <Button
+                    color="primary"
+                    type="button"
+                    onClick={() => setQty(qty + 1)}
+                    styleType="light"
+                  >
+                    <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+                  </Button>
                 </div>
-              )}
+              </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <Button
                   onClick={() => {

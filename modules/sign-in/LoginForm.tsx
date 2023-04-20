@@ -110,7 +110,6 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
   }
 
   const signIn = useTranslation('signIn')
-  const internalUser = useTranslation('internalAccount')
   const forgotPassword = useTranslation('forgotPassword')
   const loginName = useTranslation('loginName')
   const password = useTranslation('password')
@@ -200,13 +199,27 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
           width: '100%',
           display: 'flex',
           justifyContent: 'end',
+          gap: 10,
+        }}
+      >
+        {isEndUser && (
+          <Button styleType="light" onClick={() => router.push('/admin')}>
+            Đăng nhập với tại khoản nội bộ
+          </Button>
+        )}
+      </div>
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
           paddingTop: '1rem',
           gap: 10,
         }}
       >
-        {isEndUser && <Button onClick={() => router.push('/admin')}>{internalUser}</Button>}
+        {isEndUser && <Button onClick={() => router.push('/register')}>Đăng ký</Button>}
         <Button onClick={handleLogin} disabled={isLoginLoading}>
-          {isLoginLoading ? <Loading /> : <>{signIn}</>}
+          {isLoginLoading ? <Loading /> : <>Đăng nhập</>}
         </Button>
       </div>
     </>

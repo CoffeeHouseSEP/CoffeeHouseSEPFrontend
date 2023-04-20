@@ -31,6 +31,7 @@ export const apiRoute = {
     detailUser: '/user-internal/get-user-detail',
     updateUser: '/user-internal/update-user',
     forgotPass: '/user-internal/forgot-password',
+    register: '/user-internal/register',
   },
   image: {
     imageInfo: '/image-info/get-image-by-object-id',
