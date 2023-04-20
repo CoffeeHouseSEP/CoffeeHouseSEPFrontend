@@ -3,6 +3,7 @@ import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { inputStyles } from '@/inventory'
+import { themeValue } from '@/lib'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, UserResponseSuccess, ViewPointType } from '@/types'
@@ -223,20 +224,20 @@ export const BranchForm = ({
             active
           </Checkbox>
         </div>
-        <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10 }}>
-          <UploadFileBase64
-            handleUploadFile={handleUploadImage}
-            labelInput="Upload branch image"
-            disabled={type === 'read'}
-          />
-          {!!branch.image.base64 && (
-            <div style={{ height: '100%', aspectRatio: '1', position: 'relative' }}>
-              <Image layout="fill" src={`${branch.image.prefix}${branch.image.base64}`} />
-            </div>
-          )}
-        </div>
       </div>
-      <h4>Select manager</h4>
+      <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10, marginTop: '20px' }}>
+        <UploadFileBase64
+          handleUploadFile={handleUploadImage}
+          labelInput="Upload branch image"
+          disabled={type === 'read'}
+        />
+        {!!branch.image.base64 && (
+          <div style={{ height: '100%', aspectRatio: '1', position: 'relative' }}>
+            <Image layout="fill" src={`${branch.image.prefix}${branch.image.base64}`} />
+          </div>
+        )}
+      </div>
+      <h4 style={{ color: themeValue.dark.colors.redHighland }}>Select manager</h4>
       <CustomTable
         idFiled="id"
         detailPath="admin/user/"

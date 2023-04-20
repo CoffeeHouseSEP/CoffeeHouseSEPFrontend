@@ -3,6 +3,7 @@ import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { inputStyles } from '@/inventory'
+import { themeValue } from '@/lib'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, UserResponseSuccess, ViewPointType } from '@/types'
@@ -42,7 +43,6 @@ export const GoodsForm = ({
   const innerPriceLabel = useTranslation('innerPrice')
   const descriptionLabel = useTranslation('description')
   const goodsUnitLabel = useTranslation('goodsUnit')
-  const categoryIdLabel = useTranslation('categoryId')
 
   const result = useApiCall<CommonListResultType<UserResponseSuccess>, String>({
     callApi: () =>
@@ -243,30 +243,20 @@ export const GoodsForm = ({
             available
           </Checkbox>
         </div>
-        <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10 }}>
-          <UploadFileBase64
-            handleUploadFile={handleUploadImage}
-            labelInput="Upload goods image"
-            disabled={type === 'read'}
-          />
-          {!!goods.image.base64 && (
-            <div style={{ height: '100%', aspectRatio: '1', position: 'relative' }}>
-              <Image layout="fill" src={`${goods.image.prefix}${goods.image.base64}`} />
-            </div>
-          )}
-        </div>
       </div>
-      <div style={{ maxWidth: 375, margin: `10px 0px` }}>
-        <Input
-          readOnly
-          value={goods.categoryId}
-          label={categoryIdLabel}
-          onChange={() => {}}
-          {...inputStyles({
-            error: errorState?.categoryId && translate(errorState.categoryId),
-          })}
+      <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10, marginTop: '20px' }}>
+        <UploadFileBase64
+          handleUploadFile={handleUploadImage}
+          labelInput="Upload goods image"
+          disabled={type === 'read'}
         />
+        {!!goods.image.base64 && (
+          <div style={{ height: '100%', aspectRatio: '1', position: 'relative' }}>
+            <Image layout="fill" src={`${goods.image.prefix}${goods.image.base64}`} />
+          </div>
+        )}
       </div>
+      <h4 style={{ color: themeValue.dark.colors.redHighland }}>Select your category</h4>
       <CustomTable
         idFiled="categoryId"
         detailPath="admin/category/"
