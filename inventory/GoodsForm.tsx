@@ -223,7 +223,18 @@ export const GoodsForm = ({
               onchangeGoodsState({ status: goods.status === 1 ? 0 : 1 })
             }}
           >
-            {goods.status ? 'active' : 'deactivate'}
+            active
+          </Checkbox>
+        </div>
+        <div style={{ gridColumn: 'span 1 / span 1' }}>
+          <Checkbox
+            isReadOnly={type === 'read'}
+            isSelected={goods.isTransfer === 1}
+            onChange={() => {
+              onchangeGoodsState({ isTransfer: goods.isTransfer === 1 ? 0 : 1 })
+            }}
+          >
+            transfer
           </Checkbox>
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
@@ -234,7 +245,7 @@ export const GoodsForm = ({
               onchangeGoodsState({ isSold: goods.isSold === 1 ? 0 : 1 })
             }}
           >
-            {goods.isSold ? 'isSold' : 'Out of stock'}
+            available
           </Checkbox>
         </div>
         <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10 }}>

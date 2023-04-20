@@ -10,6 +10,7 @@ export interface GoodsRequest {
   status: 0 | 1
   categoryId: string
   isSize: number
+  isTransfer: number
   isSold: number
   goodsUnit: number
   image: ImageResponse
@@ -19,6 +20,7 @@ export interface GoodsResponse {
   name: string
   code: string
   applyPrice: number
+  isTransfer: number
   innerPrice: number
   description: string
   status: 0 | 1

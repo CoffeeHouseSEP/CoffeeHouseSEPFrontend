@@ -7,7 +7,7 @@ export const useTranslation = (key: string) => {
 
   const result = useMemo(() => {
     if (language[key]) return language[key]
-    return `Error translation: ${key}!`
+    return `${key}!`
   }, [key, language])
 
   return result
@@ -19,7 +19,7 @@ export const useTranslationFunction = () => {
   const getTranslate = (key: string) => {
     if (key.trim() === '') return ''
     if (language[key]) return language[key]
-    return `Error translation: ${key}!`
+    return `${key}!`
   }
 
   return getTranslate

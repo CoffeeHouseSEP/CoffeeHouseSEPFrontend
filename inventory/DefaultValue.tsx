@@ -72,6 +72,7 @@ export const DefaultGoods: GoodsRequest = {
   applyPrice: 0,
   innerPrice: 0,
   description: '',
+  isTransfer: 0,
   status: 0,
   categoryId: '',
   isSize: 0,
