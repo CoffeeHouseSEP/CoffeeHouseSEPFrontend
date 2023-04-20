@@ -42,9 +42,6 @@ export const BranchForm = ({
   const descriptionLabel = useTranslation('descriptionBranch')
   const addressLabel = useTranslation('addressBranch')
   const phoneNumberLabel = useTranslation('phoneNumberBranch')
-  const branchManagerIdLabel = useTranslation('branchManagerId')
-  const longitudeLabel = useTranslation('longitude')
-  const latitudeLabel = useTranslation('latitude')
 
   const result = useApiCall<CommonListResultType<UserResponseSuccess>, String>({
     callApi: () =>
@@ -143,21 +140,6 @@ export const BranchForm = ({
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
             readOnly={type === 'read'}
-            value={branch.address}
-            label={addressLabel}
-            onChange={(event) => {
-              onchangeUserState({
-                address: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.address && translate(errorState.address),
-            })}
-          />
-        </div>
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly={type === 'read'}
             value={branch.phoneNumber}
             label={phoneNumberLabel}
             onChange={(event) => {
@@ -169,47 +151,6 @@ export const BranchForm = ({
               error: errorState?.phoneNumber && translate(errorState.phoneNumber),
             })}
           />
-        </div>
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly={type === 'read'}
-            value={branch.latitude}
-            label={longitudeLabel}
-            onChange={(event) => {
-              onchangeUserState({
-                latitude: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.latitude && translate(errorState.latitude),
-            })}
-          />
-        </div>
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly={type === 'read'}
-            value={branch.longitude}
-            label={latitudeLabel}
-            onChange={(event) => {
-              onchangeUserState({
-                longitude: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.longitude && translate(errorState.longitude),
-            })}
-          />
-        </div>
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Checkbox
-            isReadOnly={type === 'read'}
-            isSelected={branch.status === 1}
-            onChange={() => {
-              onchangeUserState({ status: branch.status === 1 ? 0 : 1 })
-            }}
-          >
-            {branch.status ? 'active' : 'deactivate'}
-          </Checkbox>
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <SelectProvince
@@ -256,6 +197,32 @@ export const BranchForm = ({
           province={branch.province}
           type={type}
         />
+        <div style={{ gridColumn: 'span 1 / span 1' }}>
+          <Input
+            readOnly={type === 'read'}
+            value={branch.address}
+            label={addressLabel}
+            onChange={(event) => {
+              onchangeUserState({
+                address: event.currentTarget.value,
+              })
+            }}
+            {...inputStyles({
+              error: errorState?.address && translate(errorState.address),
+            })}
+          />
+        </div>
+        <div style={{ gridColumn: 'span 1 / span 1' }}>
+          <Checkbox
+            isReadOnly={type === 'read'}
+            isSelected={branch.status === 1}
+            onChange={() => {
+              onchangeUserState({ status: branch.status === 1 ? 0 : 1 })
+            }}
+          >
+            active
+          </Checkbox>
+        </div>
         <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10 }}>
           <UploadFileBase64
             handleUploadFile={handleUploadImage}
@@ -269,17 +236,7 @@ export const BranchForm = ({
           )}
         </div>
       </div>
-      <div style={{ maxWidth: 375, margin: `10px 0px` }}>
-        <Input
-          readOnly
-          value={branch.branchManagerId}
-          label={branchManagerIdLabel}
-          onChange={() => {}}
-          {...inputStyles({
-            error: errorState?.branchManagerId && translate(errorState.branchManagerId),
-          })}
-        />
-      </div>
+      <h4>Select manager</h4>
       <CustomTable
         idFiled="id"
         detailPath="admin/user/"
