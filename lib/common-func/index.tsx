@@ -76,6 +76,9 @@ export const ParseValueForTable = (): object & any => {
         </div>
       )
     },
+    totalPrice: (value: number) => {
+      return Math.round(value)
+    },
     status: (value: string) => {
       if (typeof value === 'string') {
         let status = <>no content</>

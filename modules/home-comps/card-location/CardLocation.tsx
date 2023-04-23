@@ -13,6 +13,7 @@ export const CardLocation = ({ data }: CardFeedBackProps) => {
   const router = useRouter()
   return (
     <CardBase
+      Link={`/store/${data.branchId}`}
       wrapperStyle={{
         padding: 50,
         justifyContent: 'start',

@@ -8,7 +8,6 @@ import { CommonListResultType, NewItem } from '@/types'
 import { BranchResponse } from '@/types/branch/branch'
 import { GoodsResponse } from '@/types/goods/goods'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { BsChevronRight, BsFillCalendar2DateFill } from 'react-icons/bs'
 import { toast } from 'react-toastify'
@@ -18,7 +17,6 @@ import ImageItem from '../news/Image/ImageItem'
 import { CardGoodsHome } from './CardGoodsHome'
 
 export const HomeContainer = () => {
-  const router = useRouter()
   const pixel = useResponsive()
   const newsList = useApiCall<CommonListResultType<NewItem>, String>({
     callApi: () =>
@@ -102,36 +100,6 @@ export const HomeContainer = () => {
           />
         </div>
       )}
-      <div>
-        <div>
-          <a href="https://activation.highlandscoffee.com.vn/">
-            <div
-              style={{
-                width: pixel <= 1280 ? `${pixel}px` : '100%',
-                height: pixel <= 1280 ? `${pixel}px` : '485px',
-                position: 'relative',
-                aspectRatio: '1/1',
-              }}
-            >
-              <Image layout="fill" src="/asset/poster.png" />
-            </div>
-          </a>
-        </div>
-        <div>
-          <a href="https://activation.highlandscoffee.com.vn/">
-            <div
-              style={{
-                width: pixel <= 1280 ? `${pixel}px` : '100%',
-                height: pixel <= 1280 ? `${pixel}px` : '485px',
-                position: 'relative',
-                aspectRatio: '1/1',
-              }}
-            >
-              <Image layout="fill" src="/asset/poster2.png" />
-            </div>
-          </a>
-        </div>
-      </div>
       <div
         style={{
           display: 'grid',
@@ -230,7 +198,6 @@ export const HomeContainer = () => {
                     margin: '2px 0',
                     cursor: 'pointer',
                   }}
-                  onClick={() => router.push(`/news/${item.newsId}`)}
                 >
                   <div
                     style={{
