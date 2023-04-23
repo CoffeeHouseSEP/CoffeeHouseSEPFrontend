@@ -14,6 +14,7 @@ export default function FooterEndUser() {
         width: '100%',
         color: '#fff',
         textAlign: 'center',
+        height: 50,
       }}
     />
   )

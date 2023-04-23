@@ -157,9 +157,11 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
           <Button onClick={() => setStep('login')} disabled={isLoginLoading}>
             Back to sign in
           </Button>
-          <Button onClick={handleForgot} disabled={isLoginLoading}>
-            {isLoginLoading ? <Loading /> : <>{forgotPassword}</>}
-          </Button>
+          {!router.asPath.includes('admin') && (
+            <Button onClick={handleForgot} disabled={isLoginLoading}>
+              {isLoginLoading ? <Loading /> : <>{forgotPassword}</>}
+            </Button>
+          )}
         </div>
       </>
     )

@@ -1,4 +1,4 @@
-import { Button, Loading } from '@/components'
+import { Button, CustomTable, Loading, Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useResponsive } from '@/hooks'
@@ -6,7 +6,9 @@ import { themeValue } from '@/lib'
 import { authenticationSelector } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { setReloadCrt } from '@/redux/share-store'
-import { postMethod } from '@/services'
+import { getMethod, postMethod } from '@/services'
+import { CommonListResultType, ViewPointType } from '@/types'
+import { BranchResponse } from '@/types/branch/branch'
 import { OrderFailure, OrderRequest } from '@/types/order/order'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -44,6 +46,7 @@ export const CartContainer = () => {
   const pixel = useResponsive()
   const [cookies] = useCookies([TOKEN_AUTHENTICATION])
   const [orderSuccess, setOrderSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (reloadCart && typeof window !== 'undefined') {
@@ -96,6 +99,144 @@ export const CartContainer = () => {
   useEffect(() => {
     onChangeOrder({ branchId: '' })
   }, [order.district, order.province, order.ward])
+
+  const [total, setTotal] = useState<
+    {
+      qty: number
+      unitPrice: number
+    }[]
+  >([])
+
+  const getTotalPrice = () => {
+    let priceTotal = 0
+    for (let i = 0; i < total.length; i += 1) {
+      priceTotal += total[i].qty * total[i].unitPrice
+    }
+    return priceTotal
+  }
+
+  const getPrice = async (id: string) => {
+    setLoading(true)
+    try {
+      const res = await getMethod({
+        pathName: apiRoute.goods.getListGoods,
+        params: {
+          page: '1',
+          pageSize: '1',
+          goodsId: id,
+          keySort: 'desc',
+          sortField: 'goodsId',
+        },
+      })
+      return res?.data?.result.data[0]?.applyPrice || 0
+    } catch (err: any) {
+      return 0
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const getSizeUp = async (size: 'S' | 'M' | 'L') => {
+    if (size === 'S') return 1
+    setLoading(true)
+    try {
+      const res = await getMethod({
+        pathName: apiRoute.appParams.getAppPrams,
+        params: {
+          parType: 'UPSIZE_GOODS',
+        },
+      })
+      const result = res?.data?.result.data.find((item: any) => item.name === size)
+      return result ? parseFloat(result.code) : 1
+    } catch (err: any) {
+      return 1
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const getTotal = async () => {
+    const result = await Promise.all(
+      cart.map(async (pro) => {
+        const priceSize = await getSizeUp(pro.size)
+        const unitPrice = await getPrice(pro.id)
+        return {
+          qty: pro.qty,
+          unitPrice: priceSize * unitPrice,
+        }
+      })
+    )
+    setTotal(result)
+  }
+
+  useEffect(() => {
+    if (cart.length) getTotal()
+  }, [cart])
+
+  const getTotalCart = () => {
+    if (couponSelect.maxApply && couponSelect.value) {
+      const discount = Math.round((getTotalPrice() * couponSelect.value) / 100)
+      if (discount > couponSelect.maxApply)
+        return Math.round(getTotalPrice()) - couponSelect.maxApply
+      return Math.round(getTotalPrice()) - discount
+    }
+    return Math.round(getTotalPrice())
+  }
+
+  const [page, setPage] = useState<number>(1)
+
+  const dataField: ViewPointType[] = [
+    {
+      key: 'name',
+      label: 'nameBranch',
+    },
+    {
+      key: 'phoneNumber',
+      label: 'phoneNumberBranch',
+    },
+    {
+      key: 'branchManagerName',
+      label: 'branchManagerName',
+    },
+  ]
+
+  let paramBr = {}
+
+  if (order.province) {
+    paramBr = { ...paramBr, province: order.province }
+  }
+
+  if (order.district) {
+    paramBr = { ...paramBr, district: order.district }
+  }
+
+  if (order.ward) {
+    paramBr = { ...paramBr, ward: order.ward }
+  }
+
+  const resultBranch = useApiCall<CommonListResultType<BranchResponse>, String>({
+    callApi: () =>
+      getMethod({
+        pathName: apiRoute.branch.getListBranch,
+        params: {
+          page: String(page),
+          pageSize: '10',
+          ...paramBr,
+        },
+      }),
+    handleError(status, message) {
+      if (status) {
+        toast.error(message)
+      }
+    },
+    preventLoadingGlobal: true,
+  })
+  const { data, setLetCall } = resultBranch
+  useEffect(() => {
+    if (order.province && order.district) {
+      setLetCall(true)
+    }
+  }, [page, order.province, order.district, order.ward])
 
   if (orderSuccess) {
     return (
@@ -236,6 +377,12 @@ export const CartContainer = () => {
                   <ProductCart setReloadCart={setReloadCart} item={item} />
                 ))}
               </div>
+              <div style={{ ...itemStyle, justifyContent: 'start' }}>
+                Tổng giá trị đơn hàng:
+                <span style={{ marginLeft: 10 }}>
+                  {loading ? <Loading size={40} /> : <strong>{String(getTotalCart())} VND</strong>}
+                </span>
+              </div>
             </div>
             <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10 }}>
               <CouponCart
@@ -245,23 +392,52 @@ export const CartContainer = () => {
                 cartInfo={order.listOrderDetail}
               />
             </div>
+            <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10 }}>
+              <CartGeneralInfo
+                order={order}
+                onChangeOrder={onChangeOrder}
+                error={takeOrder.error?.result}
+              />
+            </div>
+            <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10 }}>
+              {order.province && !resultBranch.loading && (
+                <>
+                  <div style={{ marginTop: 10 }}>Branch</div>
+                  <CustomTable
+                    selectionMode="single"
+                    selectedKeys={[order.branchId]}
+                    handleChangeSelection={(value: string[]) => {
+                      onChangeOrder({ branchId: value[0] })
+                    }}
+                    idFiled="branchId"
+                    detailPath="admin/branch/"
+                    header={dataField ?? []}
+                    listActions={[]}
+                    body={
+                      data
+                        ? data.result.data.map((cate) => {
+                            return { ...cate, status: cate.status === 1 ? 'active' : 'deactivate' }
+                          })
+                        : []
+                    }
+                  >
+                    <>{null}</>
+                  </CustomTable>
+                </>
+              )}
+              {resultBranch.loading && <Loading />}
+              {order.province && !resultBranch.loading && (
+                <Pagination
+                  pageSize={10}
+                  total={data?.result?.totalRows ?? 0}
+                  onChange={(number) => setPage(number)}
+                  page={page}
+                  paginationStyle={{ marginTop: 20 }}
+                />
+              )}
+            </div>
           </div>
-          <div
-            style={{
-              width: '100%',
-              minHeight: '100%',
-              maxWidth: 1024,
-              margin: pixel >= 1000 ? 'auto' : '10px 20px',
-            }}
-          >
-            <CartGeneralInfo
-              coupon={couponSelect}
-              order={order}
-              onChangeOrder={onChangeOrder}
-              item={cart}
-              error={takeOrder.error?.result}
-            />
-          </div>
+
           <div
             style={{
               gridColumn: 'span 2 / span 2',

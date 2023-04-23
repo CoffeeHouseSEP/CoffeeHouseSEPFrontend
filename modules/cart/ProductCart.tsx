@@ -90,7 +90,7 @@ export const ProductCart = ({
   }
 
   useEffect(() => {
-    if (goods.data?.result.data[0].applyPrice) {
+    if (goods.data?.result.data.length && goods.data?.result.data[0].applyPrice) {
       getPrice(goods.data.result.data[0].applyPrice)
     }
   }, [goods])
