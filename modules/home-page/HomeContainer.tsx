@@ -5,12 +5,15 @@ import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall, useResponsive } from '@/hooks'
 import { getMethod } from '@/services'
 import { CommonListResultType, NewItem } from '@/types'
+import { BranchResponse } from '@/types/branch/branch'
 import { GoodsResponse } from '@/types/goods/goods'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { BsFillCalendar2DateFill } from 'react-icons/bs'
+import { BsChevronRight, BsFillCalendar2DateFill } from 'react-icons/bs'
+import { toast } from 'react-toastify'
 import { CardDestinations } from '../home-comps/card-destinations/CardDestinations'
+import { CardLocation } from '../home-comps/card-location/CardLocation'
 import ImageItem from '../news/Image/ImageItem'
 import { CardGoodsHome } from './CardGoodsHome'
 
@@ -41,6 +44,30 @@ export const HomeContainer = () => {
   }, [])
 
   const products = productList.data?.result.data || []
+
+  //   const [page, setPage] = useState<number>(1)
+  const result = useApiCall<CommonListResultType<BranchResponse>, String>({
+    callApi: () =>
+      getMethod({
+        pathName: apiRoute.branch.getListBranch,
+        params: {
+          sortField: 'createdDate',
+          keySort: 'DESC',
+        },
+      }),
+    handleError(status, message) {
+      if (status) {
+        toast.error(message)
+      }
+    },
+    preventLoadingGlobal: true,
+  })
+  const { data, loading, setLetCall } = result
+  const numberOfStore = data?.result.data.length
+
+  useEffect(() => {
+    setLetCall(true)
+  }, [])
 
   return (
     <>
@@ -121,6 +148,27 @@ export const HomeContainer = () => {
           }}
         >
           <Image layout="fill" objectFit="cover" src="/asset/store.jpg" />
+          {numberOfStore && !loading && (
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 10,
+                width: '80%',
+                height: '50%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <CustomSlider
+                ItemCard={data.result.data.map((item) => (
+                  <CardLocation key={item.branchId} data={item} />
+                ))}
+                numberDisplay={1}
+              />
+            </div>
+          )}
         </div>
         <div
           style={{
@@ -140,6 +188,39 @@ export const HomeContainer = () => {
               left: pixel <= 500 ? 20 : 100,
             }}
           >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                alignContent: 'center',
+              }}
+            >
+              <h2
+                style={{
+                  display: 'block',
+                  fontSize: '26px',
+                  lineHeight: '34px',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                TIN MỚI NHẤT
+              </h2>
+              <div>
+                <a
+                  style={{
+                    textDecoration: 'underline',
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '13px',
+                    fontWeight: 'bold',
+                  }}
+                  href="news/listnews"
+                >
+                  <span>Xem toàn bộ</span> <BsChevronRight />
+                </a>
+              </div>
+            </div>
             {newsList.data?.result &&
               newsList.data?.result.data.map((item) => (
                 <div

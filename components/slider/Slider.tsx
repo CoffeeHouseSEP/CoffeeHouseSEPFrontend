@@ -55,6 +55,7 @@ export const CustomSlider = ({
       className="hide-scrollbar"
       style={{
         width: '100%',
+        height: '100%',
         overflowX: 'hidden',
         position: 'relative',
       }}
