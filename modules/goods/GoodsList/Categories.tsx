@@ -3,17 +3,17 @@ import { themeValue } from '@/lib'
 import { CategoryItem } from '@/types'
 
 interface PropCategory {
-  filterItems: (categoryId: number) => void
-  categoryId?: number
+  filterItems: (categoryId: string) => void
+  categoryId?: string
   category?: CategoryItem[]
 }
 const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
   const pixel = useResponsive()
-  const handlefilterItems = (categoryId: number) => {
+  const handlefilterItems = (categoryId: string) => {
     filterItems(categoryId)
   }
   const filterAllItems = () => {
-    filterItems(-1)
+    filterItems('-1')
   }
 
   return (

@@ -4,7 +4,8 @@ import { useApiCall, useTranslationFunction } from '@/hooks'
 import { themeValue } from '@/lib'
 import { getMethod } from '@/services'
 import { CategoryItem, CommonListResultType } from '@/types'
-import { GoodsRequest } from '@/types/goods/goods'
+import { GoodsResponse } from '@/types/goods/goods'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Categories from './Categories'
@@ -13,9 +14,10 @@ import Product from './Product'
 export default function GoodList() {
   const [page, setPage] = useState<number>(1)
   const translate = useTranslationFunction()
-  const [goodItem, setGoodItem] = useState<GoodsRequest[]>([])
+  const [goodItem, setGoodItem] = useState<GoodsResponse[]>([])
   const [cateItem, setCateItem] = useState<CategoryItem[]>([])
-  const [categoryId, setCategoryId] = useState<number>()
+  const router = useRouter()
+  const [categoryId, setCategoryId] = useState<string | undefined>()
   const pageSize = '8'
   const category = useApiCall<CommonListResultType<CategoryItem>, String>({
     callApi: () =>
@@ -32,7 +34,7 @@ export default function GoodList() {
     preventLoadingGlobal: true,
   })
 
-  const goods = useApiCall<CommonListResultType<GoodsRequest>, String>({
+  const goods = useApiCall<CommonListResultType<GoodsResponse>, String>({
     callApi: () =>
       getMethod({
         pathName: apiRoute.goods.getListGoods,
@@ -55,12 +57,25 @@ export default function GoodList() {
   })
   const { data, loading, setLetCall } = goods
   useEffect(() => {
-    category.setLetCall(true)
-    setLetCall(true)
-  }, [page])
+    if (category.data?.result.data.length) {
+      setLetCall(true)
+    }
+  }, [category.data, categoryId, page])
 
-  const filterItems = (categoryId: number) => {
-    if (categoryId === -1) {
+  useEffect(() => {
+    category.setLetCall(true)
+  }, [])
+
+  useEffect(() => {
+    if (category.data?.result.data.length) {
+      const categoryIdParam = router.query.categoryId
+      const findCate = cateItem.find((item) => item.categoryId === String(categoryIdParam))
+      setCategoryId(findCate?.categoryId)
+    }
+  }, [router, category.data])
+
+  const filterItems = (categoryId: string) => {
+    if (categoryId === '-1') {
       if (data) {
         setCategoryId(undefined)
         setLetCall(true)
@@ -72,6 +87,7 @@ export default function GoodList() {
       setLetCall(true)
     }
   }
+
   return (
     <main>
       {!loading && (

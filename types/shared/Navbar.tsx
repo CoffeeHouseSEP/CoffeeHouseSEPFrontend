@@ -5,7 +5,7 @@ export interface NavBarItemType {
 }
 
 export interface CategoryItem {
-  categoryId: number
+  categoryId: string
   name: string
   description: string
   status: number
@@ -27,6 +27,6 @@ export interface GoodsItem {
   applyPrice: number
   description: string
   status: number
-  categoryId: number
+  categoryId: string
   innerPrice: number
 }

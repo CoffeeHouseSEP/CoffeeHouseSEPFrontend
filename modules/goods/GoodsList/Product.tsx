@@ -1,14 +1,14 @@
 import { addToCartHandler, themeValue } from '@/lib'
 import ImageItem from '@/modules/news/Image/ImageItem'
 import { setReloadCrt } from '@/redux/share-store'
-import { GoodsRequest } from '@/types/goods/goods'
+import { GoodsResponse } from '@/types/goods/goods'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 
 interface PropProduct {
-  items: GoodsRequest[]
+  items: GoodsResponse[]
 }
 const Product = ({ items }: PropProduct) => {
   const router = useRouter()

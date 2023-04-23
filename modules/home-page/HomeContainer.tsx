@@ -1,25 +1,20 @@
-import { Input } from '@/components'
-import { cityData, cityStore } from '@/components/mock-data/MockDataConstant'
-import { RecommendedDataType, RecommendedDataTypeStore } from '@/components/mock-data/MockDataType'
+import { cityData } from '@/components/mock-data/MockDataConstant'
+import { RecommendedDataType } from '@/components/mock-data/MockDataType'
 import { CustomSlider } from '@/components/slider/Slider'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall, useResponsive } from '@/hooks'
-import { themeValue } from '@/lib'
-import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { getMethod } from '@/services'
 import { CommonListResultType, NewItem } from '@/types'
+import { GoodsResponse } from '@/types/goods/goods'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { AiOutlineSend } from 'react-icons/ai'
-import { BsChevronRight, BsFillCalendar2DateFill } from 'react-icons/bs'
-import { useSelector } from 'react-redux'
+import { BsFillCalendar2DateFill } from 'react-icons/bs'
 import { CardDestinations } from '../home-comps/card-destinations/CardDestinations'
-import { CardLocation } from '../home-comps/card-location/CardLocation'
 import ImageItem from '../news/Image/ImageItem'
+import { CardGoodsHome } from './CardGoodsHome'
 
 export const HomeContainer = () => {
-  const { darkTheme } = useSelector(GeneralSettingsSelector)
   const router = useRouter()
   const pixel = useResponsive()
   const newsList = useApiCall<CommonListResultType<NewItem>, String>({
@@ -31,9 +26,22 @@ export const HomeContainer = () => {
     preventLoadingGlobal: true,
   })
 
+  const productList = useApiCall<CommonListResultType<GoodsResponse>, String>({
+    callApi: () =>
+      getMethod({
+        pathName: apiRoute.goods.getListGoods,
+        params: { page: '1', pageSize: '10', keySort: 'DESC', sortField: 'goodsId', status: 1 },
+      }),
+    preventLoadingGlobal: true,
+  })
+
   useEffect(() => {
     newsList.setLetCall(true)
+    productList.setLetCall(true)
   }, [])
+
+  const products = productList.data?.result.data || []
+
   return (
     <>
       <div
@@ -41,7 +49,6 @@ export const HomeContainer = () => {
           display: 'flex',
           flexDirection: 'column',
           gap: 40,
-          background: 'linear-gradient(to right, #232526, #414345)',
         }}
       >
         <CustomSlider
@@ -51,24 +58,23 @@ export const HomeContainer = () => {
           numberDisplay={1}
         />
       </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          margin: ' 0 auto',
-          gap: 40,
-          justifyContent: 'center',
-          alignItems: 'center',
-          background: 'linear-gradient(to right, #232526, #414345)',
-        }}
-      >
-        <CustomSlider
-          ItemCard={cityStore.map((item: RecommendedDataTypeStore) => (
-            <CardLocation key={item.id} data={item} />
-          ))}
-          numberDisplay={1}
-        />
-      </div>
+      {products.length > 0 && (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 40,
+          }}
+        >
+          <CustomSlider
+            dot={false}
+            ItemCard={products.map((item) => (
+              <CardGoodsHome menuItem={item} />
+            ))}
+            numberDisplay={pixel <= 500 ? 1 : 4}
+          />
+        </div>
+      )}
       <div>
         <div>
           <a href="https://activation.highlandscoffee.com.vn/">
@@ -134,40 +140,6 @@ export const HomeContainer = () => {
               left: pixel <= 500 ? 20 : 100,
             }}
           >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                alignContent: 'center',
-              }}
-            >
-              <h2
-                style={{
-                  display: 'block',
-                  fontSize: '26px',
-                  lineHeight: '34px',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                TIN MỚI NHẤT
-              </h2>
-              <div>
-                <div
-                  style={{
-                    textDecoration: 'underline',
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontSize: '13px',
-                    fontWeight: 'bold',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => router.push('/news/listnews')}
-                >
-                  <span>Xem toàn bộ</span> <BsChevronRight />
-                </div>
-              </div>
-            </div>
             {newsList.data?.result &&
               newsList.data?.result.data.map((item) => (
                 <div
@@ -225,30 +197,6 @@ export const HomeContainer = () => {
                   </div>
                 </div>
               ))}
-            <div style={{ display: 'flex', gap: 0 }}>
-              <Input
-                style={{
-                  width: pixel <= 380 ? 200 : '100%',
-                  height: '100%',
-                  backgroundColor: themeValue[darkTheme].colors.background,
-                }}
-                placeholder="Enter your email to receive information..."
-                type="email"
-              />
-              <div
-                style={{
-                  backgroundColor: '#53382c',
-                  display: 'flex',
-                  padding: 12,
-                  justifyContent: 'center',
-                  color: '#fff',
-                  alignItems: 'center',
-                  cursor: 'pointer',
-                }}
-              >
-                <AiOutlineSend style={{ marginRight: 10 }} /> <span>Gửi</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

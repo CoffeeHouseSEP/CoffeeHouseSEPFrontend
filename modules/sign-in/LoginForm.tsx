@@ -125,22 +125,26 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
             textAlign: 'center',
           }}
         >
-          {forgotPassword}
+          {!router.asPath.includes('admin') ? forgotPassword : 'Contact admin to get new password'}
         </div>
-        <Input
-          ref={usernameRef}
-          {...inputStyles({})}
-          labelLeft="Username"
-          clearable
-          onFocus={handleReset}
-        />
-        <Input
-          ref={emailForgotRef}
-          {...inputStyles({})}
-          labelLeft="Email"
-          clearable
-          onFocus={handleReset}
-        />
+        {!router.asPath.includes('admin') && (
+          <>
+            <Input
+              ref={usernameRef}
+              {...inputStyles({})}
+              labelLeft="Username"
+              clearable
+              onFocus={handleReset}
+            />
+            <Input
+              ref={emailForgotRef}
+              {...inputStyles({})}
+              labelLeft="Email"
+              clearable
+              onFocus={handleReset}
+            />
+          </>
+        )}
         <div
           style={{
             width: '100%',

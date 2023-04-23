@@ -15,13 +15,13 @@ interface IGridCategory {
 export default function CategoryItemView({ list, goodList }: IGridCategory) {
   const pixel = useResponsive()
   const router = useRouter()
-  const [isHover, setIsHover] = useState<number>()
+  const [isHover, setIsHover] = useState<string>()
   const { darkTheme } = useSelector(GeneralSettingsSelector)
-  const handleMouseEnter = (id: number) => {
+  const handleMouseEnter = (id: string) => {
     setIsHover(id)
   }
   const handleMouseLeave = () => {
-    setIsHover(-1)
+    setIsHover('-1')
   }
 
   return (
@@ -98,6 +98,7 @@ export default function CategoryItemView({ list, goodList }: IGridCategory) {
                         border: '1px solid #fff',
                         marginBottom: pixel <= 960 ? 'auto' : '0',
                       }}
+                      onClick={() => router.push(`/goods/listgoods?categoryId=${item.categoryId}`)}
                     >
                       KHÁM PHÁ THÊM
                     </button>

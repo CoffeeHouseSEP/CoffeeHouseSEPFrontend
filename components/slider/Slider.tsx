@@ -1,3 +1,4 @@
+import { themeValue } from '@/lib'
 import Image from 'next/image'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 
@@ -76,6 +77,7 @@ export const CustomSlider = ({
           opacity: index > 0 ? 1 : 0.5,
           width: 30,
           height: 30,
+          backgroundColor: themeValue.dark.colors.primary,
         }}
       >
         <Image src="/asset/arrow-left.svg" alt="" layout="fill" />
@@ -89,7 +91,6 @@ export const CustomSlider = ({
           MozTransition: '2s ease-out',
           OTransition: '2s ease-out',
           transition: '2s ease-out',
-          gap: 20,
           marginBottom: 10,
           height: '100%',
           width: 'min-content',
@@ -123,12 +124,12 @@ export const CustomSlider = ({
           transform: 'translateY(50%)',
           borderRadius: '100%',
           display: 'flex',
-
           zIndex: 5,
           cursor: index < ItemCard.length - numberDisplay ? 'pointer' : 'default',
           opacity: index < ItemCard.length - numberDisplay ? 1 : 0.5,
           width: 30,
           height: 30,
+          backgroundColor: themeValue.dark.colors.primary,
         }}
       >
         <Image src="/asset/arrow-right.svg" alt="" layout="fill" />
