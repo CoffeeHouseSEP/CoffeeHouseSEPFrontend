@@ -130,6 +130,7 @@ export const NavBarEndUser = () => {
                 display: 'flex',
                 gap: 15,
                 alignItems: 'end',
+                justifyContent: 'end',
               }}
             >
               <Menu cartLength={cart.length} />
