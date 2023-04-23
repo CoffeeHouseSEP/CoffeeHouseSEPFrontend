@@ -76,7 +76,6 @@ export default function DetailNew() {
           </span>
         </span>
       </div>
-      <p>{newDetail?.content}</p>
 
       <div
         style={{
@@ -86,9 +85,21 @@ export default function DetailNew() {
           aspectRatio: '1/1',
           cursor: 'pointer',
           transition: 'linear 1s',
+          margin: 'auto',
         }}
       >
         <ImageItem id={newDetail.newsId} />
+      </div>
+
+      <div
+        style={{
+          width: pixel <= 980 ? 'auto' : '50%',
+          height: pixel <= 980 ? 'auto' : '20%',
+          margin: 'auto',
+          marginTop: '10px',
+        }}
+      >
+        {newDetail?.content}
       </div>
 
       <h2

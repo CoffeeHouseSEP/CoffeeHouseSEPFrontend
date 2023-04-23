@@ -127,7 +127,7 @@ export const CardBase = ({
       ) : null}
       {description ? (
         <div style={{ ...initDesCriptionStyle, ...description.style }}>
-          Giá :{description.content} $
+          Giá :{description.content} VND
         </div>
       ) : null}
       {child}
