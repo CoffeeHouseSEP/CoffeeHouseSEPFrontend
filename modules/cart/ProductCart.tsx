@@ -104,15 +104,14 @@ export const ProductCart = ({
           qty: number
           size: string
         }[] = JSON.parse(cart)
-        const findItem = productList.find(
-          (itemLocal) => item.id === itemLocal.id && item.size === itemLocal.size
-        )
-        if (findItem) {
-          const newList = productList.filter(
-            (thisItem) => thisItem.id !== item.id && thisItem.size !== item.size
-          )
-          localStorage.setItem('cart', JSON.stringify(newList))
-        }
+        const newList = productList.filter((thisItem) => {
+          if (item.id === thisItem.id) {
+            if (item.size === thisItem.size) return true
+            return false
+          }
+          return true
+        })
+        localStorage.setItem('cart', JSON.stringify(newList))
       }
       dispatch(setReloadCrt(true))
       setReloadCart(true)
@@ -161,7 +160,9 @@ export const ProductCart = ({
           )
         )}
       </div>
-      <div style={{ gridColumn: 'span 1 / span 1', ...itemStyle }}>{item.size}</div>
+      <div style={{ gridColumn: 'span 1 / span 1', ...itemStyle }}>
+        {goods.data?.result.data[0].isSize === 1 && item.size}
+      </div>
       <div
         style={{
           overflow: 'hidden',

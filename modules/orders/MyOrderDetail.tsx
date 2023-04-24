@@ -153,7 +153,7 @@ export const MyOrderDetail = () => {
               <div style={{ color: themeValue.light.colors.redHighland }}>Ngày tạo đơn:</div>
               <div>{orderDetail?.createdDate}</div>
               <div style={{ color: themeValue.light.colors.redHighland }}>Tổng giá trị:</div>
-              <div>{orderDetail?.totalPrice} VND</div>
+              <div>{Math.round(orderDetail?.totalPrice || 0)} VND</div>
               <div style={{ color: themeValue.light.colors.redHighland }}>Trạng thái:</div>
               <div>{parseValue.status!(orderDetail?.status)}</div>
               <div style={{ color: themeValue.light.colors.redHighland }}>Mã giảm giá:</div>

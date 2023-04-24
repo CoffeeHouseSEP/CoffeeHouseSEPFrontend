@@ -8,6 +8,7 @@ import { CommonListResultType, NewItem } from '@/types'
 import { BranchResponse } from '@/types/branch/branch'
 import { GoodsResponse } from '@/types/goods/goods'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect } from 'react'
 import { BsChevronRight, BsFillCalendar2DateFill } from 'react-icons/bs'
 import { toast } from 'react-toastify'
@@ -191,59 +192,61 @@ export const HomeContainer = () => {
             </div>
             {newsList.data?.result &&
               newsList.data?.result.data.map((item) => (
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    margin: '2px 0',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: pixel <= 380 ? '80px' : '120px',
-                      height: pixel <= 380 ? '60px' : '80px',
-                      position: 'relative',
-                      aspectRatio: '1',
-                      cursor: 'pointer',
-                      transition: 'linear 1s',
-                    }}
-                  >
-                    <ImageItem id={item.newsId} />
-                  </div>
+                <Link href={`/news/${item.newsId}`}>
                   <div
                     style={{
                       display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
-                      marginLeft: 30,
+                      alignItems: 'center',
+                      margin: '2px 0',
+                      cursor: 'pointer',
                     }}
                   >
-                    <h5
+                    <div
                       style={{
-                        textTransform: 'uppercase',
-                        fontSize: pixel <= 380 ? '10px' : '16px',
-                        lineHeight: pixel <= 380 ? '16px' : '24px',
-                        fontWeight: 'bold',
-                        maxHeight: '48px',
-                        width: pixel <= 380 ? '60%' : '100%',
-                        overflow: 'hidden',
+                        width: pixel <= 380 ? '80px' : '120px',
+                        height: pixel <= 380 ? '60px' : '80px',
+                        position: 'relative',
+                        aspectRatio: '1',
+                        cursor: 'pointer',
+                        transition: 'linear 1s',
                       }}
                     >
-                      {item.title}
-                    </h5>
-                    <span
+                      <ImageItem id={item.newsId} />
+                    </div>
+                    <div
                       style={{
-                        color: '#666666',
-                        fontSize: pixel <= 380 ? '10px' : '12px',
-                        lineHeight: '21px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        marginLeft: 30,
                       }}
                     >
-                      <BsFillCalendar2DateFill style={{ marginRight: '10px' }} />
-                      {item?.createdDate.replaceAll(':00.000+00:00', '')}
-                    </span>
+                      <h5
+                        style={{
+                          textTransform: 'uppercase',
+                          fontSize: pixel <= 380 ? '10px' : '16px',
+                          lineHeight: pixel <= 380 ? '16px' : '24px',
+                          fontWeight: 'bold',
+                          maxHeight: '48px',
+                          width: pixel <= 380 ? '60%' : '100%',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        {item.title}
+                      </h5>
+                      <span
+                        style={{
+                          color: '#666666',
+                          fontSize: pixel <= 380 ? '10px' : '12px',
+                          lineHeight: '21px',
+                        }}
+                      >
+                        <BsFillCalendar2DateFill style={{ marginRight: '10px' }} />
+                        {item?.createdDate.replaceAll(':00.000+00:00', '')}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
           </div>
         </div>

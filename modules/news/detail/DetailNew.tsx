@@ -79,10 +79,10 @@ export default function DetailNew() {
 
       <div
         style={{
-          width: pixel <= 980 ? 'auto' : '50%',
+          width: pixel <= 980 ? 'auto' : '60%',
           height: pixel <= 980 ? 'auto' : '20%',
           position: 'relative',
-          aspectRatio: '1/1',
+          aspectRatio: '5/3',
           cursor: 'pointer',
           transition: 'linear 1s',
           margin: 'auto',

@@ -162,7 +162,7 @@ export const CartContainer = () => {
         const unitPrice = await getPrice(pro.id)
         return {
           qty: pro.qty,
-          unitPrice: priceSize * unitPrice,
+          unitPrice: Math.round(priceSize * unitPrice),
         }
       })
     )

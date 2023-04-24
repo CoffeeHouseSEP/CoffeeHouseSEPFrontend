@@ -1,6 +1,6 @@
 import { Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
-import { useApiCall } from '@/hooks'
+import { useApiCall, useResponsive } from '@/hooks'
 import { getMethod } from '@/services'
 import { CommonListResultType, NewItem } from '@/types'
 import { useEffect, useState } from 'react'
@@ -25,6 +25,9 @@ export default function ListNews() {
   useEffect(() => {
     setLetCall(true)
   }, [page])
+
+  const pixel = useResponsive()
+
   return (
     <div>
       <div style={{ textAlign: 'center', margin: '10rem 0 4rem 0' }}>
@@ -35,8 +38,8 @@ export default function ListNews() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px,1fr)',
-            gap: '2rem 1rem',
+            gridTemplateColumns: `repeat(${pixel <= 900 ? 1 : 3}, minmax(300px,1fr)`,
+            gap: 20,
             marginBottom: '4rem',
           }}
         >

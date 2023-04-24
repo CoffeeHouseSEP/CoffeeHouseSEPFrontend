@@ -42,6 +42,8 @@ export default function GoodsDetail() {
       toast.error(translate(message))
     },
     handleSuccess(message, data) {
+      setQty(1)
+      setActiveSize(0)
       setPrice(data.data[0].applyPrice)
     },
     preventLoadingGlobal: true,
