@@ -1,7 +1,7 @@
 import { Button, CustomTable, Pagination } from '@/components'
 import { FloatButton } from '@/components/button/FloatButton'
 import { apiRoute } from '@/constants/apiRoutes'
-import { ROLE_COOKIE } from '@/constants/auth'
+import { ROLE_COOKIE, TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, postMethod, putMethod } from '@/services'
@@ -19,7 +19,7 @@ export const GoodManagement = () => {
 
   const [page, setPage] = useState<number>(1)
 
-  const [cookies] = useCookies([ROLE_COOKIE])
+  const [cookies] = useCookies([ROLE_COOKIE, TOKEN_AUTHENTICATION])
 
   const [select, setSelect] = useState<string[]>([])
 
@@ -36,6 +36,7 @@ export const GoodManagement = () => {
       getMethod({
         pathName: apiRoute.goods.getListGoodsByAuthorized,
         params: { page: String(page), pageSize: '10' },
+        token: cookies.token,
       }),
     handleError(status, message) {
       if (status) {
@@ -93,6 +94,7 @@ export const GoodManagement = () => {
       putMethod({
         pathName: apiRoute.disableGoodsBranch.branchGoodsEnable,
         params: { goodsId: select[0] },
+        token: cookies.token,
       }),
     handleSuccess(message) {
       toast.success(message)
@@ -109,6 +111,7 @@ export const GoodManagement = () => {
       postMethod({
         pathName: apiRoute.disableGoodsBranch.branchGoodsDisable,
         params: { goodsId: select[0] },
+        token: cookies.token,
       }),
     handleSuccess(message) {
       toast.success(message)
