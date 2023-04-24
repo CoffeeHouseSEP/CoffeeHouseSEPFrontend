@@ -86,6 +86,7 @@ export const OrderManagement = () => {
         header={dataField ?? []}
         body={data ? data.result.data : []}
         loading={loading}
+        listActions={[]}
       >
         <>{null}</>
       </CustomTable>

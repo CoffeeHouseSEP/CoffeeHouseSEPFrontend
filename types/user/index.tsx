@@ -6,6 +6,7 @@ export interface UserResponseSuccess {
   status: number
   email: string
   address: string
+  fullName: string
 }
 
 export interface UserNotifications {
@@ -25,6 +26,7 @@ export interface UserRequest {
   phoneNumber: string
   email: string
   address: string
+  fullName: string
 }
 
 export type UserRequestFailure = Record<keyof UserRequest, string>

@@ -15,6 +15,7 @@ export const DefaultCategory: CategoryResponse = {
 }
 
 export const DefaultUserRequest: UserRequest = {
+  fullName: '',
   loginName: '',
   phoneNumber: '',
   address: '',

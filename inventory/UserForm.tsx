@@ -26,6 +26,7 @@ export const UserForm = ({
   //   const { darkTheme } = useSelector(GeneralSettingsSelector)
 
   const userLoginName = useTranslation('userLoginName')
+  const userFullName = useTranslation('userFullName')
   const userPhoneNumber = useTranslation('userPhoneNumber')
   const userEmail = useTranslation('userEmail')
   const userAddress = useTranslation('userAddress')
@@ -38,6 +39,21 @@ export const UserForm = ({
         gap: 16,
       }}
     >
+      <div style={{ gridColumn: 'span 1 / span 1' }}>
+        <Input
+          readOnly={type === 'read'}
+          value={user.fullName}
+          label={userFullName}
+          onChange={(event) => {
+            onchangeUserState({
+              fullName: event.currentTarget.value,
+            })
+          }}
+          {...inputStyles({
+            error: errorState?.fullName && translate(errorState.fullName),
+          })}
+        />
+      </div>
       <div style={{ gridColumn: 'span 1 / span 1' }}>
         <Input
           readOnly={type === 'read'}

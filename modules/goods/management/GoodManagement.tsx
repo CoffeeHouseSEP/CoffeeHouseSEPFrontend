@@ -28,7 +28,7 @@ export const GoodManagement = () => {
   const result = useApiCall<CommonListResultType<GoodsResponse>, String>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.goods.getListGoods,
+        pathName: apiRoute.goods.getListGoodsByAuthorized,
         params: { page: String(page), pageSize: '10' },
       }),
     handleError(status, message) {

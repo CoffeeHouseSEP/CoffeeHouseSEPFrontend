@@ -225,14 +225,22 @@ export const BranchForm = ({
           </Checkbox>
         </div>
       </div>
-      <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10, marginTop: '20px' }}>
+      <div
+        style={{
+          gridColumn: 'span 1 / span 1',
+          display: 'flex',
+          gap: 10,
+          marginTop: '20px',
+          alignItems: 'center',
+        }}
+      >
         <UploadFileBase64
           handleUploadFile={handleUploadImage}
           labelInput="Upload branch image"
           disabled={type === 'read'}
         />
         {!!branch.image.base64 && (
-          <div style={{ height: '100%', aspectRatio: '1', position: 'relative' }}>
+          <div style={{ height: '50px', aspectRatio: '1', position: 'relative' }}>
             <Image layout="fill" src={`${branch.image.prefix}${branch.image.base64}`} />
           </div>
         )}

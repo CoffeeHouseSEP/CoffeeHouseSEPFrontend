@@ -9,7 +9,7 @@ import { getMethod } from '@/services'
 import { CommonListResultType, UserResponseSuccess, ViewPointType } from '@/types'
 import { GoodsRequest, GoodsRequestFailure } from '@/types/goods/goods'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -98,6 +98,20 @@ export const GoodsForm = ({
       },
     })
   }
+
+  const thisImage = useMemo(() => {
+    return goods.image.base64 ? (
+      <div style={{ height: '40px', aspectRatio: '1 / 1', position: 'relative' }}>
+        <Image layout="fill" src={`${goods.image.prefix}${goods.image.base64}`} />
+      </div>
+    ) : (
+      <div style={{ color: themeValue.dark.colors.redHighland }}>
+        {errorState && errorState['base64' as keyof typeof errorState]
+          ? errorState['base64' as keyof typeof errorState]
+          : 'No image'}
+      </div>
+    )
+  }, [goods])
 
   return (
     <>
@@ -244,17 +258,21 @@ export const GoodsForm = ({
           </Checkbox>
         </div>
       </div>
-      <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10, marginTop: '20px' }}>
+      <div
+        style={{
+          width: 'max-content',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+          marginTop: '20px',
+        }}
+      >
         <UploadFileBase64
           handleUploadFile={handleUploadImage}
           labelInput="Upload goods image"
           disabled={type === 'read'}
         />
-        {!!goods.image.base64 && (
-          <div style={{ height: '100%', aspectRatio: '1', position: 'relative' }}>
-            <Image layout="fill" src={`${goods.image.prefix}${goods.image.base64}`} />
-          </div>
-        )}
+        {thisImage}
       </div>
       <h4 style={{ color: themeValue.dark.colors.redHighland }}>Select your category</h4>
       <CustomTable

@@ -21,7 +21,6 @@ export const NewsForm = ({ news, onchangeUserState, type, errorState }: INewForm
 
   const titleLabel = useTranslation('title')
   const contentLabel = useTranslation('content')
-  const createByLabel = useTranslation('createBy')
 
   const handleUploadImage = (value: string) => {
     const image = `${value}`
@@ -73,22 +72,6 @@ export const NewsForm = ({ news, onchangeUserState, type, errorState }: INewForm
           })}
         />
       </div>
-      <div style={{ gridColumn: 'span 1 / span 1' }}>
-        <Input
-          readOnly={type === 'read'}
-          value={news.createdBy}
-          label={createByLabel}
-          onChange={(event) => {
-            onchangeUserState({
-              createdBy: event.currentTarget.value,
-            })
-          }}
-          {...inputStyles({
-            error: errorState?.createdBy && translate(errorState.createdBy),
-          })}
-        />
-      </div>
-
       <div style={{ gridColumn: 'span 1 / span 1' }}>
         <Checkbox
           isReadOnly={type === 'read'}

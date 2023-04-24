@@ -40,6 +40,7 @@ export const UserDetail = () => {
         phoneNumber: thisUser.phoneNumber,
         email: thisUser.email,
         address: thisUser.address,
+        fullName: thisUser.fullName,
       })
     },
     handleError(status, message) {

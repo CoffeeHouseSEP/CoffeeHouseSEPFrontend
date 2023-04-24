@@ -1,5 +1,5 @@
 import { GeneralSettingsStoreTypes, UserResponseSuccess } from '@/types'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: GeneralSettingsStoreTypes = {
   darkTheme: 'dark',
@@ -12,6 +12,7 @@ const initialState: GeneralSettingsStoreTypes = {
     createdDate: '',
     email: '',
     address: '',
+    fullName: '',
   },
 }
 

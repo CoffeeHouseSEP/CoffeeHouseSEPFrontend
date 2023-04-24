@@ -38,7 +38,7 @@ export const DashboardContainer = () => {
     if (cookies.token) {
       getDashboard.setLetCall(true)
     }
-  }, [page])
+  }, [page, cookies.token])
 
   return (
     <>

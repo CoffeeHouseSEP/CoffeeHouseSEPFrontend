@@ -28,7 +28,7 @@ export const CateManagement = () => {
   const result = useApiCall<CommonListResultType<CategoryResponse>, String>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.category.getListCategory,
+        pathName: apiRoute.category.getListAuthorized,
         params: { page: String(page) },
       }),
     handleError(status, message) {

@@ -32,7 +32,7 @@ export const CateDetail = () => {
   const viewResult = useApiCall<CommonListResultType<CategoryResponse>, string>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.category.getListCategory,
+        pathName: apiRoute.category.getListAuthorized,
         params: {
           categoryId: id ?? '1',
         },

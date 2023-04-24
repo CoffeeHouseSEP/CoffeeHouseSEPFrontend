@@ -3,6 +3,7 @@ export const apiRoute = {
     getListCategory: '/category/get-list-category',
     updateCategory: '/category/update-category',
     createCategory: '/category/add-new-category',
+    getListAuthorized: '/category/get-list-category-authorized',
   },
   news: {
     getListNews: '/news/get-list-news',
