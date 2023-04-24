@@ -30,19 +30,10 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
     {
       mainItem: { label: 'Dashboard', path: '/admin', icon: '' },
     },
-
-    {
-      mainItem: { label: 'UserManagement', path: '/admin/user/management', icon: '' },
-    },
-    {
-      mainItem: { label: 'CategoryManagement', path: '/admin/category/management', icon: '' },
-    },
     {
       mainItem: { label: 'GoodManagement', path: '/admin/good/management', icon: '' },
     },
-    {
-      mainItem: { label: 'NewsManagement', path: '/admin/news/management', icon: '' },
-    },
+
     {
       mainItem: { label: 'OrderManagement', path: '/admin/orders/management', icon: '' },
     },
@@ -51,6 +42,16 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
   if (cookies.role === 'ADMIN') {
     sidebar = [
       ...sidebar,
+      {
+        mainItem: { label: 'CategoryManagement', path: '/admin/category/management', icon: '' },
+      },
+      {
+        mainItem: { label: 'NewsManagement', path: '/admin/news/management', icon: '' },
+      },
+      {
+        mainItem: { label: 'UserManagement', path: '/admin/user/management', icon: '' },
+      },
+
       {
         mainItem: { label: 'BranchManagement', path: '/admin/branch/management', icon: '' },
       },

@@ -1,4 +1,3 @@
-import { useRoleSwitch } from '@/hooks'
 import { GoodManagement } from '@/modules/goods/management'
 import dynamic from 'next/dynamic'
 import { ReactElement } from 'react'
@@ -7,7 +6,7 @@ import { NextPageWithLayout } from '../../_app'
 const InternalLayout = dynamic(() => import('@/components/layout/InternalLayout'), { ssr: false })
 
 const GoodsManagement: NextPageWithLayout = () => {
-  return useRoleSwitch(<GoodManagement />)
+  return <GoodManagement />
 }
 
 GoodsManagement.getLayout = function getLayout(page: ReactElement) {
