@@ -16,6 +16,7 @@ export interface OrderResponse {
   approvedDate: string
   cancelledDate: string
   reason: string
+  description: string
 }
 export interface OrderCancel {
   requestId: string
