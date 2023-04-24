@@ -33,6 +33,8 @@ export const apiRoute = {
     updateUser: '/user-internal/update-user',
     forgotPass: '/user-internal/forgot-password',
     register: '/user-internal/register',
+    activeUser: '/user-internal/active-user',
+    deActiveUser: '/user-internal/de-active-user',
   },
   image: {
     imageInfo: '/image-info/get-image-by-object-id',
@@ -59,6 +61,7 @@ export const apiRoute = {
     cancelOrders: '/orders/cancel-orders',
     orderDetail: '/order-detail/get-list-order-detail-by-order-id',
     createOrder: '/orders/create-orders',
+    completeOrder: '/orders/complete-orders',
   },
   address: {
     addressProvince: '/address/get-list-province',

@@ -4,7 +4,7 @@ import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
-import { getMethod } from '@/services'
+import { getMethod, postMethod } from '@/services'
 import { CommonListResultType, OptionsType, UserResponseSuccess, ViewPointType } from '@/types'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -87,6 +87,42 @@ export const UserManagement = () => {
     },
   ]
 
+  const [select, setSelect] = useState<string[]>([])
+
+  const enable = useApiCall<string, String>({
+    callApi: () =>
+      postMethod({
+        pathName: apiRoute.user.activeUser,
+        params: { id: select[0] },
+        token: cookies.token,
+      }),
+    handleSuccess(message) {
+      toast.success(message)
+    },
+    handleError(status, message) {
+      if (status) {
+        toast.error(translate(message))
+      }
+    },
+  })
+
+  const disable = useApiCall<string, String>({
+    callApi: () =>
+      postMethod({
+        pathName: apiRoute.user.deActiveUser,
+        params: { id: select[0] },
+        token: cookies.token,
+      }),
+    handleSuccess(message) {
+      toast.success(message)
+    },
+    handleError(status, message) {
+      if (status) {
+        toast.error(translate(message))
+      }
+    },
+  })
+
   return (
     <>
       <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
@@ -109,6 +145,22 @@ export const UserManagement = () => {
           </FloatButton>
         )}
       </div>
+      <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', gap: 10 }}>
+        <Button
+          onClick={() => enable.setLetCall(true)}
+          disabled={select.length === 0}
+          color="primary"
+        >
+          Active user
+        </Button>
+        <Button
+          onClick={() => disable.setLetCall(true)}
+          disabled={select.length === 0}
+          color="warning"
+        >
+          Deactivate user
+        </Button>
+      </div>
       <Dropdown<'USER' | 'BRANCH_MANAGER'>
         options={options}
         button="Filter role"
@@ -119,6 +171,9 @@ export const UserManagement = () => {
         idFiled="id"
         detailPath="admin/user/"
         header={dataField ?? []}
+        selectionMode="single"
+        selectedKeys={select}
+        handleChangeSelection={setSelect}
         body={
           data
             ? data.result.data.map((user) => {

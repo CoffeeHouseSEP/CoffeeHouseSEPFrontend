@@ -32,6 +32,7 @@ export const CartContainer = () => {
     ward: '',
     district: '',
     couponId: '',
+    description: '',
     listOrderDetail: [],
   })
   const [couponSelect, setCouponSelect] = useState<{ maxApply: number; value: number }>({

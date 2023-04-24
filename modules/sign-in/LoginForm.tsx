@@ -204,20 +204,6 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
         style={{
           width: '100%',
           display: 'flex',
-          justifyContent: 'end',
-          gap: 10,
-        }}
-      >
-        {isEndUser && (
-          <Button styleType="light" onClick={() => router.push('/admin')}>
-            Đăng nhập với tại khoản nội bộ
-          </Button>
-        )}
-      </div>
-      <div
-        style={{
-          width: '100%',
-          display: 'flex',
           justifyContent: 'space-between',
           paddingTop: '1rem',
           gap: 10,

@@ -29,6 +29,7 @@ export interface OrderRequest {
   ward: string
   district: string
   couponId: string
+  description: string
   listOrderDetail: {
     goodsId: string
     quantity: number

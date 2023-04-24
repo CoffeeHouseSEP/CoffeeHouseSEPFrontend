@@ -7,15 +7,12 @@ import { ShareStoreSelector, setReloadCrt } from '@/redux/share-store'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { AiOutlineSearch } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
-import { Input } from '../../form'
 import { Menu } from './Menu'
 import { MenuMobile } from './MenuMobile'
 
 export const NavBarEndUser = () => {
   const pixel = useResponsive()
-  const [search, setSearch] = useState<string>('')
   const { darkTheme } = useSelector(GeneralSettingsSelector)
   const { isLoggedIn } = useSelector(authenticationSelector)
   const { reloadCart } = useSelector(ShareStoreSelector)
@@ -84,7 +81,7 @@ export const NavBarEndUser = () => {
             }}
           >
             <div style={{ display: pixel <= 980 ? 'none' : 'flex', gap: 0 }}>
-              <Input
+              {/* <Input
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value)
@@ -95,8 +92,8 @@ export const NavBarEndUser = () => {
                   backgroundColor: themeValue[darkTheme].colors.background,
                 }}
                 placeholder="Tìm kiếm..."
-              />
-              <div
+              /> */}
+              {/* <div
                 style={{
                   backgroundColor: themeValue[darkTheme].colors.background,
                   display: 'flex',
@@ -106,7 +103,7 @@ export const NavBarEndUser = () => {
                 }}
               >
                 <AiOutlineSearch />
-              </div>
+              </div> */}
             </div>
             {isLoggedIn && pixel > 980 && (
               <div style={{ width: '100px' }}>
