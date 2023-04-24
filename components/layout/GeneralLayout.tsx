@@ -54,7 +54,7 @@ export const GeneralLayout = ({ children }: { children: React.ReactNode }) => {
         }
         if (router.pathname.includes('admin')) {
           if (cookies.role === 'BRANCH_MANAGER') {
-            router.push('/branch')
+            router.push('/admin')
           }
         }
         if (router.pathname.includes('branch')) {

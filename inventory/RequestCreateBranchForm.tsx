@@ -2,6 +2,7 @@ import { CustomTable, Input, Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
+import { themeValue } from '@/lib'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
@@ -140,6 +141,23 @@ export const RequestCreateBranchForm = ({
           paginationStyle={{ marginTop: 20 }}
         />
       )}
+      {Object.keys(errorState || {}).map((item) => {
+        if (errorState && errorState[item as keyof typeof errorState]) {
+          return (
+            <div
+              style={{
+                marginTop: 30,
+                fontSize: '20px',
+                paddingLeft: '4px',
+                color: themeValue.dark.colors.redHighland,
+              }}
+            >
+              {errorState[item as keyof typeof errorState]}
+            </div>
+          )
+        }
+        return ''
+      })}
     </>
   )
 }
