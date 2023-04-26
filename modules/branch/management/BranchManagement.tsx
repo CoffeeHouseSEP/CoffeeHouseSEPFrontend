@@ -44,10 +44,6 @@ export const BranchManagement = () => {
 
   const dataField: ViewPointType[] = [
     {
-      key: 'branchId',
-      label: 'branchId',
-    },
-    {
       key: 'name',
       label: 'nameBranch',
     },

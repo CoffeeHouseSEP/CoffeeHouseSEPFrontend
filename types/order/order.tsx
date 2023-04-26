@@ -31,6 +31,7 @@ export interface OrderRequest {
   district: string
   couponId: string
   description: string
+  phoneNumber: string
   listOrderDetail: {
     goodsId: string
     quantity: number

@@ -93,7 +93,10 @@ export const ParseValueForTable = (): object & any => {
             status = <div style={{ color: 'success' }}>XÁC NHẬN</div>
             break
           case 'CANCELLED':
-            status = <div style={{ color: 'red' }}>ĐÃ HOÃN</div>
+            status = <div style={{ color: 'red' }}>ĐÃ HỦY</div>
+            break
+          case 'CREATED':
+            status = <div style={{ color: 'success' }}>ĐÃ TẠO</div>
             break
           default:
             status = <>{value}</>
@@ -116,6 +119,10 @@ export const ParseValueForTable = (): object & any => {
     },
     gender: (value: number) => {
       return convertValueToLabel(value, genderList)
+    },
+    isDisabled: (value: number) => {
+      if (value) return <AiOutlineCloseCircle color="red" />
+      return <AiOutlineCheckCircle color="green" />
     },
   }
 }

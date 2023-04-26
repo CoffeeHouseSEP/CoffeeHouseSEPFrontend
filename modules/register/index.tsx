@@ -16,6 +16,7 @@ export interface RegisterRequest {
   registerPassword: string
   email: string
   fullName: string
+  phone: string
 }
 
 export type RegisterFailure = Record<keyof RegisterRequest, string>
@@ -26,6 +27,7 @@ export const RegisterFrom = () => {
   const registerPassword = useRef<HTMLInputElement>(null)
   const emailRef = useRef<HTMLInputElement>(null)
   const fullNameRef = useRef<HTMLInputElement>(null)
+  const phoneRef = useRef<HTMLInputElement>(null)
   const { darkTheme } = useSelector(GeneralSettingsSelector)
   const { isLoginLoading } = useSelector(authenticationSelector)
   const dispatch = useDispatch()
@@ -39,6 +41,7 @@ export const RegisterFrom = () => {
           registerPassword: encodeBase64(registerPassword.current?.value || ''),
           email: emailRef.current?.value || '',
           fullName: fullNameRef.current?.value || '',
+          phone: phoneRef.current?.value || '',
         },
       }),
     handleSuccess(message) {
@@ -103,6 +106,14 @@ export const RegisterFrom = () => {
           error: error?.result.email,
         })}
         label="Email"
+        clearable
+      />
+      <Input
+        ref={phoneRef}
+        {...inputStyles({
+          error: error?.result.phone,
+        })}
+        label="Phone"
         clearable
       />
       <div

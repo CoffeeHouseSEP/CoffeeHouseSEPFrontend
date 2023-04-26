@@ -55,7 +55,7 @@ export const NavBarEndUser = () => {
           <Link href="/">
             <div
               style={{
-                height: '100%',
+                height: '80%',
                 aspectRatio: '4 / 3',
                 position: 'relative',
                 cursor: 'pointer',

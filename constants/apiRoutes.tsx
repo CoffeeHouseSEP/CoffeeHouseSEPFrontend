@@ -15,6 +15,7 @@ export const apiRoute = {
     createGoods: '/goods/add-new-goods',
     updateGoods: '/goods/update-goods',
     getListGoodsByAuthorized: '/goods/get-list-goods-authorized',
+    getListGoodsBranch: '/goods/get-list-goods-branch-manager',
   },
   branch: {
     getListBranch: '/branch/get-list-branch',

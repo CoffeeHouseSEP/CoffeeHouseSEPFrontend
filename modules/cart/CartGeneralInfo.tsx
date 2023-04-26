@@ -54,12 +54,6 @@ export const CartGeneralInfo = ({
         onChange={(e) => onChangeOrder({ address: e.target.value })}
         {...inputStyles({ error: error?.address })}
       />
-      <Input
-        label="Description"
-        value={order.description}
-        onChange={(e) => onChangeOrder({ description: e.target.value })}
-        {...inputStyles({ error: error?.description })}
-      />
       <Button
         style={{ marginBottom: 10 }}
         onClick={() => {
@@ -69,6 +63,18 @@ export const CartGeneralInfo = ({
       >
         Cancel select address
       </Button>
+      <Input
+        label="Description"
+        value={order.description}
+        onChange={(e) => onChangeOrder({ description: e.target.value })}
+        {...inputStyles({ error: error?.description })}
+      />
+      <Input
+        label="Phone number"
+        value={order.phoneNumber}
+        onChange={(e) => onChangeOrder({ phoneNumber: e.target.value })}
+        {...inputStyles({ error: error?.phoneNumber })}
+      />
     </>
   )
 }

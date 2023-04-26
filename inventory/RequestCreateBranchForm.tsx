@@ -1,4 +1,4 @@
-import { CustomTable, Input, Pagination } from '@/components'
+import { Button, CustomTable, Input, Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
@@ -11,6 +11,7 @@ import { RequestFailure } from '@/types/request/request'
 import { RequestCreateResponse } from '@/types/requestDetail/requestDetail'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { inputStyles } from './Styles'
@@ -28,16 +29,13 @@ export const RequestCreateBranchForm = ({
   request,
   type,
   errorState,
-  selectGoods,
 }: IRequestCreateBranchForm) => {
   const { breakPoint } = useSelector(ShareStoreSelector)
   const translate = useTranslationFunction()
   const [cookies] = useCookies([TOKEN_AUTHENTICATION])
   const [page, setPage] = useState<number>(1)
-  const [selectId, setSelectId] = useState<string[]>(selectGoods ? [selectGoods] : [''])
 
   const GoodsIdLabel = useTranslation('goodsId')
-  const QuantityLabel = useTranslation('quantity')
   const result = useApiCall<CommonListResultType<GoodsResponse>, String>({
     callApi: () =>
       getMethod({
@@ -55,31 +53,30 @@ export const RequestCreateBranchForm = ({
   useEffect(() => {
     setLetCall(true)
   }, [page])
-  useEffect(() => {
-    if (selectId.length) {
-      onchangeUserState({
-        goodsId: selectId[0],
-      })
-    } else {
-      onchangeUserState({
-        goodsId: '',
-      })
-    }
-  }, [selectId])
+
   const dataField: ViewPointType[] = [
-    {
-      key: 'goodsId',
-      label: 'goodsId',
-    },
     {
       key: 'name',
       label: 'name',
+    },
+    {
+      key: 'categoryName',
+      label: 'categoryName',
     },
     {
       key: 'applyPrice',
       label: 'applyPrice',
     },
   ]
+
+  const setQuantity = (id: number) => {
+    if (id <= 1) {
+      onchangeUserState({ quantity: 1 })
+    } else {
+      onchangeUserState({ quantity: id })
+    }
+  }
+
   return (
     <>
       <div
@@ -100,22 +97,35 @@ export const RequestCreateBranchForm = ({
             })}
           />
         </div>
-        <div>
-          <Input
-            label={QuantityLabel}
-            value={request.quantity}
-            onChange={(event) => {
-              onchangeUserState({
-                quantity: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.branchId && translate(errorState.branchId),
-            })}
-          />
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Button
+            type="button"
+            onClick={() => setQuantity(request.quantity)}
+            color="primary"
+            styleType="light"
+          >
+            <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+          </Button>
+          {/* amount */}
+          <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{request.quantity}</p>
+          {/* decrease amount */}
+          <Button
+            color="primary"
+            type="button"
+            onClick={() => setQuantity(request.quantity + 1)}
+            styleType="light"
+          >
+            <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+          </Button>
         </div>
       </div>
       <CustomTable
+        listActions={[]}
         idFiled="goodsId"
         detailPath="admin/goods/"
         header={dataField ?? []}
@@ -127,9 +137,11 @@ export const RequestCreateBranchForm = ({
             : []
         }
         selectionMode={type === 'read' ? 'none' : 'single'}
-        selectedKeys={selectId}
+        selectedKeys={[request.goodsId]}
         loading={loading}
-        handleChangeSelection={setSelectId}
+        handleChangeSelection={(value: string[]) =>
+          onchangeUserState({ goodsId: value.length > 0 ? value[0] : '' })
+        }
       >
         <>{null}</>
       </CustomTable>

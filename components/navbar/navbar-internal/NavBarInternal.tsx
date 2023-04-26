@@ -21,10 +21,10 @@ export const NavbarInternal = ({ setOpenSideBar, pixel }: INavbarInternal) => {
   const iconButton = () => {
     return (
       <div
-        style={{ cursor: 'pointer', position: 'relative', height: '100px', aspectRatio: '1' }}
+        style={{ cursor: 'pointer', position: 'relative', height: '40px', aspectRatio: '1.3 / 1' }}
         onClick={() => {
-          if (router.pathname !== '/dashboard') {
-            router.push('/dashboard')
+          if (router.pathname !== '/admin') {
+            router.push('/admin')
           }
         }}
       >

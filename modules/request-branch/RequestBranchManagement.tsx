@@ -6,7 +6,7 @@ import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } 
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
-import { RequestBranchRequest } from '@/types/request/request'
+import { RequestBranchResponse } from '@/types/request/request'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
@@ -25,7 +25,7 @@ export const RequestBranchManagement = () => {
 
   const { breakPoint } = useSelector(ShareStoreSelector)
 
-  const result = useApiCall<CommonListResultType<RequestBranchRequest>, String>({
+  const result = useApiCall<CommonListResultType<RequestBranchResponse>, String>({
     callApi: () =>
       getMethod({
         pathName: apiRoute.request.getRequest,
@@ -49,16 +49,12 @@ export const RequestBranchManagement = () => {
   }
   const dataField: ViewPointType[] = [
     {
-      key: 'requestId',
-      label: 'requestId',
-    },
-    {
       key: 'branchName',
       label: 'branchName',
     },
     {
-      key: 'createdBy',
-      label: 'createdBy',
+      key: 'createdByName',
+      label: 'createdByName',
     },
     {
       key: 'createdDate',

@@ -114,24 +114,23 @@ export const CouponCart = ({
         )}
       {!getCoupon.loading &&
         (!getCoupon.data?.result.data || getCoupon.data?.result.data.length === 0) && (
-          <>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-              <div>
-                <RiCoupon2Fill size={50} color={themeValue[darkTheme].colors.redHighland} />
-              </div>
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+          >
+            <div>
+              <RiCoupon2Fill size={50} color={themeValue[darkTheme].colors.redHighland} />
+            </div>{' '}
+            <div style={{ color: themeValue[darkTheme].colors.redHighland, fontWeight: 550 }}>
+              Không có mã giảm giá phù hợp
             </div>
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                color: themeValue[darkTheme].colors.redHighland,
-                fontWeight: 700,
-              }}
-            >
-              <div>Không có mã giảm giá phù hợp</div>
-            </div>
-          </>
+          </div>
         )}
     </>
   )

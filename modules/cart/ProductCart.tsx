@@ -106,8 +106,8 @@ export const ProductCart = ({
         }[] = JSON.parse(cart)
         const newList = productList.filter((thisItem) => {
           if (item.id === thisItem.id) {
-            if (item.size === thisItem.size) return true
-            return false
+            if (item.size === thisItem.size) return false
+            return true
           }
           return true
         })

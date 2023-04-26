@@ -24,6 +24,7 @@ export interface GoodsResponse {
   innerPrice: number
   description: string
   status: 0 | 1
+  categoryName: string
   categoryId: string
   isSize: number
   isSold: number

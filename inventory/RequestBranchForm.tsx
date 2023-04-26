@@ -112,16 +112,8 @@ export const RequestBranchForm = ({
 
   const dataField: ViewPointType[] = [
     {
-      key: 'requestDetailId',
-      label: 'requestDetailId',
-    },
-    {
-      key: 'requestId',
-      label: 'requestId',
-    },
-    {
-      key: 'goodsId',
-      label: 'goodsId',
+      key: 'goodsName',
+      label: 'goodsName',
     },
     {
       key: 'quantity',
@@ -141,51 +133,55 @@ export const RequestBranchForm = ({
           gap: 16,
         }}
       >
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly
-            value={request.requestId}
-            label={requestIdLabel}
-            onChange={(event) => {
-              onchangeUserState({
-                requestId: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.requestId && translate(errorState.requestId),
-            })}
-          />
-        </div>
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly
-            value={request.branchId}
-            label={branchIdLabel}
-            onChange={(event) => {
-              onchangeUserState({
-                branchId: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.branchId && translate(errorState.branchId),
-            })}
-          />
-        </div>
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly
-            value={request.createdBy}
-            label={createdByLabel}
-            onChange={(event) => {
-              onchangeUserState({
-                createdBy: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.createdBy && translate(errorState.createdBy),
-            })}
-          />
-        </div>
+        {!router.query.id && (
+          <>
+            <div style={{ gridColumn: 'span 1 / span 1' }}>
+              <Input
+                readOnly
+                value={request.requestId}
+                label={requestIdLabel}
+                onChange={(event) => {
+                  onchangeUserState({
+                    requestId: event.currentTarget.value,
+                  })
+                }}
+                {...inputStyles({
+                  error: errorState?.requestId && translate(errorState.requestId),
+                })}
+              />
+            </div>
+            <div style={{ gridColumn: 'span 1 / span 1' }}>
+              <Input
+                readOnly
+                value={request.branchId}
+                label={branchIdLabel}
+                onChange={(event) => {
+                  onchangeUserState({
+                    branchId: event.currentTarget.value,
+                  })
+                }}
+                {...inputStyles({
+                  error: errorState?.branchId && translate(errorState.branchId),
+                })}
+              />
+            </div>
+            <div style={{ gridColumn: 'span 1 / span 1' }}>
+              <Input
+                readOnly
+                value={request.createdBy}
+                label={createdByLabel}
+                onChange={(event) => {
+                  onchangeUserState({
+                    createdBy: event.currentTarget.value,
+                  })
+                }}
+                {...inputStyles({
+                  error: errorState?.createdBy && translate(errorState.createdBy),
+                })}
+              />
+            </div>
+          </>
+        )}
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
             readOnly={type === 'read'}
@@ -298,6 +294,7 @@ export const RequestBranchForm = ({
       ) : (
         <div>
           <CustomTable
+            listActions={[]}
             idFiled="requestId"
             detailPath="admin/request-branch/"
             header={dataField ?? []}

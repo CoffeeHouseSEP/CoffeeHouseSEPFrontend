@@ -41,21 +41,16 @@ export const RequestManagement = () => {
 
   const dataField: ViewPointType[] = [
     {
-      key: 'requestId',
-      label: 'requestId',
-    },
-    {
       key: 'branchName',
       label: 'branchName',
     },
     {
-      key: 'createdBy',
-      label: 'createdBy',
+      key: 'createdByName',
+      label: 'createdByName',
     },
-
     {
-      key: 'approvedBy',
-      label: 'approvedBy',
+      key: 'approvedByName',
+      label: 'approvedByName',
     },
     {
       key: 'createdDate',

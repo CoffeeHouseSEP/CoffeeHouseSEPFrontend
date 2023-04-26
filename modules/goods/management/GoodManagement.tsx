@@ -34,7 +34,10 @@ export const GoodManagement = () => {
   const result = useApiCall<CommonListResultType<GoodsResponse>, String>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.goods.getListGoodsByAuthorized,
+        pathName:
+          cookies.role === 'ADMIN'
+            ? apiRoute.goods.getListGoodsByAuthorized
+            : apiRoute.goods.getListGoodsBranch,
         params: { page: String(page), pageSize: '10' },
         token: cookies.token,
       }),
@@ -50,11 +53,7 @@ export const GoodManagement = () => {
     setLetCall(true)
   }, [page])
 
-  const dataField: ViewPointType[] = [
-    {
-      key: 'goodsId',
-      label: 'goodsId',
-    },
+  let dataField: ViewPointType[] = [
     {
       key: 'name',
       label: 'name',
@@ -68,8 +67,8 @@ export const GoodManagement = () => {
       label: 'description',
     },
     {
-      key: 'categoryId',
-      label: 'categoryId',
+      key: 'categoryName',
+      label: 'categoryName',
     },
     {
       key: 'goodsUnit',
@@ -79,11 +78,27 @@ export const GoodManagement = () => {
       key: 'isSold',
       label: 'isSold',
     },
-    {
-      key: 'status',
-      label: 'status',
-    },
   ]
+
+  if (cookies.role === 'ADMIN') {
+    dataField = [
+      ...dataField,
+      {
+        key: 'status',
+        label: 'status',
+      },
+    ]
+  }
+
+  if (cookies.role === 'BRANCH_MANAGER') {
+    dataField = [
+      ...dataField,
+      {
+        key: 'isDisabled',
+        label: 'isDisabled',
+      },
+    ]
+  }
 
   const handleRedirectCreate = () => {
     router.push('/admin/good/create')
@@ -97,6 +112,7 @@ export const GoodManagement = () => {
         token: cookies.token,
       }),
     handleSuccess(message) {
+      setLetCall(true)
       toast.success(message)
     },
     handleError(status, message) {
@@ -114,6 +130,7 @@ export const GoodManagement = () => {
         token: cookies.token,
       }),
     handleSuccess(message) {
+      setLetCall(true)
       toast.success(message)
     },
     handleError(status, message) {

@@ -19,6 +19,7 @@ import { FloatTrayCreate } from '../inventory/FloatTrailCreate'
 
 export default function RequestCreate() {
   const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
+  const [select, setSelect] = useState<string[]>([])
 
   const router = useRouter()
   const translate = useTranslationFunction()
@@ -59,17 +60,41 @@ export default function RequestCreate() {
 
   const confirmLabel = useTranslation('Confirm')
 
+  const deleteLabel = useTranslation('delete')
+
   const callCreate = () => {
     createResult.setLetCall(true)
   }
+
   const confirmChoice = () => {
-    setRequest([
-      ...request.filter((item) => item.goodsId !== requestState.goodsId && item.goodsId !== ''),
-      requestState,
-    ])
-    setRequestState(DefaultCreateRequest)
-    toast.info('Selected goods successfully!')
+    if (requestState.goodsId.length > 0) {
+      const req = [...request.filter((item) => item.goodsId !== '')]
+      if (req.find((item) => item.goodsId === requestState.goodsId)) {
+        setRequest([
+          ...req.map((item) => {
+            if (item.goodsId === requestState.goodsId) {
+              return { ...item, quantity: item.quantity + requestState.quantity }
+            }
+            return item
+          }),
+        ])
+      } else {
+        setRequest([...req, requestState])
+      }
+      setRequestState(DefaultCreateRequest)
+      toast.info('Selected goods successfully!')
+    } else {
+      toast.error('Please select goof')
+    }
   }
+
+  const deleteGoodReq = () => {
+    const newReq = request.filter((item) => item.goodsId !== select[0])
+    setRequest(newReq)
+    setSelect([])
+    toast.info('deleted!')
+  }
+
   const dataField: ViewPointType[] = [
     {
       key: 'goodsId',
@@ -123,14 +148,21 @@ export default function RequestCreate() {
       </div>
       <div style={{ fontSize: '25px', fontWeight: 'bold', padding: 20 }}>Goods is Selected:</div>
       <CustomTable
+        selectionMode="single"
+        listActions={[]}
         idFiled="goodsId"
         detailPath="admin/request/"
         header={dataField ?? []}
         body={request}
+        selectedKeys={select}
+        handleChangeSelection={setSelect}
       >
         <>{null}</>
       </CustomTable>
-      <div style={{ float: 'right' }}>
+      <div style={{ float: 'right', gap: 10, display: 'flex' }}>
+        <Button color="warning" onClick={deleteGoodReq} disabled={select.length === 0}>
+          {createResult.loading ? <Loading /> : <>{deleteLabel}</>}
+        </Button>
         <Button color="primary" onClick={confirmChoice} disabled={createResult.loading}>
           {createResult.loading ? <Loading /> : <>{confirmLabel}</>}
         </Button>

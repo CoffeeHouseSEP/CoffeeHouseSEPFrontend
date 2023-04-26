@@ -1,9 +1,11 @@
 import { Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
-import { useApiCall, useResponsive } from '@/hooks'
+import { useApiCall } from '@/hooks'
+import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, NewItem } from '@/types'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import NewsItem from './NewItem'
 
 export default function ListNews() {
@@ -26,7 +28,7 @@ export default function ListNews() {
     setLetCall(true)
   }, [page])
 
-  const pixel = useResponsive()
+  const { breakPoint } = useSelector(ShareStoreSelector)
 
   return (
     <div>
@@ -38,9 +40,8 @@ export default function ListNews() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: `repeat(${pixel <= 900 ? 1 : 3}, minmax(300px,1fr)`,
+            gridTemplateColumns: `repeat(${breakPoint}, minmax(0, 1fr))`,
             gap: 20,
-            marginBottom: '4rem',
           }}
         >
           <NewsItem list={newList} />

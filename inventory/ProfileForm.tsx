@@ -39,7 +39,7 @@ export const ProfileForm = ({ profile, onChangeProfile, errorState }: IProfileFo
             })
           }}
           {...inputStyles({
-            error: errorState?.loginName && translate(errorState.loginName),
+            error: errorState?.fullName && translate(errorState.fullName),
           })}
         />
       </div>

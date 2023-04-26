@@ -25,6 +25,8 @@ import { ProductCart, itemStyle } from './ProductCart'
 export const CartContainer = () => {
   const [cart, setCart] = useState<{ id: string; qty: number; size: 'M' | 'S' | 'L' }[]>([])
   const [reloadCart, setReloadCart] = useState<boolean>(true)
+  const { isLoggedIn } = useSelector(authenticationSelector)
+  const { darkTheme, accountInfo } = useSelector(GeneralSettingsSelector)
   const [order, setOrder] = useState<OrderRequest>({
     branchId: '',
     address: '',
@@ -34,15 +36,12 @@ export const CartContainer = () => {
     couponId: '',
     description: '',
     listOrderDetail: [],
+    phoneNumber: accountInfo.phoneNumber,
   })
   const [couponSelect, setCouponSelect] = useState<{ maxApply: number; value: number }>({
     maxApply: 0,
     value: 0,
   })
-
-  const { isLoggedIn } = useSelector(authenticationSelector)
-
-  const { darkTheme } = useSelector(GeneralSettingsSelector)
 
   const pixel = useResponsive()
   const [cookies] = useCookies([TOKEN_AUTHENTICATION])
@@ -436,6 +435,11 @@ export const CartContainer = () => {
                   paginationStyle={{ marginTop: 20 }}
                 />
               )}
+              <div
+                style={{ color: themeValue.dark.colors.redHighland, fontWeight: 500, padding: 10 }}
+              >
+                {takeOrder.error?.result.branchId}
+              </div>
             </div>
           </div>
 

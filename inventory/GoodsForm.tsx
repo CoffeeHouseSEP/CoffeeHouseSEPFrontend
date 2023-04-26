@@ -223,18 +223,6 @@ export const GoodsForm = ({
             has size
           </Checkbox>
         </div>
-
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Checkbox
-            isReadOnly={type === 'read'}
-            isSelected={goods.status === 1}
-            onChange={() => {
-              onchangeGoodsState({ status: goods.status === 1 ? 0 : 1 })
-            }}
-          >
-            active
-          </Checkbox>
-        </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Checkbox
             isReadOnly={type === 'read'}

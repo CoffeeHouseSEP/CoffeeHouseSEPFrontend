@@ -1,4 +1,4 @@
-import { Checkbox, CustomTable, Input, Pagination, UploadFileBase64 } from '@/components'
+import { CustomTable, Input, Pagination, UploadFileBase64 } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
@@ -213,17 +213,6 @@ export const BranchForm = ({
             })}
           />
         </div>
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Checkbox
-            isReadOnly={type === 'read'}
-            isSelected={branch.status === 1}
-            onChange={() => {
-              onchangeUserState({ status: branch.status === 1 ? 0 : 1 })
-            }}
-          >
-            active
-          </Checkbox>
-        </div>
       </div>
       <div
         style={{
@@ -272,6 +261,12 @@ export const BranchForm = ({
           paginationStyle={{ marginTop: 20 }}
         />
       )}
+      <div style={{ color: themeValue.dark.colors.redHighland, fontWeight: 500, padding: 10 }}>
+        {errorState?.branchId}
+      </div>
+      <div style={{ color: themeValue.dark.colors.redHighland, fontWeight: 500, padding: 10 }}>
+        {errorState?.branchManagerId}
+      </div>
     </>
   )
 }

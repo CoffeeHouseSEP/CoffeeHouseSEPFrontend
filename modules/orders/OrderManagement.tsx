@@ -47,14 +47,6 @@ export const OrderManagement = () => {
 
   const dataField: ViewPointType[] = [
     {
-      key: 'ordersId',
-      label: 'ordersId',
-    },
-    {
-      key: 'customerId',
-      label: 'customerId',
-    },
-    {
       key: 'customerName',
       label: 'customerName',
     },
@@ -71,8 +63,8 @@ export const OrderManagement = () => {
       label: 'shippedDate',
     },
     {
-      key: 'couponId',
-      label: 'couponId',
+      key: 'couponCode',
+      label: 'couponCode',
     },
     {
       key: 'status',

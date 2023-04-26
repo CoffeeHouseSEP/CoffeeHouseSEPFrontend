@@ -22,6 +22,7 @@ export const DefaultUserRequest: UserRequest = {
   email: '',
 }
 export const DefaultOrder: OrderResponse = {
+  description: '',
   ordersId: '',
   customerId: '',
   customerName: '',
