@@ -1,4 +1,4 @@
-import { CustomTable, Input, Pagination } from '@/components'
+import { Button, CustomTable, Input, Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
@@ -12,6 +12,7 @@ import { RequestCreateResponse, RequestDetailResponse } from '@/types/requestDet
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
@@ -31,7 +32,6 @@ export const RequestBranchForm = ({
   type,
   type1,
   errorState,
-  selectGoods,
   requestBody,
 }: IRequestForm) => {
   const router = useRouter()
@@ -39,7 +39,6 @@ export const RequestBranchForm = ({
   const translate = useTranslationFunction()
   const [cookies] = useCookies([TOKEN_AUTHENTICATION])
   const [page, setPage] = useState<number>(1)
-  const [selectId, setSelectId] = useState<string[]>(selectGoods ? [selectGoods] : [''])
   const id = router?.query?.id?.toString()
 
   const requestIdLabel = useTranslation('requestId')
@@ -49,7 +48,6 @@ export const RequestBranchForm = ({
   const totalPriceLabel = useTranslation('totalPrice')
   const statusLabel = useTranslation('status')
   const GoodsIdLabel = useTranslation('goodsId')
-  const QuantityLabel = useTranslation('quantity')
 
   const result = useApiCall<CommonListResultType<RequestDetailResponse>, String>({
     callApi: () =>
@@ -84,17 +82,6 @@ export const RequestBranchForm = ({
     setLetCall(true)
   }, [page])
 
-  useEffect(() => {
-    if (selectId.length) {
-      onchangeUserState({
-        goodsId: selectId[0],
-      })
-    } else {
-      onchangeUserState({
-        goodsId: '',
-      })
-    }
-  }, [selectId])
   const dataListGoodField: ViewPointType[] = [
     {
       key: 'goodsId',
@@ -124,6 +111,15 @@ export const RequestBranchForm = ({
       label: 'applyPrice',
     },
   ]
+
+  const setQuantity = (id: number) => {
+    if (id <= 1) {
+      onchangeUserState({ quantity: 1 })
+    } else {
+      onchangeUserState({ quantity: id })
+    }
+  }
+
   return (
     <>
       <div
@@ -249,22 +245,37 @@ export const RequestBranchForm = ({
                 })}
               />
             </div>
-            <div>
-              <Input
-                label={QuantityLabel}
-                value={requestBody.quantity}
-                onChange={(event) => {
-                  onchangeUserState({
-                    quantity: event.currentTarget.value,
-                  })
-                }}
-                {...inputStyles({
-                  error: errorState?.branchId && translate(errorState.branchId),
-                })}
-              />
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Button
+                type="button"
+                onClick={() => setQuantity(requestBody.quantity)}
+                color="primary"
+                styleType="light"
+              >
+                <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+              </Button>
+              {/* amount */}
+              <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>
+                {requestBody.quantity}
+              </p>
+              {/* decrease amount */}
+              <Button
+                color="primary"
+                type="button"
+                onClick={() => setQuantity(requestBody.quantity + 1)}
+                styleType="light"
+              >
+                <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+              </Button>
             </div>
           </div>
           <CustomTable
+            listActions={[]}
             idFiled="goodsId"
             detailPath="admin/good/"
             header={dataListGoodField ?? []}
@@ -276,9 +287,11 @@ export const RequestBranchForm = ({
                 : []
             }
             selectionMode={type1 === 'read' ? 'none' : 'single'}
-            selectedKeys={selectId}
+            selectedKeys={[requestBody.goodsId]}
             loading={loading}
-            handleChangeSelection={setSelectId}
+            handleChangeSelection={(value: string[]) =>
+              onchangeUserState({ goodsId: value.length > 0 ? value[0] : '' })
+            }
           >
             <>{null}</>
           </CustomTable>

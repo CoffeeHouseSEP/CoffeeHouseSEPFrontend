@@ -85,16 +85,38 @@ export const RequestBranchDetail = () => {
     const newUserState = { ...requestState }
     setRequestState({ ...newUserState, ...newUpdate })
   }
+
+  const [select, setSelect] = useState<string[]>([])
+
   const confirmChoice = () => {
-    setRequestDetail([
-      ...requestDetail.filter(
-        (item) => item.goodsId !== requestState.goodsId && item.goodsId !== ''
-      ),
-      requestState,
-    ])
-    setRequestState(DefaultCreateRequest)
-    toast.info('Selected goods successfully!')
+    if (requestState.goodsId.length > 0) {
+      const req = [...requestDetail.filter((item) => item.goodsId !== '')]
+      if (req.find((item) => item.goodsId === requestState.goodsId)) {
+        setRequestDetail([
+          ...req.map((item) => {
+            if (item.goodsId === requestState.goodsId) {
+              return { ...item, quantity: item.quantity + requestState.quantity }
+            }
+            return item
+          }),
+        ])
+      } else {
+        setRequestDetail([...req, requestState])
+      }
+      setRequestState(DefaultCreateRequest)
+      toast.info('Selected goods successfully!')
+    } else {
+      toast.error('Please select goof')
+    }
   }
+
+  const deleteGoodReq = () => {
+    const newReq = requestDetail.filter((item) => item.goodsId !== select[0])
+    setRequestDetail(newReq)
+    setSelect([])
+    toast.info('deleted!')
+  }
+
   const updateResult = useApiCall<RequestUpdateBranchRequest, RequestFailure>({
     callApi: () =>
       putMethod<RequestUpdateBranchRequest>({
@@ -214,6 +236,7 @@ export const RequestBranchDetail = () => {
   const cancelLabel = useTranslation('cancel')
   const sendLabel = useTranslation('SendRequest')
   const confirmLabel = useTranslation('Confirm')
+  const deleteLabel = useTranslation('delete')
 
   if (viewResult.loading)
     return (
@@ -541,10 +564,17 @@ export const RequestBranchDetail = () => {
             detailPath="admin/request/"
             header={dataGoodsField ?? []}
             body={requestDetail}
+            selectedKeys={select}
+            listActions={[]}
+            handleChangeSelection={setSelect}
+            selectionMode="single"
           >
             <>{null}</>
           </CustomTable>
-          <div style={{ float: 'right' }}>
+          <div style={{ float: 'right', gap: 10, display: 'flex' }}>
+            <Button color="warning" onClick={deleteGoodReq} disabled={select.length === 0}>
+              {updateResult.loading ? <Loading /> : <>{deleteLabel}</>}
+            </Button>
             <Button color="primary" onClick={confirmChoice} disabled={updateResult.loading}>
               {updateResult.loading ? <Loading /> : <>{confirmLabel}</>}
             </Button>
