@@ -84,7 +84,7 @@ export default function RequestCreate() {
       setRequestState(DefaultCreateRequest)
       toast.info('Selected goods successfully!')
     } else {
-      toast.error('Please select goof')
+      toast.error('Please select good!')
     }
   }
 

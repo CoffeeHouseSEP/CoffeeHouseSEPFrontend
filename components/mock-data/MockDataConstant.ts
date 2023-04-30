@@ -139,19 +139,19 @@ export const cityStore: RecommendedDataTypeStore[] = [
 export const cityData: RecommendedDataType[] = [
   {
     id: '1',
-    imageUrl: '/asset/Love1.png',
+    imageUrl: '/asset/about1.jpg',
     name: 'Hồ Chí Minh',
     properties: '32',
   },
   {
     id: '2',
-    imageUrl: '/asset/Love2.png',
+    imageUrl: '/asset/slider2.avif',
     name: 'Hà Nội',
     properties: '45',
   },
   {
     id: '3',
-    imageUrl: '/asset/Love.png',
+    imageUrl: '/asset/slider3.avif',
     name: 'Đà Lạt',
     properties: '23',
   },
