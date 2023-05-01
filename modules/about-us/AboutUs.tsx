@@ -51,8 +51,8 @@ export default function AboutUs() {
                 <div style={{ fontSize: 16 }}>
                   <div style={{ lineHeight: '115%' }}>
                     <div style={{ lineHeight: '115%' }}>
-                      Highlands Coffee® được thành lập vào năm 1999, bắt nguồn từ tình yêu dành cho
-                      đất Việt cùng với cà phê và cộng đồng nơi đây.&nbsp;
+                      Coffee® Chain được thành lập vào năm 2023, bắt nguồn từ tình yêu dành cho đất
+                      Việt cùng với cà phê và cộng đồng nơi đây.&nbsp;
                     </div>
                   </div>
                 </div>
@@ -133,9 +133,9 @@ export default function AboutUs() {
                 <div style={{ fontSize: 16 }}>
                   <div style={{ lineHeight: '115%' }}>
                     <div style={{ lineHeight: '115%' }}>
-                      Highlands Coffee® là không gian của chúng mình nên mọi thứ ở đây đều vì sự
-                      thoải mái của chúng mình. Đừng giữ trong lòng, hãy chia sẻ với chúng mình điều
-                      bạn mong muốn để cùng nhau giúp Highlands Coffee® trở nên tuyệt vời hơn.
+                      Coffee® Chain là không gian của chúng mình nên mọi thứ ở đây đều vì sự thoải
+                      mái của chúng mình. Đừng giữ trong lòng, hãy chia sẻ với chúng mình điều bạn
+                      mong muốn để cùng nhau giúp Highlands Coffee® trở nên tuyệt vời hơn.
                     </div>
                   </div>
                 </div>
