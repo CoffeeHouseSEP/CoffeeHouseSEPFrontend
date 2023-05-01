@@ -6,7 +6,7 @@ import { CommonListResultType } from '@/types'
 import { BranchResponse } from '@/types/branch/branch'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
-import { AiFillCreditCard, AiOutlineWifi, AiTwotonePhone } from 'react-icons/ai'
+import { AiTwotonePhone } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 
 export default function Store() {
@@ -67,9 +67,10 @@ export default function Store() {
           >
             <div
               style={{
-                fontSize: '18px',
+                fontSize: '20px',
                 lineHeight: '26px',
                 fontWeight: 'bold',
+                height: '60px',
                 color: '#555555',
                 textTransform: 'uppercase',
               }}
@@ -79,40 +80,6 @@ export default function Store() {
             <div style={{ marginBottom: '5px', color: '#666666' }}>{item.address}</div>
             <div style={{ marginBottom: '5px', color: '#666666' }}>
               <AiTwotonePhone /> {item.phoneNumber}
-            </div>
-            <div
-              style={{
-                marginBottom: '5px',
-                fontSize: '12px',
-                lineHeight: '20px',
-                color: '#999999',
-              }}
-            >
-              <span
-                style={{
-                  fontSize: '12px',
-                  lineHeight: '20px',
-                  color: '#ffffff',
-                  textTransform: 'uppercase',
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  width: '45px',
-                  height: '20px',
-                  backgroundColor: '#b22830',
-                  padding: '5px',
-                }}
-              >
-                {item.status === 1 ? 'OPEN' : 'CLOSED'}
-              </span>{' '}
-              Open 7:00 – 23:00 * 7 days/week
-            </div>
-            <div>
-              {' '}
-              <AiOutlineWifi /> Wifi Free
-            </div>
-            <div style={{ marginBottom: 15 }}>
-              {' '}
-              <AiFillCreditCard /> Payment by card
             </div>
           </div>
         ))}
@@ -143,7 +110,7 @@ export default function Store() {
             padding: '0px 10px',
           }}
         >
-          Tìm quán cà phê
+          Quán cà phê
         </h1>
         {loading && (
           <div style={{ width: 'max-content', margin: 'auto', marginTop: 60 }}>

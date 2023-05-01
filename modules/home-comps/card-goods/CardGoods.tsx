@@ -60,15 +60,7 @@ export const CardGoods = ({ data }: CardGoodsProps) => {
           fontWeight: 700,
           color: '#53382c',
           margin: '0 auto',
-        },
-      }}
-      description={{
-        content: data.applyPrice.toString(),
-        style: {
-          fontSize: pixel <= 500 ? 12 : 18,
-          fontWeight: 700,
-          color: '#53382c',
-          margin: '0 auto',
+          height: 85,
         },
       }}
     />

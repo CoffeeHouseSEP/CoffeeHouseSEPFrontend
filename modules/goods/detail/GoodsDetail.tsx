@@ -2,7 +2,7 @@ import { Button, Loading } from '@/components'
 import { CustomSlider } from '@/components/slider/Slider'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall, useResponsive, useTranslationFunction } from '@/hooks'
-import { addToCartHandler } from '@/lib'
+import { VND, addToCartHandler } from '@/lib'
 import { CardGoods } from '@/modules/home-comps/card-goods/CardGoods'
 import ImageItem from '@/modules/news/Image/ImageItem'
 import { setReloadCrt } from '@/redux/share-store'
@@ -174,7 +174,7 @@ export default function GoodsDetail() {
             }}
           >
             <div>
-              <h2
+              <h3
                 style={{
                   cursor: 'pointer',
                   fontSize: '34px',
@@ -182,19 +182,21 @@ export default function GoodsDetail() {
                   textTransform: 'uppercase',
                   color: '#53382c',
                   display: 'block',
+                  margin: 'auto',
                 }}
                 onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
               >
                 {goodDetail?.name}
-              </h2>
+              </h3>
               <div
                 style={{
                   aspectRatio: '1/1',
-                  width: '200px',
+                  width: '250px',
                   cursor: 'pointer',
                   position: 'relative',
                   background: '#ffffff',
                   transition: 'linear 1s',
+                  margin: 'auto',
                   borderRadius: 10,
                 }}
                 onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
@@ -204,10 +206,12 @@ export default function GoodsDetail() {
             </div>
             <div
               style={{
-                maxWidth: 500,
+                width: 'max-content',
+                maxWidth: '375px',
                 display: 'flex',
                 flexDirection: 'column',
-                paddingLeft: 30,
+                margin: '0px 10px',
+                marginTop: pixel <= 960 ? 10 : 100,
               }}
             >
               <p
@@ -223,8 +227,45 @@ export default function GoodsDetail() {
               >
                 {goodDetail?.description}
               </p>
+              <Button
+                size="xl"
+                style={{ margin: '10px 0px' }}
+                onClick={() => {
+                  addToCartHandler(qty, getSize(), id)
+                  toast.success('Thêm vào giỏ hàng thành công')
+                  dispatch(setReloadCrt(true))
+                }}
+              >
+                ĐẶT MUA NGAY
+              </Button>
               {/* <div style={{ margin: '10px 0' }}> Size : {goodDetail?.isSize === 0 ? 'M' : 'L'}</div>
                */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <Button
+                  type="button"
+                  onClick={() => setQuantity(qty)}
+                  color="primary"
+                  styleType="light"
+                >
+                  <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+                </Button>
+                {/* amount */}
+                <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{qty}</p>
+                {/* decrease amount */}
+                <Button
+                  color="primary"
+                  type="button"
+                  onClick={() => setQty(qty + 1)}
+                  styleType="light"
+                >
+                  <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+                </Button>
+              </div>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 {goodDetail?.isSize === 1 && (
                   <>
@@ -269,43 +310,8 @@ export default function GoodsDetail() {
                     </div>
                   </>
                 )}
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Button
-                    type="button"
-                    onClick={() => setQuantity(qty)}
-                    color="primary"
-                    styleType="light"
-                  >
-                    <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-                  </Button>
-                  {/* amount */}
-                  <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{qty}</p>
-                  {/* decrease amount */}
-                  <Button
-                    color="primary"
-                    type="button"
-                    onClick={() => setQty(qty + 1)}
-                    styleType="light"
-                  >
-                    <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-                  </Button>
-                </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <Button
-                  onClick={() => {
-                    addToCartHandler(qty, getSize(), id)
-                    toast.success('Thêm vào giỏ hàng thành công')
-                    dispatch(setReloadCrt(true))
-                  }}
-                >
-                  ĐẶT MUA NGAY
-                </Button>
                 <div
                   style={{
                     display: 'flex',
@@ -317,8 +323,7 @@ export default function GoodsDetail() {
                   }}
                 >
                   <span style={{ marginRight: ' 5px' }}> Price :</span>
-                  <span>{loadingP ? <Loading /> : Math.round(price)}</span>
-                  <span>VND</span>
+                  <span>{loadingP ? <Loading /> : VND.format(Math.round(price))}</span>
                 </div>
               </div>
             </div>

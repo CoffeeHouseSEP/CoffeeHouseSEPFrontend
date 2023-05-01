@@ -5,7 +5,6 @@ import { CommonListResultType } from '@/types'
 import { BranchResponse } from '@/types/branch/branch'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { AiFillCreditCard, AiOutlineWifi } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 import ImageItem from '../news/Image/ImageItem'
 
@@ -114,14 +113,21 @@ export default function StoreDetail() {
                             display: 'flex',
                           }}
                         >
-                          <div style={{ color: '#B22830', marginRight: '15px', minWidth: '60px' }}>
+                          <div
+                            style={{
+                              color: '#B22830',
+                              marginRight: '15px',
+                              minWidth: '60px',
+                              marginTop: 4,
+                            }}
+                          >
                             Address:
                           </div>{' '}
                           <div style={{ lineHeight: '23px', fontSize: '15px' }}>
+                            {storeDetail?.province}, {storeDetail?.district}, {storeDetail?.ward},{' '}
                             {storeDetail?.address}
                           </div>
                         </div>
-                        <hr />
                         <div
                           style={{
                             marginBottom: '5px',
@@ -136,41 +142,6 @@ export default function StoreDetail() {
                           <div>{storeDetail?.phoneNumber}</div>
                         </div>
                         <hr />
-                        <div
-                          style={{
-                            marginBottom: '5px',
-                            fontSize: '12px',
-                            lineHeight: '20px',
-                            color: '#999999',
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontSize: '12px',
-                              lineHeight: '20px',
-                              color: '#ffffff',
-                              textTransform: 'uppercase',
-                              fontWeight: 'bold',
-                              textAlign: 'center',
-                              width: '45px',
-                              height: '20px',
-                              backgroundColor: '#b22830',
-                              padding: '5px',
-                            }}
-                          >
-                            {storeDetail?.status === 1 ? 'OPEN' : 'CLOSED'}
-                          </span>{' '}
-                          Open 7:00 – 23:00 * 7 days/week
-                        </div>
-                        <div style={{ padding: 5 }}>
-                          {' '}
-                          <AiOutlineWifi style={{ marginRight: '10px' }} /> <span>Wifi Free</span>
-                        </div>
-                        <div style={{ marginBottom: 15, padding: 5 }}>
-                          {' '}
-                          <AiFillCreditCard style={{ marginRight: '10px' }} />{' '}
-                          <span>Payment by card</span>
-                        </div>
                       </div>
                     </div>
                   </div>

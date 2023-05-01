@@ -1,6 +1,5 @@
 import { useResponsive } from '@/hooks'
 import Image from 'next/image'
-import React from 'react'
 
 export default function AboutUs() {
   const pixel = useResponsive()
@@ -31,7 +30,7 @@ export default function AboutUs() {
               marginTop: '20px',
             }}
           >
-            <a href="https://www.highlandscoffee.com.vn/vn/nguon-goc.html">NGUỒN GỐC</a>
+            <a>NGUỒN GỐC</a>
           </div>
           <div
             data-eff="fadeInUp"
@@ -67,30 +66,10 @@ export default function AboutUs() {
               </div>
             </div>
           </div>
-          <div
-            data-eff="fadeInUp"
-            data-delay="0.7"
-            style={{
-              animationDelay: '0.7s',
-              display: 'inline-block',
-              fontSize: '16px',
-              lineHeight: '24px',
-              color: '#b22830',
-              textTransform: 'uppercase',
-              border: 'solid 1px #b22830',
-              padding: '7px 63px',
-              borderRadius: '5px',
-              marginTop: '20px',
-            }}
-          >
-            <a href="https://www.highlandscoffee.com.vn/vn/nguon-goc.html">
-              <div>Xem chi tiết</div>
-            </a>
-          </div>
         </div>
 
         <div className="img lazy-start fadeIn" style={{ width: '100%' }}>
-          <a href="https://activation.highlandscoffee.com.vn/">
+          <a>
             <div
               style={{ width: '100%', height: '374px', position: 'relative', aspectRatio: '1/1' }}
             >
@@ -101,7 +80,7 @@ export default function AboutUs() {
       </div>
       <div style={{ display: 'flex', flexDirection: pixel <= 960 ? 'column' : 'row' }}>
         <div className="img lazy-start fadeIn" style={{ width: '100%' }}>
-          <a href="https://activation.highlandscoffee.com.vn/">
+          <a>
             <div
               style={{ width: '100%', height: '374px', position: 'relative', aspectRatio: '1/1' }}
             >
@@ -133,7 +112,7 @@ export default function AboutUs() {
               marginTop: '20px',
             }}
           >
-            <a href="https://www.highlandscoffee.com.vn/vn/nguon-goc.html">DỊCH VỤ</a>
+            <a>DỊCH VỤ</a>
           </div>
           <div
             data-eff="fadeInUp"
@@ -162,26 +141,6 @@ export default function AboutUs() {
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            data-eff="fadeInUp"
-            data-delay="0.7"
-            style={{
-              animationDelay: '0.7s',
-              display: 'inline-block',
-              fontSize: '16px',
-              lineHeight: '24px',
-              color: '#b22830',
-              textTransform: 'uppercase',
-              border: 'solid 1px #b22830',
-              padding: '7px 63px',
-              borderRadius: '5px',
-              marginTop: '20px',
-            }}
-          >
-            <a href="https://www.highlandscoffee.com.vn/vn/nguon-goc.html">
-              <div>Xem chi tiết</div>
-            </a>
           </div>
         </div>
       </div>

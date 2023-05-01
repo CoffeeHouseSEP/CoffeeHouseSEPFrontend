@@ -40,6 +40,8 @@ export interface RequestBranchRequest {
   reason: string
   totalPrice: number
   listRequestDetail: RequestCreateResponse[]
+  branchName: string
+  createdByName: string
 }
 export interface BranchResponseSuccess {}
 

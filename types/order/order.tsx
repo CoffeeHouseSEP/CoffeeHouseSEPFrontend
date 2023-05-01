@@ -17,6 +17,7 @@ export interface OrderResponse {
   cancelledDate: string
   reason: string
   description: string
+  phoneNumber: string
 }
 export interface OrderCancel {
   requestId: string

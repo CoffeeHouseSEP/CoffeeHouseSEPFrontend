@@ -1,4 +1,4 @@
-import { addToCartHandler, themeValue } from '@/lib'
+import { VND, addToCartHandler, themeValue } from '@/lib'
 import ImageItem from '@/modules/news/Image/ImageItem'
 import { setReloadCrt } from '@/redux/share-store'
 import { GoodsResponse } from '@/types/goods/goods'
@@ -70,7 +70,7 @@ const Product = ({ items }: PropProduct) => {
                   </h5>
                 </header>
                 <h4 style={{ color: themeValue.dark.colors.redHighland }}>
-                  {Math.floor(applyPrice)} VND
+                  {VND.format(Math.floor(applyPrice))}
                 </h4>
               </div>
               <div

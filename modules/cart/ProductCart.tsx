@@ -1,7 +1,7 @@
 import { Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall } from '@/hooks'
-import { themeValue } from '@/lib'
+import { VND, themeValue } from '@/lib'
 import { setReloadCrt } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType } from '@/types'
@@ -180,7 +180,7 @@ export const ProductCart = ({
           ...itemStyle,
         }}
       >
-        {price}
+        {VND.format(price)}
       </div>
     </>
   )

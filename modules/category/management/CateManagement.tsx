@@ -44,10 +44,6 @@ export const CateManagement = () => {
 
   const dataField: ViewPointType[] = [
     {
-      key: 'categoryId',
-      label: 'categoryId',
-    },
-    {
       key: 'name',
       label: 'nameCate',
     },

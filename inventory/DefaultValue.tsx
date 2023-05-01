@@ -22,6 +22,7 @@ export const DefaultUserRequest: UserRequest = {
   email: '',
 }
 export const DefaultOrder: OrderResponse = {
+  phoneNumber: '',
   description: '',
   ordersId: '',
   customerId: '',
@@ -59,13 +60,9 @@ export const DefaultRequest: RequestBranchRequest = {
   cancelledDate: '',
   reason: '',
   totalPrice: 0,
-  listRequestDetail: [
-    {
-      goodsId: '',
-      quantity: 0,
-      applyPrice: 0,
-    },
-  ],
+  listRequestDetail: [],
+  branchName: '',
+  createdByName: '',
 }
 export const DefaultGoods: GoodsRequest = {
   goodsId: '',

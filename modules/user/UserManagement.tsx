@@ -1,7 +1,7 @@
 import { Button, CustomTable, Dropdown, Pagination } from '@/components'
 import { FloatButton } from '@/components/button/FloatButton'
 import { apiRoute } from '@/constants/apiRoutes'
-import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
+import { ROLE_COOKIE, TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, postMethod } from '@/services'
@@ -17,7 +17,7 @@ export const UserManagement = () => {
   const translate = useTranslationFunction()
 
   const [page, setPage] = useState<number>(1)
-  const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
+  const [cookies] = useCookies([TOKEN_AUTHENTICATION, ROLE_COOKIE])
   const [filter, setFilter] = useState<'USER' | 'BRANCH_MANAGER'>('USER')
 
   const router = useRouter()
@@ -42,10 +42,6 @@ export const UserManagement = () => {
   const { data, loading, setLetCall } = result
 
   const dataField: ViewPointType[] = [
-    {
-      key: 'id',
-      label: 'userId',
-    },
     {
       key: 'loginName',
       label: 'loginName',
@@ -128,45 +124,51 @@ export const UserManagement = () => {
       <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
-        {breakPoint > 1 ? (
-          <Button onClick={handleRedirectCreate}>{createUserButton}</Button>
-        ) : (
-          <FloatButton
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '60px',
-              aspectRatio: '1 / 1',
-            }}
-            onClick={handleRedirectCreate}
+        {breakPoint > 1
+          ? cookies.role === 'ADMIN' && (
+              <Button onClick={handleRedirectCreate}>{createUserButton}</Button>
+            )
+          : cookies.role === 'ADMIN' && (
+              <FloatButton
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '60px',
+                  aspectRatio: '1 / 1',
+                }}
+                onClick={handleRedirectCreate}
+              >
+                <IoIosCreate style={{ width: '50%', height: '50%' }} />
+              </FloatButton>
+            )}
+      </div>
+      {cookies.role === 'ADMIN' && (
+        <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', gap: 10 }}>
+          <Button
+            onClick={() => enable.setLetCall(true)}
+            disabled={select.length === 0}
+            color="primary"
           >
-            <IoIosCreate style={{ width: '50%', height: '50%' }} />
-          </FloatButton>
-        )}
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', gap: 10 }}>
-        <Button
-          onClick={() => enable.setLetCall(true)}
-          disabled={select.length === 0}
-          color="primary"
-        >
-          Active user
-        </Button>
-        <Button
-          onClick={() => disable.setLetCall(true)}
-          disabled={select.length === 0}
-          color="warning"
-        >
-          Deactivate user
-        </Button>
-      </div>
-      <Dropdown<'USER' | 'BRANCH_MANAGER'>
-        options={options}
-        button="Filter role"
-        onClick={(value: 'USER' | 'BRANCH_MANAGER') => setFilter(value)}
-        isCloseSelect
-      />
+            Active user
+          </Button>
+          <Button
+            onClick={() => disable.setLetCall(true)}
+            disabled={select.length === 0}
+            color="warning"
+          >
+            Deactivate user
+          </Button>
+        </div>
+      )}
+      {cookies.role === 'ADMIN' && (
+        <Dropdown<'USER' | 'BRANCH_MANAGER'>
+          options={options}
+          button="Filter role"
+          onClick={(value: 'USER' | 'BRANCH_MANAGER') => setFilter(value)}
+          isCloseSelect
+        />
+      )}
       <CustomTable
         idFiled="id"
         detailPath="admin/user/"

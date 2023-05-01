@@ -2,7 +2,7 @@ import { Button, CustomTable, Loading, Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useResponsive } from '@/hooks'
-import { themeValue } from '@/lib'
+import { VND, themeValue } from '@/lib'
 import { authenticationSelector } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { setReloadCrt } from '@/redux/share-store'
@@ -194,10 +194,6 @@ export const CartContainer = () => {
       key: 'phoneNumber',
       label: 'phoneNumberBranch',
     },
-    {
-      key: 'branchManagerName',
-      label: 'branchManagerName',
-    },
   ]
 
   let paramBr = {}
@@ -371,7 +367,7 @@ export const CartContainer = () => {
                   Tên sản phẩm
                 </div>
                 <div style={{ gridColumn: 'span 2 / span 2', marginBottom: 10, ...itemStyle }}>
-                  Đơn gía
+                  Đơn giá
                 </div>
                 {cart.map((item) => (
                   <ProductCart setReloadCart={setReloadCart} item={item} />
@@ -380,7 +376,7 @@ export const CartContainer = () => {
               <div style={{ ...itemStyle, justifyContent: 'start' }}>
                 Tổng giá trị đơn hàng:
                 <span style={{ marginLeft: 10 }}>
-                  {loading ? <Loading size={40} /> : <strong>{String(getTotalCart())} VND</strong>}
+                  {loading ? <Loading size={40} /> : <strong>{VND.format(getTotalCart())}</strong>}
                 </span>
               </div>
             </div>
@@ -402,7 +398,7 @@ export const CartContainer = () => {
             <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10 }}>
               {order.province && !resultBranch.loading && (
                 <>
-                  <div style={{ marginTop: 10 }}>Branch</div>
+                  <h3 style={{ marginTop: 10 }}>Chọn cửa hàng</h3>
                   <CustomTable
                     selectionMode="single"
                     selectedKeys={[order.branchId]}

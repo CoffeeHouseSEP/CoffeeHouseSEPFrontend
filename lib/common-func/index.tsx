@@ -191,3 +191,8 @@ export const formatDate = (yourDate: Date) => {
 
   return [year, month, day].join('-')
 }
+
+export const VND = new Intl.NumberFormat('vi-VN', {
+  style: 'currency',
+  currency: 'VND',
+})

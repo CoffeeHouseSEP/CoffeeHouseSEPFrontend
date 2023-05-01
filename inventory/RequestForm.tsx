@@ -28,10 +28,6 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
   const [cookies] = useCookies([TOKEN_AUTHENTICATION])
   const [page, setPage] = useState<number>(1)
   const id = router?.query?.id?.toString()
-
-  const requestIdLabel = useTranslation('requestId')
-  const branchIdLabel = useTranslation('branchId')
-  const createdByLabel = useTranslation('createdBy')
   const createdDateLabel = useTranslation('createdDate')
   const totalPriceLabel = useTranslation('totalPrice')
   const statusLabel = useTranslation('status')
@@ -55,16 +51,8 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
   }, [page])
   const dataField: ViewPointType[] = [
     {
-      key: 'requestDetailId',
-      label: 'requestDetailId',
-    },
-    {
-      key: 'requestId',
-      label: 'requestId',
-    },
-    {
-      key: 'goodsId',
-      label: 'goodsId',
+      key: 'goodsName',
+      label: 'goodsName',
     },
     {
       key: 'quantity',
@@ -84,51 +72,6 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
           gap: 16,
         }}
       >
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly={type === 'read'}
-            value={request.requestId}
-            label={requestIdLabel}
-            onChange={(event) => {
-              onchangeUserState({
-                requestId: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.requestId && translate(errorState.requestId),
-            })}
-          />
-        </div>
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly={type === 'read'}
-            value={request.branchId}
-            label={branchIdLabel}
-            onChange={(event) => {
-              onchangeUserState({
-                branchId: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.branchId && translate(errorState.branchId),
-            })}
-          />
-        </div>
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly={type === 'read'}
-            value={request.createdBy}
-            label={createdByLabel}
-            onChange={(event) => {
-              onchangeUserState({
-                createdBy: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.createdBy && translate(errorState.createdBy),
-            })}
-          />
-        </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
             readOnly={type === 'read'}
@@ -176,6 +119,7 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
         </div>
       </div>
       <CustomTable
+        listActions={[]}
         idFiled="requestId"
         detailPath="admin/request/"
         header={dataField ?? []}

@@ -145,43 +145,45 @@ export const GoodManagement = () => {
       <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
-        {breakPoint > 1 ? (
-          <Button disabled={cookies.role === 'BRANCH_MANAGER'} onClick={handleRedirectCreate}>
-            {GoodCreatePascal}
+        {breakPoint > 1
+          ? cookies.role !== 'BRANCH_MANAGER' && (
+              <Button disabled={cookies.role === 'BRANCH_MANAGER'} onClick={handleRedirectCreate}>
+                {GoodCreatePascal}
+              </Button>
+            )
+          : cookies.role !== 'BRANCH_MANAGER' && (
+              <FloatButton
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '60px',
+                  aspectRatio: '1 / 1',
+                }}
+                onClick={handleRedirectCreate}
+              >
+                <IoIosCreate style={{ width: '50%', height: '50%' }} />
+              </FloatButton>
+            )}
+      </div>
+      {cookies.role === 'BRANCH_MANAGER' && (
+        <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', gap: 10 }}>
+          <Button
+            onClick={() => enable.setLetCall(true)}
+            disabled={select.length === 0}
+            color="primary"
+          >
+            Enable product
           </Button>
-        ) : (
-          cookies.role === 'BRANCH_MANAGER' && (
-            <FloatButton
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '60px',
-                aspectRatio: '1 / 1',
-              }}
-              onClick={handleRedirectCreate}
-            >
-              <IoIosCreate style={{ width: '50%', height: '50%' }} />
-            </FloatButton>
-          )
-        )}
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', gap: 10 }}>
-        <Button
-          onClick={() => enable.setLetCall(true)}
-          disabled={select.length === 0}
-          color="primary"
-        >
-          Enable product
-        </Button>
-        <Button
-          onClick={() => disable.setLetCall(true)}
-          disabled={select.length === 0}
-          color="warning"
-        >
-          Disable product
-        </Button>
-      </div>
+          <Button
+            onClick={() => disable.setLetCall(true)}
+            disabled={select.length === 0}
+            color="warning"
+          >
+            Disable product
+          </Button>
+        </div>
+      )}
       <CustomTable
         idFiled="goodsId"
         selectedKeys={select}

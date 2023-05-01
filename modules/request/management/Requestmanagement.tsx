@@ -117,24 +117,6 @@ export const RequestManagement = () => {
     },
   })
 
-  const complete = useApiCall<string, String>({
-    callApi: () =>
-      putMethod({
-        pathName: apiRoute.request.completeRequest,
-        token: cookies.token,
-        params: { requestsId: select[0] },
-      }),
-    handleSuccess(message) {
-      setLetCall(true)
-      toast.success(message)
-    },
-    handleError(status, message) {
-      if (status) {
-        toast.error(translate(message))
-      }
-    },
-  })
-
   return (
     <>
       <Modal open={isOpen} preventClose>
@@ -169,13 +151,6 @@ export const RequestManagement = () => {
         <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
       </div>
       <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', gap: 10 }}>
-        <Button
-          onClick={() => complete.setLetCall(true)}
-          disabled={select.length === 0}
-          color="primary"
-        >
-          Complete order
-        </Button>
         <Button
           onClick={() => approve.setLetCall(true)}
           disabled={select.length === 0}

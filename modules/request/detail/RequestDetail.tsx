@@ -1,8 +1,8 @@
-import { Button, Loading } from '@/components'
+import { Button, Input, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
-import { DefaultRequest } from '@/inventory'
+import { DefaultRequest, inputStyles } from '@/inventory'
 import { RequestForm } from '@/inventory/RequestForm'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
@@ -116,6 +116,10 @@ export const RequestDetail = () => {
   const editLabel = useTranslation('edit')
   const breadCrumb = useGetBreadCrumb()
   const cancelLabel = useTranslation('cancel')
+
+  const requestIdLabel = useTranslation('requestId')
+  const branchName = useTranslation('branchName')
+  const createdByLabel = useTranslation('createdBy')
 
   if (viewResult.loading)
     return (
@@ -412,6 +416,35 @@ export const RequestDetail = () => {
             )}
           </>
         )}
+      </div>
+      <div style={{ paddingTop: 20 }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${breakPoint}, minmax(0, 1fr))`,
+            gap: 16,
+          }}
+        >
+          <div style={{ gridColumn: 'span 1 / span 1' }}>
+            <Input readOnly value={request.requestId} label={requestIdLabel} {...inputStyles({})} />
+          </div>
+          <div style={{ gridColumn: 'span 1 / span 1' }}>
+            <Input
+              readOnly
+              value={request.branchName as string}
+              label={branchName}
+              {...inputStyles({})}
+            />
+          </div>
+          <div style={{ gridColumn: 'span 1 / span 1' }}>
+            <Input
+              readOnly
+              value={request.createdByName}
+              label={createdByLabel}
+              {...inputStyles({})}
+            />
+          </div>
+        </div>
       </div>
       <div style={{ paddingTop: 20 }}>
         <RequestForm

@@ -127,7 +127,7 @@ export const MyOrderDetail = () => {
                 Tên sản phẩm
               </div>
               <div style={{ gridColumn: 'span 2 / span 2', marginBottom: 10, ...itemStyle }}>
-                Đơn gía
+                Đơn giá
               </div>
               {itemList.data?.result.data.length &&
                 itemList.data?.result.data.map((item) => <ProductCartOrder item={item} />)}
@@ -150,6 +150,8 @@ export const MyOrderDetail = () => {
             >
               <div style={{ color: themeValue.light.colors.redHighland }}>Tên khách hàng:</div>
               <div>{orderDetail?.customerName}</div>
+              <div style={{ color: themeValue.light.colors.redHighland }}>Số điện thoại:</div>
+              <div>{orderDetail?.phoneNumber}</div>
               <div style={{ color: themeValue.light.colors.redHighland }}>Ngày tạo đơn:</div>
               <div>{orderDetail?.createdDate}</div>
               <div style={{ color: themeValue.light.colors.redHighland }}>Tổng giá trị:</div>
