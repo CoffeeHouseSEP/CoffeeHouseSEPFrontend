@@ -74,11 +74,11 @@ export const UserManagement = () => {
 
   const options: OptionsType<'USER' | 'BRANCH_MANAGER'>[] = [
     {
-      label: 'User',
+      label: 'Người dùng',
       value: 'USER',
     },
     {
-      label: 'Branch manager',
+      label: 'Quản lý chi nhánh',
       value: 'BRANCH_MANAGER',
     },
   ]
@@ -150,21 +150,21 @@ export const UserManagement = () => {
             disabled={select.length === 0}
             color="primary"
           >
-            Active user
+            Kích hoạt
           </Button>
           <Button
             onClick={() => disable.setLetCall(true)}
             disabled={select.length === 0}
             color="warning"
           >
-            Deactivate user
+            Hủy kích hoạt
           </Button>
         </div>
       )}
       {cookies.role === 'ADMIN' && (
         <Dropdown<'USER' | 'BRANCH_MANAGER'>
           options={options}
-          button="Filter role"
+          button="Lọc theo quyền"
           onClick={(value: 'USER' | 'BRANCH_MANAGER') => setFilter(value)}
           isCloseSelect
         />
@@ -179,7 +179,7 @@ export const UserManagement = () => {
         body={
           data
             ? data.result.data.map((user) => {
-                return { ...user, status: user.status === 1 ? 'active' : 'deactivate' }
+                return { ...user, status: user.status === 1 ? 'Hoạt động' : 'Không hoạt động' }
               })
             : []
         }

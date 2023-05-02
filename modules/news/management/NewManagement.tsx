@@ -44,15 +44,11 @@ export const NewManagement = () => {
 
   const dataField: ViewPointType[] = [
     {
-      key: 'newsId',
-      label: 'newsId',
-    },
-    {
       key: 'title',
       label: 'title',
     },
     {
-      key: 'createdBy',
+      key: 'createdByName',
       label: 'createdBy',
     },
     {
@@ -102,7 +98,7 @@ export const NewManagement = () => {
         body={
           data
             ? data.result.data.map((cate) => {
-                return { ...cate, status: cate.status === 1 ? 'active' : 'deactivate' }
+                return { ...cate, status: cate.status === 1 ? 'Đang hoạt động' : 'Không hoạt động' }
               })
             : []
         }

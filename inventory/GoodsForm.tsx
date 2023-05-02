@@ -108,7 +108,7 @@ export const GoodsForm = ({
       <div style={{ color: themeValue.dark.colors.redHighland }}>
         {errorState && errorState['base64' as keyof typeof errorState]
           ? errorState['base64' as keyof typeof errorState]
-          : 'No image'}
+          : 'Không có ảnh'}
       </div>
     )
   }, [goods])
@@ -220,7 +220,7 @@ export const GoodsForm = ({
               onchangeGoodsState({ isSize: goods.isSize === 1 ? 0 : 1 })
             }}
           >
-            has size
+            Có kích cỡ
           </Checkbox>
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
@@ -231,7 +231,7 @@ export const GoodsForm = ({
               onchangeGoodsState({ isTransfer: goods.isTransfer === 1 ? 0 : 1 })
             }}
           >
-            transfer
+            Có thể giao dịch
           </Checkbox>
         </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
@@ -242,7 +242,7 @@ export const GoodsForm = ({
               onchangeGoodsState({ isSold: goods.isSold === 1 ? 0 : 1 })
             }}
           >
-            available
+            Có sẵn
           </Checkbox>
         </div>
       </div>
@@ -257,12 +257,12 @@ export const GoodsForm = ({
       >
         <UploadFileBase64
           handleUploadFile={handleUploadImage}
-          labelInput="Upload goods image"
+          labelInput="Tải ảnh sản phẩm"
           disabled={type === 'read'}
         />
         {thisImage}
       </div>
-      <h4 style={{ color: themeValue.dark.colors.redHighland }}>Select your category</h4>
+      <h4 style={{ color: themeValue.dark.colors.redHighland }}>Chọn danh mục</h4>
       <CustomTable
         idFiled="categoryId"
         detailPath="admin/category/"
@@ -270,7 +270,7 @@ export const GoodsForm = ({
         body={
           data
             ? data.result.data.map((user) => {
-                return { ...user, status: user.status === 1 ? 'active' : 'deactivate' }
+                return { ...user, status: user.status === 1 ? 'Hoạt động' : 'Không hoạt động' }
               })
             : []
         }
@@ -278,6 +278,7 @@ export const GoodsForm = ({
         selectedKeys={selectId}
         loading={loading}
         handleChangeSelection={setSelectId}
+        listActions={[]}
       >
         <>{null}</>
       </CustomTable>

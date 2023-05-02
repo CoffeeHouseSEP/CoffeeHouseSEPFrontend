@@ -1,4 +1,4 @@
-import { CustomTable, Input, Pagination, UploadFileBase64 } from '@/components'
+import { Checkbox, CustomTable, Input, Pagination, UploadFileBase64 } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
@@ -9,6 +9,7 @@ import { getMethod } from '@/services'
 import { CommonListResultType, UserResponseSuccess, ViewPointType } from '@/types'
 import { BranchRequest, BranchRequestFailure } from '@/types/branch/branch'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
@@ -43,6 +44,7 @@ export const BranchForm = ({
   const descriptionLabel = useTranslation('descriptionBranch')
   const addressLabel = useTranslation('addressBranch')
   const phoneNumberLabel = useTranslation('phoneNumberBranch')
+  const router = useRouter()
 
   const result = useApiCall<CommonListResultType<UserResponseSuccess>, String>({
     callApi: () =>
@@ -126,21 +128,6 @@ export const BranchForm = ({
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
             readOnly={type === 'read'}
-            value={branch.description}
-            label={descriptionLabel}
-            onChange={(event) => {
-              onchangeUserState({
-                description: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.description && translate(errorState.description),
-            })}
-          />
-        </div>
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly={type === 'read'}
             value={branch.phoneNumber}
             label={phoneNumberLabel}
             onChange={(event) => {
@@ -213,6 +200,19 @@ export const BranchForm = ({
             })}
           />
         </div>
+        {!router.pathname.includes('create') && (
+          <div style={{ gridColumn: 'span 1 / span 1' }}>
+            <Checkbox
+              isReadOnly={type === 'read'}
+              isSelected={branch.status === 1}
+              onChange={() => {
+                onchangeUserState({ status: branch.status === 1 ? 0 : 1 })
+              }}
+            >
+              Hoạt động
+            </Checkbox>
+          </div>
+        )}
       </div>
       <div
         style={{
@@ -225,7 +225,7 @@ export const BranchForm = ({
       >
         <UploadFileBase64
           handleUploadFile={handleUploadImage}
-          labelInput="Upload branch image"
+          labelInput="Tải ảnh chi nhánh"
           disabled={type === 'read'}
         />
         {!!branch.image.base64 && (
@@ -234,7 +234,36 @@ export const BranchForm = ({
           </div>
         )}
       </div>
-      <h4 style={{ color: themeValue.dark.colors.redHighland }}>Select manager</h4>
+      <div
+        style={{
+          color: themeValue.light.colors.foreground,
+          margin: '10px 0px',
+        }}
+      >
+        {descriptionLabel}
+      </div>
+      <div>
+        <textarea
+          style={{ width: '100%', minHeight: 100 }}
+          readOnly={type === 'read'}
+          value={branch.description}
+          onChange={(event) => {
+            onchangeUserState({
+              description: event.currentTarget.value,
+            })
+          }}
+        />
+      </div>
+      <div
+        style={{
+          fontSize: '10px',
+          paddingLeft: '4px',
+          color: themeValue.dark.colors.error,
+        }}
+      >
+        {errorState?.description}
+      </div>
+      <h4 style={{ color: themeValue.dark.colors.redHighland }}>Chọn quản lý</h4>
       <CustomTable
         idFiled="id"
         detailPath="admin/user/"
@@ -242,7 +271,7 @@ export const BranchForm = ({
         body={
           data
             ? data.result.data.map((user) => {
-                return { ...user, status: user.status === 1 ? 'active' : 'deactivate' }
+                return { ...user, status: user.status === 1 ? 'Đang hoạt động' : 'Không hoạt động' }
               })
             : []
         }

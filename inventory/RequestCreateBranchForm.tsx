@@ -67,6 +67,7 @@ export const RequestCreateBranchForm = ({
     const item = data as RequestCreateResponse
     return (
       <Input
+        labelLeft="SL"
         value={request.find((thisItem) => thisItem.goodsId === item.goodsId)?.quantity || ''}
         disabled={!request.find((thisItem) => thisItem.goodsId === item.goodsId)}
         onChange={(e) => {

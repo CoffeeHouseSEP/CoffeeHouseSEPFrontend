@@ -99,7 +99,7 @@ export const SelectDistrict = ({
         {useMemo(
           () => (
             <SelectCustom
-              label="District"
+              label="Quận / Huyện"
               value={valueD}
               onChange={setValueD}
               options={optionList}
@@ -114,7 +114,7 @@ export const SelectDistrict = ({
         {useMemo(
           () => (
             <SelectCustom
-              label="Ward"
+              label="Phường / Xã"
               value={valueW}
               onChange={setValueW}
               options={optionWardList}
@@ -130,7 +130,7 @@ export const SelectDistrict = ({
           {useMemo(
             () => (
               <SelectCustom
-                label="Street"
+                label="Đường"
                 value={valueS}
                 onChange={setValueS}
                 options={optionStreetList}

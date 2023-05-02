@@ -102,7 +102,7 @@ export const BranchManagement = () => {
         body={
           data
             ? data.result.data.map((cate) => {
-                return { ...cate, status: cate.status === 1 ? 'active' : 'deactivate' }
+                return { ...cate, status: cate.status === 1 ? 'Hoạt động' : 'Không hoạt động' }
               })
             : []
         }

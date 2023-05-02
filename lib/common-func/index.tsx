@@ -95,13 +95,16 @@ export const ParseValueForTable = (): object & any => {
             status = <div style={{ color: 'orange' }}>CHỜ XÁC NHẬN</div>
             break
           case 'APPROVED':
-            status = <div style={{ color: 'success' }}>XÁC NHẬN</div>
+            status = <div style={{ color: 'green' }}>XÁC NHẬN</div>
             break
           case 'CANCELLED':
             status = <div style={{ color: 'red' }}>ĐÃ HỦY</div>
             break
           case 'CREATED':
-            status = <div style={{ color: 'success' }}>ĐÃ TẠO</div>
+            status = <div style={{ color: 'green' }}>ĐÃ TẠO</div>
+            break
+          case 'COMPLETED':
+            status = <div style={{ color: 'green' }}>ĐÃ HOÀN THÀNH</div>
             break
           default:
             status = <>{value}</>

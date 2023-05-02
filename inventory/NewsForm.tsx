@@ -1,6 +1,7 @@
 import { Checkbox, Input, UploadFileBase64 } from '@/components'
 import { useTranslation, useTranslationFunction } from '@/hooks'
 import { inputStyles } from '@/inventory'
+import { themeValue } from '@/lib'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { NewsRequest, NewsRequestFailure } from '@/types/news/news'
 import Image from 'next/image'
@@ -35,66 +36,82 @@ export const NewsForm = ({ news, onchangeUserState, type, errorState }: INewForm
     })
   }
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${breakPoint}, minmax(0, 1fr))`,
-        gap: 16,
-      }}
-    >
-      <div style={{ gridColumn: 'span 1 / span 1' }}>
-        <Input
-          readOnly={type === 'read'}
-          value={news.title}
-          label={titleLabel}
-          onChange={(event) => {
-            onchangeUserState({
-              title: event.currentTarget.value,
-            })
-          }}
-          {...inputStyles({
-            error: errorState?.title && translate(errorState.title),
-          })}
-        />
+    <>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${breakPoint}, minmax(0, 1fr))`,
+          gap: 16,
+        }}
+      >
+        <div style={{ gridColumn: 'span 1 / span 1' }}>
+          <Input
+            readOnly={type === 'read'}
+            value={news.title}
+            label={titleLabel}
+            onChange={(event) => {
+              onchangeUserState({
+                title: event.currentTarget.value,
+              })
+            }}
+            {...inputStyles({
+              error: errorState?.title && translate(errorState.title),
+            })}
+          />
+        </div>
+        <div style={{ gridColumn: 'span 1 / span 1' }}>
+          <Checkbox
+            isReadOnly={type === 'read'}
+            isSelected={news.status === 1}
+            onChange={() => {
+              onchangeUserState({ status: news.status === 1 ? 0 : 1 })
+            }}
+          >
+            Hoạt động
+          </Checkbox>
+        </div>
+        <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10 }}>
+          <UploadFileBase64
+            handleUploadFile={handleUploadImage}
+            labelInput="Tải lên ảnh tin tức"
+            disabled={type === 'read'}
+          />
+          {!!news.image.base64 && (
+            <div style={{ height: '100%', aspectRatio: '1', position: 'relative' }}>
+              <Image layout="fill" src={`${news.image.prefix}${news.image.base64}`} />
+            </div>
+          )}
+        </div>
       </div>
-      <div style={{ gridColumn: 'span 1 / span 1' }}>
-        <Input
+      <div
+        style={{
+          color: themeValue.light.colors.foreground,
+          margin: '10px 0px',
+        }}
+      >
+        {contentLabel}
+      </div>
+      <div>
+        <textarea
+          style={{ width: '100%', minHeight: 100 }}
           readOnly={type === 'read'}
           value={news.content}
-          label={contentLabel}
           onChange={(event) => {
             onchangeUserState({
               content: event.currentTarget.value,
             })
           }}
-          {...inputStyles({
-            error: errorState?.content && translate(errorState.content),
-          })}
         />
       </div>
-      <div style={{ gridColumn: 'span 1 / span 1' }}>
-        <Checkbox
-          isReadOnly={type === 'read'}
-          isSelected={news.status === 1}
-          onChange={() => {
-            onchangeUserState({ status: news.status === 1 ? 0 : 1 })
-          }}
-        >
-          {news.status ? 'active' : 'deactivate'}
-        </Checkbox>
+      <div
+        style={{
+          fontSize: '10px',
+          paddingLeft: '4px',
+          color: themeValue.dark.colors.error,
+        }}
+      >
+        {errorState?.content}
       </div>
-      <div style={{ gridColumn: 'span 1 / span 1', display: 'flex', gap: 10 }}>
-        <UploadFileBase64
-          handleUploadFile={handleUploadImage}
-          labelInput="Upload news image"
-          disabled={type === 'read'}
-        />
-        {!!news.image.base64 && (
-          <div style={{ height: '100%', aspectRatio: '1', position: 'relative' }}>
-            <Image layout="fill" src={`${news.image.prefix}${news.image.base64}`} />
-          </div>
-        )}
-      </div>
-    </div>
+    </>
   )
 }

@@ -44,7 +44,7 @@ export const SelectProvince = ({
 
   return (
     <SelectCustom
-      label="Province"
+      label="Tỉnh / Thành Phố"
       value={value}
       onChange={setValue}
       options={optionList}

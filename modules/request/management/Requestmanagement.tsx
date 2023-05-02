@@ -46,11 +46,11 @@ export const RequestManagement = () => {
     },
     {
       key: 'createdByName',
-      label: 'createdByName',
+      label: 'createdBy',
     },
     {
       key: 'approvedByName',
-      label: 'approvedByName',
+      label: 'approvedBy',
     },
     {
       key: 'createdDate',
@@ -123,7 +123,7 @@ export const RequestManagement = () => {
         <h3>Cancel order</h3>
         <Input
           underlined
-          label="Reason"
+          label="Lý do"
           value={reason}
           onChange={(e) => setReason(e.target.value)}
         />
@@ -133,7 +133,7 @@ export const RequestManagement = () => {
               cancel.setLetCall(true)
             }}
           >
-            Submit
+            Xác nhận
           </Button>
           <Button
             color="warning"
@@ -142,7 +142,7 @@ export const RequestManagement = () => {
               setSelect([])
             }}
           >
-            Cancel
+            Hủy
           </Button>
         </div>
       </Modal>
@@ -156,10 +156,10 @@ export const RequestManagement = () => {
           disabled={select.length === 0}
           color="primary"
         >
-          Approve request
+          Chấp nhận yêu cầu
         </Button>
         <Button onClick={() => setIsOpen(true)} disabled={select.length === 0} color="warning">
-          Cancel request
+          Hủy yêu cầu
         </Button>
       </div>
       <CustomTable

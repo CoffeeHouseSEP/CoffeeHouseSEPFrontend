@@ -1,6 +1,7 @@
 import { Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall } from '@/hooks'
+import { VND } from '@/lib'
 import { getMethod } from '@/services'
 import { CommonListResultType } from '@/types'
 import { GoodsResponse } from '@/types/goods/goods'
@@ -109,7 +110,7 @@ export const ProductCartOrder = ({ item }: { item: OrderDetailResponse }) => {
           ...itemStyle,
         }}
       >
-        {item.applyPrice}
+        {VND.format(item.applyPrice)}
       </div>
     </>
   )

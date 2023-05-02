@@ -196,8 +196,8 @@ export const GoodManagement = () => {
             ? data.result.data.map((good) => {
                 return {
                   ...good,
-                  status: good.status === 1 ? 'active' : 'deactivate',
-                  isSold: good.isSold ? 'Is selling' : 'Out of Stock',
+                  status: good.status === 1 ? 'Hoạt động' : 'Không hoạt động',
+                  isSold: good.isSold ? 'Đang bán' : 'Bán hết',
                 }
               })
             : []

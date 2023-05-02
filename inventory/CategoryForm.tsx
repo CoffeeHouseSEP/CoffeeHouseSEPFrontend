@@ -1,8 +1,9 @@
-import { Input } from '@/components'
+import { Checkbox, Input } from '@/components'
 import { useTranslation, useTranslationFunction } from '@/hooks'
 import { inputStyles } from '@/inventory'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { CategoryRequestFailure, CategoryResponse } from '@/types/category/category'
+import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
 interface ICategoryForm {
@@ -18,8 +19,9 @@ export const CategoryForm = ({ category, onchangeUserState, type, errorState }: 
 
   //   const { darkTheme } = useSelector(GeneralSettingsSelector)
 
-  const nameLabel = useTranslation('nameCate')
+  const nameLabel = useTranslation('name')
   const descriptionLabel = useTranslation('descriptionCate')
+  const router = useRouter()
 
   return (
     <div
@@ -59,6 +61,19 @@ export const CategoryForm = ({ category, onchangeUserState, type, errorState }: 
           })}
         />
       </div>
+      {!router.pathname.includes('create') && (
+        <div style={{ gridColumn: 'span 1 / span 1' }}>
+          <Checkbox
+            isReadOnly={type === 'read'}
+            isSelected={category.status === 1}
+            onChange={() => {
+              onchangeUserState({ status: category.status === 1 ? 0 : 1 })
+            }}
+          >
+            Hoạt động
+          </Checkbox>
+        </div>
+      )}
     </div>
   )
 }

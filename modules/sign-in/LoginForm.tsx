@@ -1,7 +1,7 @@
 import { Button, Input, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { ROLE_COOKIE, TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslationFunction } from '@/hooks'
 import { inputStyles } from '@/inventory'
 import { encodeBase64, themeValue } from '@/lib'
 import { authenticationSelector, setIsLoggedIn, setLoading } from '@/redux/authentication'
@@ -109,11 +109,6 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
     dispatch(setLoading(true))
   }
 
-  const signIn = useTranslation('signIn')
-  const forgotPassword = useTranslation('forgotPassword')
-  const loginName = useTranslation('loginName')
-  const password = useTranslation('password')
-
   if (step === 'forgot')
     return (
       <>
@@ -125,21 +120,21 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
             textAlign: 'center',
           }}
         >
-          {!router.asPath.includes('admin') ? forgotPassword : 'Contact admin to get new password'}
+          {!router.asPath.includes('admin') ? 'Quên mật khẩu' : 'Liên hệ admin để lấy lại mật khẩu'}
         </div>
         {!router.asPath.includes('admin') && (
           <>
             <Input
               ref={usernameRef}
               {...inputStyles({})}
-              labelLeft="Username"
+              label="Tên đăng nhập"
               clearable
               onFocus={handleReset}
             />
             <Input
               ref={emailForgotRef}
               {...inputStyles({})}
-              labelLeft="Email"
+              label="Email"
               clearable
               onFocus={handleReset}
             />
@@ -155,11 +150,11 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
           }}
         >
           <Button onClick={() => setStep('login')} disabled={isLoginLoading}>
-            Back to sign in
+            Quay về đăng nhập
           </Button>
           {!router.asPath.includes('admin') && (
             <Button onClick={handleForgot} disabled={isLoginLoading}>
-              {isLoginLoading ? <Loading /> : <>{forgotPassword}</>}
+              {isLoginLoading ? <Loading /> : <>Quên mật khẩu</>}
             </Button>
           )}
         </div>
@@ -176,12 +171,12 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
           textAlign: 'center',
         }}
       >
-        {signIn}
+        Đăng nhập
       </div>
       <Input
         ref={emailRef}
         {...inputStyles({ error: error?.result.loginName && translate(error.result.loginName) })}
-        labelLeft={loginName}
+        label="Tên đăng nhập"
         clearable
         onFocus={handleReset}
       />
@@ -191,13 +186,13 @@ export const LoginForm = ({ isEndUser }: { isEndUser?: boolean }) => {
           error: error?.result.loginPassword && translate(error.result.loginPassword),
         })}
         type="password"
-        labelLeft={password}
+        label="Mật khẩu"
         clearable
         onFocus={handleReset}
       />
       <div style={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
         <Button styleType="light" onClick={() => setStep('forgot')} disabled={isLoginLoading}>
-          {forgotPassword}?
+          Quên mật khẩu?
         </Button>
       </div>
       <div

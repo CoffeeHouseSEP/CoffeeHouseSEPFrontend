@@ -138,7 +138,7 @@ export default function Store() {
                 }}
               >
                 {' '}
-                Find {numberOfStore} <span>stores</span>
+                {numberOfStore} <span>cửa hàng</span>
               </div>
               <div>{storeResult}</div>
               <div style={{ width: 'max-content', margin: 'auto ', marginBottom: 20 }}>

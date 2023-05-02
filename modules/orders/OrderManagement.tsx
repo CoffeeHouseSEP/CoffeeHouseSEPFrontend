@@ -131,7 +131,7 @@ export const OrderManagement = () => {
   return (
     <>
       <Modal open={isOpen} preventClose>
-        <h3>Cancel order</h3>
+        <h3>Hủy đơn hàng</h3>
         <Input
           underlined
           label="Reason"
@@ -144,7 +144,7 @@ export const OrderManagement = () => {
               cancel.setLetCall(true)
             }}
           >
-            Submit
+            Xác nhận
           </Button>
           <Button
             color="warning"
@@ -153,7 +153,7 @@ export const OrderManagement = () => {
               setSelect([])
             }}
           >
-            Cancel
+            Hủy
           </Button>
         </div>
       </Modal>
@@ -167,17 +167,17 @@ export const OrderManagement = () => {
           disabled={select.length === 0}
           color="primary"
         >
-          Complete order
+          Hoàn thành đơn hàng
         </Button>
         <Button
           onClick={() => approve.setLetCall(true)}
           disabled={select.length === 0}
           color="primary"
         >
-          Approve order
+          Cho phép đơn hàng
         </Button>
         <Button onClick={() => setIsOpen(true)} disabled={select.length === 0} color="warning">
-          Cancel order
+          Hủy đơn hàng
         </Button>
       </div>
       <CustomTable
