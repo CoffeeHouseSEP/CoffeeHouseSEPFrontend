@@ -1,7 +1,7 @@
 import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { DefaultNews } from '@/inventory'
 import { NewsForm } from '@/inventory/NewsForm'
 
@@ -22,8 +22,6 @@ export default function NewCreate() {
   const translate = useTranslationFunction()
 
   const { breakPoint } = useSelector(ShareStoreSelector)
-
-  const breadCrumb = useGetBreadCrumb()
 
   const [newState, setNewState] = useState<NewsRequest>(DefaultNews)
 
@@ -63,7 +61,7 @@ export default function NewCreate() {
   }
   return (
     <div style={{ marginTop: 18, marginBottom: 80 }}>
-      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
+      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>Tạo tin tức</h2>
       <div
         style={{
           display: 'flex',
@@ -72,7 +70,7 @@ export default function NewCreate() {
           marginBottom: 10,
         }}
       >
-        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
+        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>Tạo tin tức</h2>
         {breakPoint > 1 ? (
           <div
             style={{

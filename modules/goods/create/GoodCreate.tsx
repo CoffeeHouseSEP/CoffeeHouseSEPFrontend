@@ -1,7 +1,7 @@
 import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { DefaultGoods } from '@/inventory'
 import { GoodsForm } from '@/inventory/GoodsForm'
 
@@ -21,8 +21,6 @@ export default function GoodCreate() {
   const translate = useTranslationFunction()
 
   const { breakPoint } = useSelector(ShareStoreSelector)
-
-  const breadCrumb = useGetBreadCrumb()
 
   const [goodsState, setGoodsState] = useState<GoodsRequest>(DefaultGoods)
 
@@ -62,7 +60,7 @@ export default function GoodCreate() {
   }
   return (
     <div style={{ marginTop: 18, marginBottom: 80 }}>
-      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
+      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>Tạo sản phẩm</h2>
       <div
         style={{
           display: 'flex',
@@ -71,7 +69,7 @@ export default function GoodCreate() {
           marginBottom: 10,
         }}
       >
-        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
+        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>Tạo sản phẩm</h2>
         {/* {breakPoint > 1 ? (
      
         ) : (

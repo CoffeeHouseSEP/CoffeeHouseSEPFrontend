@@ -129,8 +129,8 @@ export const ParseValueForTable = (): object & any => {
       return convertValueToLabel(value, genderList)
     },
     isDisabled: (value: number) => {
-      if (value) return <AiOutlineCloseCircle color="red" />
-      return <AiOutlineCheckCircle color="green" />
+      if (value) return 'Hủy  kích hoạt'
+      return 'Đang kích hoạt'
     },
   }
 }

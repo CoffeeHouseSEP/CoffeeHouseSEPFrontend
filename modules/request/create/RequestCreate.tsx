@@ -1,7 +1,7 @@
 import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 
 import { RequestCreateBranchForm } from '@/inventory/RequestCreateBranchForm'
 import { ShareStoreSelector } from '@/redux/share-store'
@@ -21,8 +21,6 @@ export default function RequestCreate() {
   const translate = useTranslationFunction()
 
   const { breakPoint } = useSelector(ShareStoreSelector)
-
-  const breadCrumb = useGetBreadCrumb()
 
   const [request, setRequest] = useState<RequestCreateResponse[]>([])
 
@@ -58,7 +56,7 @@ export default function RequestCreate() {
 
   return (
     <div style={{ marginTop: 18, marginBottom: 80 }}>
-      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
+      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>Tạo lý yêu cầu</h2>
       <div
         style={{
           display: 'flex',
@@ -67,7 +65,7 @@ export default function RequestCreate() {
           marginBottom: 10,
         }}
       >
-        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
+        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>Tạo lý yêu cầu</h2>
         {breakPoint > 1 ? (
           <div
             style={{

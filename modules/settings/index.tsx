@@ -108,14 +108,14 @@ export const Settings = () => {
         style={{ backgroundColor: themeValue[darkTheme].colors.redHighland }}
         onClick={() => updateResult.setLetCall(true)}
       >
-        Update
+        Cập nhật
       </Button>
 
       <h2 style={{ marginTop: 50 }}>Password change</h2>
       <div style={{ maxWidth: 375 }}>
         <Input
           type="password"
-          label="old password"
+          label="Mật khẩu cũ"
           value={oldPass}
           onChange={(e) => {
             setOldPass(e.target.value)
@@ -124,7 +124,7 @@ export const Settings = () => {
         />
         <Input
           type="password"
-          label="New password"
+          label="Mật khẩu mới"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value)
@@ -133,7 +133,7 @@ export const Settings = () => {
         />
         <Input
           type="password"
-          label="COnfirm new password"
+          label="Xác nhận mật khẩu mới"
           value={rePassword}
           onChange={(e) => {
             setRePassword(e.target.value)
@@ -144,7 +144,7 @@ export const Settings = () => {
           style={{ backgroundColor: themeValue[darkTheme].colors.redHighland }}
           onClick={() => passwordChange.setLetCall(true)}
         >
-          Update Password
+          Đặt lại mật khẩu
         </Button>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { Button, CustomTable, Input, Modal, Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
@@ -16,8 +16,6 @@ export const RequestManagement = () => {
   const translate = useTranslationFunction()
 
   const [page, setPage] = useState<number>(1)
-
-  const breadCrumb = useGetBreadCrumb()
 
   const { breakPoint } = useSelector(ShareStoreSelector)
 
@@ -146,9 +144,9 @@ export const RequestManagement = () => {
           </Button>
         </div>
       </Modal>
-      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
+      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>Quản lý yêu cầu</h2>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
+        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>Quản lý yêu cầu</h2>
       </div>
       <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', gap: 10 }}>
         <Button

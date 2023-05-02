@@ -1,7 +1,7 @@
 import { Button, CustomTable, Input, Modal, Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { ROLE_COOKIE, TOKEN_AUTHENTICATION } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
@@ -18,8 +18,6 @@ export const OrderManagement = () => {
   const [select, setSelect] = useState<string[]>([])
 
   const [page, setPage] = useState<number>(1)
-
-  const breadCrumb = useGetBreadCrumb()
 
   const { breakPoint } = useSelector(ShareStoreSelector)
 
@@ -157,9 +155,9 @@ export const OrderManagement = () => {
           </Button>
         </div>
       </Modal>
-      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
+      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>Quản lý đơn hàng</h2>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
+        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>Quản lý đơn hàng</h2>
       </div>
       <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', gap: 10 }}>
         <Button

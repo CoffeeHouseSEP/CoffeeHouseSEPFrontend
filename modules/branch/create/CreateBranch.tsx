@@ -1,7 +1,7 @@
 import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { DefaultBranch } from '@/inventory'
 import { BranchForm } from '@/inventory/BranchForm'
 
@@ -22,8 +22,6 @@ export default function BranchCreate() {
   const translate = useTranslationFunction()
 
   const { breakPoint } = useSelector(ShareStoreSelector)
-
-  const breadCrumb = useGetBreadCrumb()
 
   const [branchState, setBranchState] = useState<BranchRequest>(DefaultBranch)
 
@@ -53,6 +51,7 @@ export default function BranchCreate() {
   const cancelLabel = useTranslation('cancel')
 
   const saveLabel = useTranslation('save')
+  const label = useTranslation('BranchCreatePascal')
 
   const callCreate = () => {
     createResult.setLetCall(true)
@@ -63,7 +62,7 @@ export default function BranchCreate() {
   }
   return (
     <div style={{ marginTop: 18, marginBottom: 80 }}>
-      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
+      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{label}</h2>
       <div
         style={{
           display: 'flex',
@@ -72,7 +71,7 @@ export default function BranchCreate() {
           marginBottom: 10,
         }}
       >
-        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
+        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{label}</h2>
         {breakPoint > 1 ? (
           <div
             style={{

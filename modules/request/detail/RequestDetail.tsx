@@ -1,7 +1,7 @@
 import { Button, Input, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { DefaultRequest, inputStyles } from '@/inventory'
 import { RequestForm } from '@/inventory/RequestForm'
 import { ShareStoreSelector } from '@/redux/share-store'
@@ -114,7 +114,6 @@ export const RequestDetail = () => {
   const cancelRequestLabel = useTranslation('CancelRequest')
 
   const editLabel = useTranslation('edit')
-  const breadCrumb = useGetBreadCrumb()
   const cancelLabel = useTranslation('cancel')
 
   const requestIdLabel = useTranslation('requestId')
@@ -132,7 +131,7 @@ export const RequestDetail = () => {
 
   return (
     <>
-      <h2>{breadCrumb}</h2>
+      <h2> Yêu cầu của {viewResult.data?.result.data[0].branchName}</h2>
       <div
         style={{
           display: 'flex',

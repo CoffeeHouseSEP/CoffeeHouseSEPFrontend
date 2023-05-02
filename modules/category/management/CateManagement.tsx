@@ -1,7 +1,7 @@
 import { Button, CustomTable, Pagination } from '@/components'
 import { FloatButton } from '@/components/button/FloatButton'
 import { apiRoute } from '@/constants/apiRoutes'
-import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
@@ -20,8 +20,6 @@ export const CateManagement = () => {
   const router = useRouter()
 
   const categoryCreatePascal = useTranslation('CategoryCreatePascal')
-
-  const breadCrumb = useGetBreadCrumb()
 
   const { breakPoint } = useSelector(ShareStoreSelector)
 
@@ -63,9 +61,9 @@ export const CateManagement = () => {
 
   return (
     <>
-      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
+      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>Quản lý danh mục</h2>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
+        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>Quản lý danh mục</h2>
         {breakPoint > 1 ? (
           <Button onClick={handleRedirectCreate}>{categoryCreatePascal}</Button>
         ) : (

@@ -1,7 +1,7 @@
 import { Button, CustomTable, Loading, Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { DefaultRequest } from '@/inventory'
 import { RequestBranchForm } from '@/inventory/RequestBranchForm'
 import { ShareStoreSelector } from '@/redux/share-store'
@@ -190,7 +190,6 @@ export const RequestBranchDetail = () => {
   const cancelRequestLabel = useTranslation('CancelRequest')
   const saveLabel = useTranslation('Save')
   const editLabel = useTranslation('edit')
-  const breadCrumb = useGetBreadCrumb()
   const cancelLabel = useTranslation('cancel')
 
   if (viewResult.loading)
@@ -204,13 +203,13 @@ export const RequestBranchDetail = () => {
 
   return (
     <>
-      <h2>{breadCrumb}</h2>
       <div
         style={{
           display: 'flex',
           justifyContent: 'end',
           alignItems: 'center',
           marginBottom: 10,
+          marginTop: 40,
         }}
       >
         {breakPoint > 1 ? (
@@ -305,7 +304,7 @@ export const RequestBranchDetail = () => {
                             <h2
                               style={{ textAlign: 'center', marginBottom: '30px', color: '#fff' }}
                             >
-                              Please fill Reason
+                              Hãy điền lý do
                             </h2>
                             <div
                               style={{
@@ -322,7 +321,7 @@ export const RequestBranchDetail = () => {
                                   pointerEvents: 'none',
                                 }}
                               >
-                                Reason for cancel request
+                                Lý do hủy kích hoạt
                               </label>
                               <input
                                 required
@@ -430,7 +429,7 @@ export const RequestBranchDetail = () => {
                       />
 
                       <h2 style={{ textAlign: 'center', marginBottom: '30px', color: '#fff' }}>
-                        Please fill Reason
+                        Hãy điền lý do
                       </h2>
                       <div
                         style={{
@@ -447,7 +446,7 @@ export const RequestBranchDetail = () => {
                             pointerEvents: 'none',
                           }}
                         >
-                          Reason for cancel request
+                          Lý do hủy yêu cầu
                         </label>
                         <input
                           required
@@ -507,7 +506,7 @@ export const RequestBranchDetail = () => {
       {type === 'read' && (
         <div>
           <div style={{ fontSize: '25px', fontWeight: 'bold', padding: 20 }}>
-            Goods is Selected:
+            Những sản phẩm đã chọn:
           </div>
           <CustomTable
             listActions={[]}

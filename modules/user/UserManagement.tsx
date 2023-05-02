@@ -2,7 +2,7 @@ import { Button, CustomTable, Dropdown, Pagination } from '@/components'
 import { FloatButton } from '@/components/button/FloatButton'
 import { apiRoute } from '@/constants/apiRoutes'
 import { ROLE_COOKIE, TOKEN_AUTHENTICATION } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, postMethod } from '@/services'
 import { CommonListResultType, OptionsType, UserResponseSuccess, ViewPointType } from '@/types'
@@ -21,8 +21,6 @@ export const UserManagement = () => {
   const [filter, setFilter] = useState<'USER' | 'BRANCH_MANAGER'>('USER')
 
   const router = useRouter()
-
-  const breadCrumb = useGetBreadCrumb()
 
   const { breakPoint } = useSelector(ShareStoreSelector)
 
@@ -121,9 +119,9 @@ export const UserManagement = () => {
 
   return (
     <>
-      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
+      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>Quản lý người dùng</h2>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
+        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>Quản lý người dùng</h2>
         {breakPoint > 1
           ? cookies.role === 'ADMIN' && (
               <Button onClick={handleRedirectCreate}>{createUserButton}</Button>

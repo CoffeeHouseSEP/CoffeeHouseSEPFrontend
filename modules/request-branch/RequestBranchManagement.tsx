@@ -2,7 +2,7 @@ import { Button, CustomTable, Pagination } from '@/components'
 import { FloatButton } from '@/components/button/FloatButton'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
@@ -20,8 +20,6 @@ export const RequestBranchManagement = () => {
   const translate = useTranslationFunction()
 
   const [page, setPage] = useState<number>(1)
-
-  const breadCrumb = useGetBreadCrumb()
 
   const { breakPoint } = useSelector(ShareStoreSelector)
 
@@ -54,7 +52,7 @@ export const RequestBranchManagement = () => {
     },
     {
       key: 'createdByName',
-      label: 'createdByName',
+      label: 'createdBy',
     },
     {
       key: 'createdDate',
@@ -84,9 +82,9 @@ export const RequestBranchManagement = () => {
 
   return (
     <>
-      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>{breadCrumb}</h2>
+      <h2 style={{ display: breakPoint === 1 ? 'block' : 'none' }}>Quản lý yêu cầu</h2>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>{breadCrumb}</h2>
+        <h2 style={{ display: breakPoint === 1 ? 'none' : 'block' }}>Quản lý yêu cầu</h2>
         {breakPoint > 1 ? (
           <Button onClick={handleRedirectCreate}>{branchCreatePascal}</Button>
         ) : (

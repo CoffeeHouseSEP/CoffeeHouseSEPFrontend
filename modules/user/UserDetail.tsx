@@ -1,7 +1,7 @@
 import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { DefaultUserRequest } from '@/inventory'
 import { UserForm } from '@/inventory/UserForm'
 import { ShareStoreSelector } from '@/redux/share-store'
@@ -21,7 +21,6 @@ export const UserDetail = () => {
   const [user, setUser] = useState<UserRequest>(DefaultUserRequest)
   const id = router?.query?.id?.toString()
   const { breakPoint } = useSelector(ShareStoreSelector)
-  const breadCrumb = useGetBreadCrumb()
 
   const viewResult = useApiCall<UserResponseSuccess, string>({
     callApi: () =>
@@ -93,7 +92,7 @@ export const UserDetail = () => {
 
   return (
     <>
-      <h2>{breadCrumb}</h2>
+      <h2>{viewResult.data?.result.fullName}</h2>
       <div
         style={{
           display: 'flex',

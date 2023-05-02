@@ -1,7 +1,7 @@
 import { Button, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
-import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
+import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { DefaultGoods } from '@/inventory'
 import { GoodsForm } from '@/inventory/GoodsForm'
 import { ShareStoreSelector } from '@/redux/share-store'
@@ -103,7 +103,6 @@ export const GoodDetail = () => {
   const cancelLabel = useTranslation('cancel')
   const saveLabel = useTranslation('saveLabel')
   const editLabel = useTranslation('edit')
-  const breadCrumb = useGetBreadCrumb()
 
   if (viewResult.loading)
     return (
@@ -136,7 +135,7 @@ export const GoodDetail = () => {
 
   return (
     <div style={{ marginTop: 18, marginBottom: 80 }}>
-      <h2>{breadCrumb}</h2>
+      <h2>{viewResult.data?.result.data[0].name}</h2>
       <div
         style={{
           display: 'flex',

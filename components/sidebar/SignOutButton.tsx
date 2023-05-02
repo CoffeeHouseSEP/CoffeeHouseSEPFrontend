@@ -6,7 +6,7 @@ import { setIsLoggedIn } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { getMethod } from '@/services'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -31,12 +31,6 @@ export const SignOutButton = ({ style }: { style?: object }) => {
       removeCookie(TOKEN_AUTHENTICATION)
       removeCookie(USER_ID)
       removeCookie(ROLE_COOKIE)
-      dispatch(setIsLoggedIn(false))
-      if (router.pathname.includes('admin')) {
-        router.push('/admin')
-      } else {
-        router.push('/')
-      }
     },
     handleError(status, message) {
       if (status) {
@@ -44,6 +38,17 @@ export const SignOutButton = ({ style }: { style?: object }) => {
       }
     },
   })
+
+  useEffect(() => {
+    if (!cookies.token && !cookies.role) {
+      dispatch(setIsLoggedIn(false))
+      if (router.pathname.includes('admin')) {
+        router.push('/admin')
+      } else {
+        router.push('/')
+      }
+    }
+  }, [cookies])
 
   return (
     <div
@@ -73,7 +78,7 @@ export const SignOutButton = ({ style }: { style?: object }) => {
         result.setLetCall(true)
       }}
     >
-      ĐĂNG XUẤT
+      Đăng xuất
     </div>
   )
 }
