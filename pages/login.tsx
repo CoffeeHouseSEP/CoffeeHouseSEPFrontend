@@ -15,7 +15,7 @@ const LoginPage: NextPageWithLayout = () => {
 LoginPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <EndUserLayout>
-      <Image src="/login-background.jpg" layout="fill" />
+      <Image src="/asset/slider3.jpeg" layout="fill" />
       {page}
     </EndUserLayout>
   )

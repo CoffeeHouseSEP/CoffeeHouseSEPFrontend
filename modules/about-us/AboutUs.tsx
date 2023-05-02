@@ -73,7 +73,7 @@ export default function AboutUs() {
             <div
               style={{ width: '100%', height: '374px', position: 'relative', aspectRatio: '1/1' }}
             >
-              <Image layout="fill" objectFit="cover" src="/asset/about1.jpg" />
+              <Image layout="fill" objectFit="cover" src="/asset/slider1.jpg" />
             </div>
           </a>
         </div>
@@ -84,7 +84,7 @@ export default function AboutUs() {
             <div
               style={{ width: '100%', height: '374px', position: 'relative', aspectRatio: '1/1' }}
             >
-              <Image layout="fill" objectFit="cover" src="/asset/about2.jpg" />
+              <Image layout="fill" objectFit="cover" src="/asset/slider3.jpeg" />
             </div>
           </a>
         </div>
