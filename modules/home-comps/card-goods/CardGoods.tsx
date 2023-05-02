@@ -56,11 +56,11 @@ export const CardGoods = ({ data }: CardGoodsProps) => {
       title={{
         content: data.name,
         style: {
-          fontSize: pixel <= 500 ? 12 : 20,
+          fontSize: pixel <= 500 ? 12 : 15,
           fontWeight: 700,
           color: '#53382c',
           margin: '0 auto',
-          height: 85,
+          height: 40,
         },
       }}
     />

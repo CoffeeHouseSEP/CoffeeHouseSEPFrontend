@@ -347,7 +347,7 @@ export const CartContainer = () => {
                   }}
                 />
                 <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10, ...itemStyle }}>
-                  Qty
+                  SL
                 </div>
                 <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10, ...itemStyle }}>
                   Ảnh

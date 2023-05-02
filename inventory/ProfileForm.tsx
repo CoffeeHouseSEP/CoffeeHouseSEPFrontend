@@ -17,7 +17,6 @@ export const ProfileForm = ({ profile, onChangeProfile, errorState }: IProfileFo
   const nameUser = useTranslation('nameUser')
   const userPhoneNumber = useTranslation('userPhoneNumber')
   const userEmail = useTranslation('userEmail')
-  const userAddress = useTranslation('userAddress')
 
   const translate = useTranslationFunction()
 
@@ -82,20 +81,6 @@ export const ProfileForm = ({ profile, onChangeProfile, errorState }: IProfileFo
           }}
           {...inputStyles({
             error: errorState?.email && translate(errorState.email),
-          })}
-        />
-      </div>
-      <div style={{ gridColumn: 'span 1 / span 1' }}>
-        <Input
-          value={profile.address}
-          label={userAddress}
-          onChange={(event) => {
-            onChangeProfile({
-              address: event.currentTarget.value,
-            })
-          }}
-          {...inputStyles({
-            error: errorState?.address && translate(errorState.address),
           })}
         />
       </div>

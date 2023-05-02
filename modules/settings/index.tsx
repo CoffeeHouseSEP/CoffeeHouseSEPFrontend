@@ -22,6 +22,9 @@ export const Settings = () => {
     email: '',
   })
   const [password, setPassword] = useState<string>('')
+  const [oldPass, setOldPass] = useState<string>('')
+  const [rePassword, setRePassword] = useState<string>('')
+
   const [cookies] = useCookies([TOKEN_AUTHENTICATION])
   const { darkTheme } = useSelector(GeneralSettingsSelector)
 
@@ -67,7 +70,9 @@ export const Settings = () => {
         pathName: apiRoute.profile.changePass,
         token: cookies.token,
         params: {
+          oldPass: encodeBase64(oldPass),
           newPass: encodeBase64(password),
+          rePass: encodeBase64(rePassword),
         },
         request: null,
       }),
@@ -110,10 +115,28 @@ export const Settings = () => {
       <div style={{ maxWidth: 375 }}>
         <Input
           type="password"
-          label="Change password"
+          label="old password"
+          value={oldPass}
+          onChange={(e) => {
+            setOldPass(e.target.value)
+          }}
+          {...inputStyles({})}
+        />
+        <Input
+          type="password"
+          label="New password"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value)
+          }}
+          {...inputStyles({})}
+        />
+        <Input
+          type="password"
+          label="COnfirm new password"
+          value={rePassword}
+          onChange={(e) => {
+            setRePassword(e.target.value)
           }}
           {...inputStyles({})}
         />

@@ -156,175 +156,164 @@ export default function GoodsDetail() {
       {!loading && (
         <div
           style={{
-            display: 'flex',
-            width: '100vw',
+            display: 'grid',
+            gridTemplateColumns: `repeat(${pixel <= 960 ? 1 : 2}, minmax(0, 1fr))`,
+            gap: 20,
+            minWidth: 375,
+            maxWidth: 800,
+            margin: 'auto',
             alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: pixel <= 960 ? 'column' : 'row',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: pixel <= 960 ? 'column' : 'row',
-              gap: 20,
-              minWidth: 375,
-              maxWidth: 900,
-              alignItems: 'center',
-            }}
-          >
-            <div>
-              <h3
-                style={{
-                  cursor: 'pointer',
-                  fontSize: '34px',
-                  lineHeight: '44px',
-                  textTransform: 'uppercase',
-                  color: '#53382c',
-                  display: 'block',
-                  margin: 'auto',
-                }}
-                onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
-              >
-                {goodDetail?.name}
-              </h3>
-              <div
-                style={{
-                  aspectRatio: '1/1',
-                  width: '250px',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  background: '#ffffff',
-                  transition: 'linear 1s',
-                  margin: 'auto',
-                  borderRadius: 10,
-                }}
-                onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
-              >
-                <ImageItem altname={goodDetail?.name} id={goodDetail?.goodsId} />
-              </div>
-            </div>
+          <div style={{ gridColumn: 'span 1 / span 1' }}>
+            <h3
+              style={{
+                cursor: 'pointer',
+                fontSize: '34px',
+                lineHeight: '44px',
+                textTransform: 'uppercase',
+                color: '#53382c',
+                display: 'block',
+                margin: 'auto',
+              }}
+              onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
+            >
+              {goodDetail?.name}
+            </h3>
             <div
               style={{
-                width: 'max-content',
-                maxWidth: '375px',
-                display: 'flex',
-                flexDirection: 'column',
-                margin: '0px 10px',
-                marginTop: pixel <= 960 ? 10 : 100,
+                aspectRatio: '1/1',
+                width: '250px',
+                cursor: 'pointer',
+                position: 'relative',
+                background: '#ffffff',
+                transition: 'linear 1s',
+                margin: 'auto',
+                borderRadius: 10,
+              }}
+              onClick={() => router.push(`/goods/${goodDetail?.goodsId}`)}
+            >
+              <ImageItem altname={goodDetail?.name} id={goodDetail?.goodsId} />
+            </div>
+          </div>
+          <div
+            style={{
+              gridColumn: 'span 1 / span 1',
+              display: 'flex',
+              flexDirection: 'column',
+              margin: '0px 10px',
+              marginTop: pixel <= 960 ? 10 : 100,
+            }}
+          >
+            <p
+              style={{
+                marginBottom: 0,
+                paddingTop: '0.5rem',
+                fontSize: '14px',
+                lineHeight: '24px',
+                color: ' #53382c',
+                fontWeight: 'normal',
               }}
             >
-              <p
-                style={{
-                  marginBottom: 0,
-                  paddingTop: '0.5rem',
-                  fontSize: '14px',
-                  lineHeight: '24px',
-                  color: ' #53382c',
-                  fontWeight: 'normal',
-                  width: pixel <= 960 ? '100%' : '50%',
-                }}
-              >
-                {goodDetail?.description}
-              </p>
+              {goodDetail?.description}
+            </p>
+            <Button
+              size="xl"
+              style={{ margin: '10px 0px' }}
+              onClick={() => {
+                addToCartHandler(qty, getSize(), id)
+                toast.success('Thêm vào giỏ hàng thành công')
+                dispatch(setReloadCrt(true))
+              }}
+            >
+              ĐẶT MUA NGAY
+            </Button>
+            {/* <div style={{ margin: '10px 0' }}> Size : {goodDetail?.isSize === 0 ? 'M' : 'L'}</div>
+             */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
               <Button
-                size="xl"
-                style={{ margin: '10px 0px' }}
-                onClick={() => {
-                  addToCartHandler(qty, getSize(), id)
-                  toast.success('Thêm vào giỏ hàng thành công')
-                  dispatch(setReloadCrt(true))
-                }}
+                type="button"
+                onClick={() => setQuantity(qty)}
+                color="primary"
+                styleType="light"
               >
-                ĐẶT MUA NGAY
+                <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
               </Button>
-              {/* <div style={{ margin: '10px 0' }}> Size : {goodDetail?.isSize === 0 ? 'M' : 'L'}</div>
-               */}
+              {/* amount */}
+              <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{qty}</p>
+              {/* decrease amount */}
+              <Button
+                color="primary"
+                type="button"
+                onClick={() => setQty(qty + 1)}
+                styleType="light"
+              >
+                <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
+              </Button>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {goodDetail?.isSize === 1 && (
+                <>
+                  <span style={{ fontSize: 18, fontWeight: 550 }}>Size :</span>
+                  <div style={{ display: 'flex', gap: 15, margin: '0px 10px' }}>
+                    <div
+                      style={{
+                        display: 'block',
+                        padding: '5px 10px',
+                        border: activeSize === 0 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
+                        color: activeSize === 0 ? '#b22830' : '#000',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => setActiveSize(0)}
+                    >
+                      <span>S</span>
+                    </div>
+                    <div
+                      style={{
+                        display: 'block',
+                        padding: '5px 10px',
+                        border: activeSize === 1 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
+                        color: activeSize === 1 ? '#b22830' : '#000',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => setActiveSize(1)}
+                    >
+                      <span>M</span>
+                    </div>
+                    <div
+                      style={{
+                        display: 'block',
+                        padding: '5px 10px',
+                        cursor: 'pointer',
+                        border: activeSize === 2 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
+                        color: activeSize === 2 ? '#b22830' : '#000',
+                      }}
+                      onClick={() => setActiveSize(2)}
+                    >
+                      <span>L</span>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div
                 style={{
                   display: 'flex',
-                  alignItems: 'center',
+                  gap: 4,
+                  fontSize: 18,
+                  fontWeight: 700,
+                  color: '#53382c',
+                  margin: '10px 0px',
                 }}
               >
-                <Button
-                  type="button"
-                  onClick={() => setQuantity(qty)}
-                  color="primary"
-                  styleType="light"
-                >
-                  <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-                </Button>
-                {/* amount */}
-                <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{qty}</p>
-                {/* decrease amount */}
-                <Button
-                  color="primary"
-                  type="button"
-                  onClick={() => setQty(qty + 1)}
-                  styleType="light"
-                >
-                  <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-                </Button>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                {goodDetail?.isSize === 1 && (
-                  <>
-                    <span>Size :</span>
-                    <div style={{ display: 'flex', gap: 15, margin: '0px 10px' }}>
-                      <div
-                        style={{
-                          display: 'block',
-                          padding: '5px 10px',
-                          border: activeSize === 0 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
-                          color: activeSize === 0 ? '#b22830' : '#000',
-                          cursor: 'pointer',
-                        }}
-                        onClick={() => setActiveSize(0)}
-                      >
-                        <span>S</span>
-                      </div>
-                      <div
-                        style={{
-                          display: 'block',
-                          padding: '5px 10px',
-                          border: activeSize === 1 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
-                          color: activeSize === 1 ? '#b22830' : '#000',
-                          cursor: 'pointer',
-                        }}
-                        onClick={() => setActiveSize(1)}
-                      >
-                        <span>M</span>
-                      </div>
-                      <div
-                        style={{
-                          display: 'block',
-                          padding: '5px 10px',
-                          cursor: 'pointer',
-                          border: activeSize === 2 ? 'solid 1px #b22830' : 'solid 1px #c3c3c3',
-                          color: activeSize === 2 ? '#b22830' : '#000',
-                        }}
-                        onClick={() => setActiveSize(2)}
-                      >
-                        <span>L</span>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    gap: 4,
-                    fontSize: 18,
-                    fontWeight: 700,
-                    color: '#53382c',
-                    margin: '10px 0px',
-                  }}
-                >
-                  <span style={{ marginRight: ' 5px' }}> Price :</span>
-                  <span>{loadingP ? <Loading /> : VND.format(Math.round(price))}</span>
-                </div>
+                <span style={{ marginRight: ' 5px' }}> Price :</span>
+                <span>{loadingP ? <Loading /> : VND.format(Math.round(price))}</span>
               </div>
             </div>
           </div>
