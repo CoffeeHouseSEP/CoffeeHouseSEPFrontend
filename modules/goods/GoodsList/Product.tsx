@@ -58,7 +58,7 @@ const Product = ({ items }: PropProduct) => {
                 <header
                   style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
+                    justifyContent: 'center',
                     borderBottom: '0.5px dotted #333',
                   }}
                 >
@@ -69,7 +69,13 @@ const Product = ({ items }: PropProduct) => {
                     {name}
                   </h5>
                 </header>
-                <h4 style={{ color: themeValue.dark.colors.redHighland }}>
+                <h4
+                  style={{
+                    color: themeValue.dark.colors.redHighland,
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
                   {VND.format(Math.floor(applyPrice))}
                 </h4>
               </div>

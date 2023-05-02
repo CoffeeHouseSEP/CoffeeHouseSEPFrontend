@@ -1,7 +1,7 @@
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useResponsive } from '@/hooks'
-import { ParseValueForTable, themeValue } from '@/lib'
+import { ParseValueForTable, VND, themeValue } from '@/lib'
 import { getMethod } from '@/services'
 import { CommonListResultType } from '@/types'
 import { OrderResponse } from '@/types/order/order'
@@ -155,7 +155,7 @@ export const MyOrderDetail = () => {
               <div style={{ color: themeValue.light.colors.redHighland }}>Ngày tạo đơn:</div>
               <div>{orderDetail?.createdDate}</div>
               <div style={{ color: themeValue.light.colors.redHighland }}>Tổng giá trị:</div>
-              <div>{Math.round(orderDetail?.totalPrice || 0)} VND</div>
+              <div>{VND.format(Math.round(orderDetail?.totalPrice || 0))}</div>
               <div style={{ color: themeValue.light.colors.redHighland }}>Trạng thái:</div>
               <div>{parseValue.status!(orderDetail?.status)}</div>
               <div style={{ color: themeValue.light.colors.redHighland }}>Mã giảm giá:</div>

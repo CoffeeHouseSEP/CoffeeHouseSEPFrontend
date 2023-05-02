@@ -32,7 +32,11 @@ export const SignOutButton = ({ style }: { style?: object }) => {
       removeCookie(USER_ID)
       removeCookie(ROLE_COOKIE)
       dispatch(setIsLoggedIn(false))
-      router.push('/')
+      if (router.pathname.includes('admin')) {
+        router.push('/admin')
+      } else {
+        router.push('/')
+      }
     },
     handleError(status, message) {
       if (status) {

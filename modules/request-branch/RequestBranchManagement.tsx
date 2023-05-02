@@ -61,7 +61,7 @@ export const RequestBranchManagement = () => {
       label: 'createdDate',
     },
     {
-      key: 'approvedBy',
+      key: 'approvedByName',
       label: 'approvedBy',
     },
     {

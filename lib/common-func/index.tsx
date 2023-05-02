@@ -45,6 +45,11 @@ export const lostOddProps = <T extends {}>(source: Partial<T>, editable: ViewPoi
   return target
 }
 
+export const VND = new Intl.NumberFormat('vi-VN', {
+  style: 'currency',
+  currency: 'VND',
+})
+
 export const getListEditAble = (editable: ViewPointType[] = []) => {
   let listReturn = {}
   editable.forEach((key) => {
@@ -77,7 +82,7 @@ export const ParseValueForTable = (): object & any => {
       )
     },
     totalPrice: (value: number) => {
-      return Math.round(value)
+      return VND.format(Math.round(value))
     },
     status: (value: string) => {
       if (typeof value === 'string') {
@@ -191,8 +196,3 @@ export const formatDate = (yourDate: Date) => {
 
   return [year, month, day].join('-')
 }
-
-export const VND = new Intl.NumberFormat('vi-VN', {
-  style: 'currency',
-  currency: 'VND',
-})

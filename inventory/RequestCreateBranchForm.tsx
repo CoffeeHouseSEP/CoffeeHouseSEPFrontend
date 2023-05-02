@@ -67,14 +67,22 @@ export const RequestCreateBranchForm = ({
     const item = data as RequestCreateResponse
     return (
       <Input
-        value={request.find((thisItem) => thisItem.goodsId === item.goodsId)?.quantity || 1}
+        value={request.find((thisItem) => thisItem.goodsId === item.goodsId)?.quantity || ''}
         disabled={!request.find((thisItem) => thisItem.goodsId === item.goodsId)}
         onChange={(e) => {
-          if (Number.isFinite(Number(e.target.value))) {
+          if (e.target.value && Number.isFinite(Number(e.target.value))) {
             let newList: RequestCreateResponse[] = []
             newList = request.map((itemThis) => {
               if (itemThis.goodsId === item.goodsId)
                 return { ...itemThis, quantity: Number(e.target.value) }
+              return itemThis
+            })
+            onchangeUserState(newList)
+          }
+          if (!e.target.value) {
+            let newList: RequestCreateResponse[] = []
+            newList = request.map((itemThis) => {
+              if (itemThis.goodsId === item.goodsId) return { ...itemThis, quantity: 0 }
               return itemThis
             })
             onchangeUserState(newList)
