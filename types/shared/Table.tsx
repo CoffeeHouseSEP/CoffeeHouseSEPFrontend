@@ -1,6 +1,6 @@
 export type ActionType = {
   content: string
-  icon: React.ReactNode
+  icon: (data: { [key: string]: any }) => React.ReactNode
   func: Function
 }
 

@@ -1,9 +1,11 @@
-import { EndUserLayout, Modal } from '@/components'
+import { Modal } from '@/components'
 import { RegisterFrom } from '@/modules/register'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { ReactElement } from 'react'
 import { NextPageWithLayout } from './_app'
 
+const EndUserLayout = dynamic(() => import('@/components/layout/EndUserLayout'), { ssr: false })
 const RegisterPage: NextPageWithLayout = () => {
   return (
     <Modal open notBlur>

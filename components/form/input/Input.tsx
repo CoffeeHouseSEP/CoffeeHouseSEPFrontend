@@ -1,7 +1,8 @@
 import { themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
-import { PseudoType, ColorType } from '@/types'
-import { InputHTMLAttributes, useId, forwardRef, useRef, useState, FocusEvent } from 'react'
+import { ColorType, PseudoType } from '@/types'
+import { FocusEvent, InputHTMLAttributes, forwardRef, useId, useRef, useState } from 'react'
+import { AiFillEye } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 
 interface IInput extends InputHTMLAttributes<HTMLInputElement> {
@@ -32,7 +33,7 @@ export const Input = forwardRef<HTMLInputElement, IInput>(
     ref
   ) => {
     const { darkTheme } = useSelector(GeneralSettingsSelector)
-
+    const [isShowPass, setIsShowPass] = useState(false)
     const id = useId()
     const refLabelLeft = useRef<HTMLSpanElement>(null)
 
@@ -112,9 +113,26 @@ export const Input = forwardRef<HTMLInputElement, IInput>(
               padding: '0 0.5rem',
               cursor: disabled || readOnly ? 'default' : 'text',
             }}
+            type={isShowPass ? 'text' : rest.type}
             onFocus={handleFocus}
             onBlur={handleBlur}
           />
+          {rest.type === 'password' && (
+            <span
+              ref={refLabelLeft}
+              style={{
+                color: themeValue[darkTheme].colors[status ?? 'gray600'],
+                padding: '0 0.5rem',
+                height: 'min-content',
+                width: 'min-content',
+                fontWeight: 500,
+                cursor: 'pointer',
+              }}
+              onClick={() => setIsShowPass(!isShowPass)}
+            >
+              <AiFillEye />
+            </span>
+          )}
           {underlined ? (
             <>
               <hr

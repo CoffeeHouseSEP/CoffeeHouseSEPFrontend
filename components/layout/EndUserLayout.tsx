@@ -8,7 +8,7 @@ interface IEndUserLayout {
   children: React.ReactNode
 }
 
-export const EndUserLayout = ({ children }: IEndUserLayout) => {
+export default function EndUserLayout({ children }: IEndUserLayout) {
   const pixel = useResponsive()
 
   useEffect(() => {}, [pixel])

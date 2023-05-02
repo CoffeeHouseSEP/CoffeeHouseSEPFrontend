@@ -1,5 +1,5 @@
 import { useResponsive } from '@/hooks'
-import { addToCartHandler, themeValue } from '@/lib'
+import { VND, addToCartHandler, themeValue } from '@/lib'
 import { setReloadCrt } from '@/redux/share-store'
 import { GoodsResponse } from '@/types/goods/goods'
 import { useRouter } from 'next/router'
@@ -64,7 +64,9 @@ export const CardGoodsHome = ({ menuItem }: { menuItem: GoodsResponse }) => {
             {name}
           </h5>
         </header>
-        <h4 style={{ color: themeValue.dark.colors.redHighland }}>{Math.floor(applyPrice)} VND</h4>
+        <h4 style={{ color: themeValue.dark.colors.redHighland }}>
+          {VND.format(Math.floor(applyPrice))}
+        </h4>
       </div>
       <div
         style={{

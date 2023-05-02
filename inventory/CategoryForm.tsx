@@ -1,4 +1,4 @@
-import { Checkbox, Input } from '@/components'
+import { Input } from '@/components'
 import { useTranslation, useTranslationFunction } from '@/hooks'
 import { inputStyles } from '@/inventory'
 import { ShareStoreSelector } from '@/redux/share-store'
@@ -58,17 +58,6 @@ export const CategoryForm = ({ category, onchangeUserState, type, errorState }: 
             error: errorState?.description && translate(errorState.description),
           })}
         />
-      </div>
-      <div style={{ gridColumn: 'span 1 / span 1' }}>
-        <Checkbox
-          isReadOnly={type === 'read'}
-          isSelected={category.status === 1}
-          onChange={() => {
-            onchangeUserState({ status: category.status === 1 ? 0 : 1 })
-          }}
-        >
-          {category.status ? 'active' : 'deactivate'}
-        </Checkbox>
       </div>
     </div>
   )

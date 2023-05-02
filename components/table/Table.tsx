@@ -66,20 +66,23 @@ export function CustomTable({
               },
             },
           ]
-        ).map((action) => (
-          <div style={{ cursor: 'pointer' }}>
-            {/* <Tooltip content={action.content}> */}
-            <div
-              onClick={(e) => {
-                action.func(data[idFiled], router)
-                e.stopPropagation()
-              }}
-            >
-              {action.icon}
+        ).map((action) => {
+          const icon = action.icon as any
+          return (
+            <div style={{ cursor: 'pointer' }}>
+              {/* <Tooltip content={action.content}> */}
+              <div
+                onClick={(e) => {
+                  action.func(data[idFiled], router)
+                  e.stopPropagation()
+                }}
+              >
+                {typeof icon !== 'object' ? icon(data) : action.icon}
+              </div>
+              {/* </Tooltip> */}
             </div>
-            {/* </Tooltip> */}
-          </div>
-        ))
+          )
+        })
       case 'select':
         return (
           <Checkbox

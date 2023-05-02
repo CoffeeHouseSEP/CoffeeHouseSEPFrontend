@@ -16,6 +16,9 @@ export default function FooterEndUser() {
         textAlign: 'center',
         height: 50,
       }}
-    />
+    >
+      <span>© 2013 Coffee Chain. All rights reserved</span>
+      <span>customerservice@coffeechain.com.vn</span>
+    </div>
   )
 }

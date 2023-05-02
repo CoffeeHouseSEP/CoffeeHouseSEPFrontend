@@ -12,7 +12,6 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 import { BsChevronRight, BsFillCalendar2DateFill } from 'react-icons/bs'
 import { toast } from 'react-toastify'
-import { CardDestinations } from '../home-comps/card-destinations/CardDestinations'
 import { CardLocation } from '../home-comps/card-location/CardLocation'
 import ImageItem from '../news/Image/ImageItem'
 import { CardGoodsHome } from './CardGoodsHome'
@@ -79,7 +78,17 @@ export const HomeContainer = () => {
       >
         <CustomSlider
           ItemCard={cityData.map((item: RecommendedDataType) => (
-            <CardDestinations key={item.id} data={item} />
+            <div
+              key={item.id}
+              style={{
+                width: '100%',
+                aspectRatio: '2 /1 ',
+                backgroundImage: `url(" ${item?.imageUrl} ")`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+              }}
+            />
           ))}
           numberDisplay={1}
         />

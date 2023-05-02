@@ -1,8 +1,8 @@
-import { Button, CustomTable, Loading } from '@/components'
+import { Button, CustomTable, Loading, Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useGetBreadCrumb, useTranslation, useTranslationFunction } from '@/hooks'
-import { DefaultCreateRequest, DefaultListDetail, DefaultRequest } from '@/inventory'
+import { DefaultRequest } from '@/inventory'
 import { RequestBranchForm } from '@/inventory/RequestBranchForm'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
@@ -30,10 +30,10 @@ export const RequestBranchDetail = () => {
   const [showReason, setShowReason] = useState<boolean>(false)
   const [cancelReason, setCancelReason] = useState<string>('')
   const [request, setRequest] = useState<RequestBranchRequest>(DefaultRequest)
-  const [requestState, setRequestState] = useState<RequestCreateResponse>(DefaultCreateRequest)
-  const [requestDetail, setRequestDetail] = useState<RequestCreateResponse[]>(DefaultListDetail)
+  const [requestDetail, setRequestDetail] = useState<RequestCreateResponse[]>([])
   const id = router?.query?.id?.toString()
   const { breakPoint } = useSelector(ShareStoreSelector)
+  const [page, setPage] = useState<number>(1)
 
   const viewResult = useApiCall<CommonListResultType<RequestBranchRequest>, string>({
     callApi: () =>
@@ -81,40 +81,9 @@ export const RequestBranchDetail = () => {
       setRequestDetail(listDetail)
     }
   }, [result.data])
-  const onchangeUserState = (newUpdate: Partial<RequestCreateResponse>) => {
-    const newUserState = { ...requestState }
-    setRequestState({ ...newUserState, ...newUpdate })
-  }
 
-  const [select, setSelect] = useState<string[]>([])
-
-  const confirmChoice = () => {
-    if (requestState.goodsId.length > 0) {
-      const req = [...requestDetail.filter((item) => item.goodsId !== '')]
-      if (req.find((item) => item.goodsId === requestState.goodsId)) {
-        setRequestDetail([
-          ...req.map((item) => {
-            if (item.goodsId === requestState.goodsId) {
-              return { ...item, quantity: item.quantity + requestState.quantity }
-            }
-            return item
-          }),
-        ])
-      } else {
-        setRequestDetail([...req, requestState])
-      }
-      setRequestState(DefaultCreateRequest)
-      toast.info('Selected goods successfully!')
-    } else {
-      toast.error('Please select goof')
-    }
-  }
-
-  const deleteGoodReq = () => {
-    const newReq = requestDetail.filter((item) => item.goodsId !== select[0])
-    setRequestDetail(newReq)
-    setSelect([])
-    toast.info('deleted!')
+  const onChangeReq = (value: Partial<RequestBranchRequest>) => {
+    setRequest({ ...request, ...value })
   }
 
   const updateResult = useApiCall<RequestUpdateBranchRequest, RequestFailure>({
@@ -154,23 +123,7 @@ export const RequestBranchDetail = () => {
       viewResult.setLetCall(true)
     },
   })
-  const sendRequest = useApiCall<RequestBranchRequest, RequestFailure>({
-    callApi: () =>
-      putMethod<RequestBranchRequest>({
-        pathName: apiRoute.request.sendRequest,
-        token: cookies.token,
-        params: { requestId: id || '' },
-      }),
-    handleError(status, message) {
-      if (status) {
-        toast.error(translate(message))
-      }
-    },
-    handleSuccess(message) {
-      toast.success(translate(message))
-      viewResult.setLetCall(true)
-    },
-  })
+
   const cancelResult = useApiCall<RequestCancel, RequestFailure>({
     callApi: () =>
       putMethod<RequestCancel>({
@@ -206,37 +159,39 @@ export const RequestBranchDetail = () => {
   const callUpdateRequest = () => {
     updateResult.setLetCall(true)
   }
-  const callSendRequest = () => {
-    sendRequest.setLetCall(true)
-  }
   const callUpdate = () => {
     completedResult.setLetCall(true)
   }
   const handleSetTypeRead = () => {
-    if (viewResult?.data?.result)
+    if (viewResult?.data?.result) {
       setRequest({ ...DefaultRequest, ...viewResult.data.result.data[0] })
+      setRequestDetail(result.data?.result.data || [])
+    }
     setType('read')
     updateResult.handleReset()
   }
-  const dataGoodsField: ViewPointType[] = [
+
+  const dataField: ViewPointType[] = [
     {
-      key: 'goodsId',
-      label: 'goodsId',
+      key: 'goodsName',
+      label: 'goodsName',
     },
     {
       key: 'quantity',
       label: 'quantity',
     },
+    {
+      key: 'applyPrice',
+      label: 'applyPrice',
+    },
   ]
+
   const completeLabel = useTranslation('CompleteRequest')
   const cancelRequestLabel = useTranslation('CancelRequest')
   const saveLabel = useTranslation('Save')
   const editLabel = useTranslation('edit')
   const breadCrumb = useGetBreadCrumb()
   const cancelLabel = useTranslation('cancel')
-  const sendLabel = useTranslation('SendRequest')
-  const confirmLabel = useTranslation('Confirm')
-  const deleteLabel = useTranslation('delete')
 
   if (viewResult.loading)
     return (
@@ -540,45 +495,37 @@ export const RequestBranchDetail = () => {
       <div style={{ paddingTop: 20 }}>
         <RequestBranchForm
           request={request}
-          requestBody={requestState}
-          onchangeUserState={onchangeUserState}
+          requestBody={requestDetail}
+          onchangeUserState={onChangeReq}
+          onchangeListState={setRequestDetail}
           type={type}
           type1={type}
           errorState={updateResult.error?.result}
         />
       </div>
 
-      {type === 'read' ? (
-        <div style={{ float: 'right' }}>
-          <Button color="primary" onClick={callSendRequest} disabled={viewResult.loading}>
-            {viewResult.loading ? <Loading /> : <>{sendLabel}</>}
-          </Button>
-        </div>
-      ) : (
+      {type === 'read' && (
         <div>
           <div style={{ fontSize: '25px', fontWeight: 'bold', padding: 20 }}>
             Goods is Selected:
           </div>
           <CustomTable
-            idFiled="goodsId"
-            detailPath="admin/request/"
-            header={dataGoodsField ?? []}
-            body={requestDetail}
-            selectedKeys={select}
             listActions={[]}
-            handleChangeSelection={setSelect}
-            selectionMode="single"
+            idFiled="requestId"
+            detailPath="admin/request-branch/"
+            header={dataField ?? []}
+            body={result.data?.result.data ? result.data?.result.data : []}
           >
             <>{null}</>
           </CustomTable>
-          <div style={{ float: 'right', gap: 10, display: 'flex' }}>
-            <Button color="warning" onClick={deleteGoodReq} disabled={select.length === 0}>
-              {updateResult.loading ? <Loading /> : <>{deleteLabel}</>}
-            </Button>
-            <Button color="primary" onClick={confirmChoice} disabled={updateResult.loading}>
-              {updateResult.loading ? <Loading /> : <>{confirmLabel}</>}
-            </Button>
-          </div>
+          {!result.loading && (
+            <Pagination
+              total={result.data?.result?.totalRows ?? 0}
+              onChange={(number) => setPage(number)}
+              page={page}
+              paginationStyle={{ marginTop: 20 }}
+            />
+          )}
         </div>
       )}
     </>

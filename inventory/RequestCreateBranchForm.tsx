@@ -1,9 +1,8 @@
-import { Button, CustomTable, Input, Pagination } from '@/components'
+import { CustomTable, Input, Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
-import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
-import { themeValue } from '@/lib'
-import { ShareStoreSelector } from '@/redux/share-store'
+import { useApiCall, useTranslationFunction } from '@/hooks'
+import { VND, themeValue } from '@/lib'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
 import { GoodsResponse } from '@/types/goods/goods'
@@ -11,17 +10,13 @@ import { RequestFailure } from '@/types/request/request'
 import { RequestCreateResponse } from '@/types/requestDetail/requestDetail'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
-import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai'
-import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { inputStyles } from './Styles'
 
 interface IRequestCreateBranchForm {
-  request: RequestCreateResponse
-  onchangeUserState: Function
+  request: RequestCreateResponse[]
+  onchangeUserState: (value: RequestCreateResponse[]) => void
   type: 'read' | 'update'
   errorState?: Partial<RequestFailure>
-  selectGoods?: string
 }
 
 export const RequestCreateBranchForm = ({
@@ -30,12 +25,10 @@ export const RequestCreateBranchForm = ({
   type,
   errorState,
 }: IRequestCreateBranchForm) => {
-  const { breakPoint } = useSelector(ShareStoreSelector)
   const translate = useTranslationFunction()
   const [cookies] = useCookies([TOKEN_AUTHENTICATION])
   const [page, setPage] = useState<number>(1)
 
-  const GoodsIdLabel = useTranslation('goodsId')
   const result = useApiCall<CommonListResultType<GoodsResponse>, String>({
     callApi: () =>
       getMethod({
@@ -49,7 +42,9 @@ export const RequestCreateBranchForm = ({
       }
     },
   })
+
   const { data, loading, setLetCall } = result
+
   useEffect(() => {
     setLetCall(true)
   }, [page])
@@ -57,91 +52,81 @@ export const RequestCreateBranchForm = ({
   const dataField: ViewPointType[] = [
     {
       key: 'name',
-      label: 'name',
+      label: 'goodsName',
     },
     {
       key: 'categoryName',
       label: 'categoryName',
     },
     {
-      key: 'applyPrice',
-      label: 'applyPrice',
+      key: 'innerPrice',
+      label: 'innerPrice',
     },
   ]
-
-  const setQuantity = (id: number) => {
-    if (id <= 1) {
-      onchangeUserState({ quantity: 1 })
-    } else {
-      onchangeUserState({ quantity: id })
-    }
+  const inputItem = (data: { [key: string]: any }) => {
+    const item = data as RequestCreateResponse
+    return (
+      <Input
+        value={request.find((thisItem) => thisItem.goodsId === item.goodsId)?.quantity || 1}
+        disabled={!request.find((thisItem) => thisItem.goodsId === item.goodsId)}
+        onChange={(e) => {
+          if (Number.isFinite(Number(e.target.value))) {
+            let newList: RequestCreateResponse[] = []
+            newList = request.map((itemThis) => {
+              if (itemThis.goodsId === item.goodsId)
+                return { ...itemThis, quantity: Number(e.target.value) }
+              return itemThis
+            })
+            onchangeUserState(newList)
+          }
+        }}
+      />
+    )
   }
 
   return (
     <>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: `repeat(${breakPoint}, minmax(0, 1fr))`,
-          gap: 16,
-        }}
-      >
-        <div>
-          <Input
-            readOnly
-            value={request.goodsId}
-            label={GoodsIdLabel}
-            onChange={() => {}}
-            {...inputStyles({
-              error: errorState?.branchId && translate(errorState.branchId),
-            })}
-          />
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <Button
-            type="button"
-            onClick={() => setQuantity(request.quantity)}
-            color="primary"
-            styleType="light"
-          >
-            <AiFillLeftCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-          </Button>
-          {/* amount */}
-          <p style={{ fontSize: '2rem', margin: '10px 10px', color: '#000' }}>{request.quantity}</p>
-          {/* decrease amount */}
-          <Button
-            color="primary"
-            type="button"
-            onClick={() => setQuantity(request.quantity + 1)}
-            styleType="light"
-          >
-            <AiFillRightCircle style={{ fontSize: '2rem', cursor: 'pointer' }} />
-          </Button>
-        </div>
-      </div>
       <CustomTable
-        listActions={[]}
+        listActions={[
+          {
+            content: 'string',
+            icon: inputItem,
+            func: () => {},
+          },
+        ]}
         idFiled="goodsId"
         detailPath="admin/goods/"
         header={dataField ?? []}
         body={
           data
             ? data.result.data.map((user) => {
-                return { ...user, status: user.status === 1 ? 'active' : 'deactivate' }
+                return { ...user, innerPrice: VND.format(user.innerPrice) }
               })
             : []
         }
-        selectionMode={type === 'read' ? 'none' : 'single'}
-        selectedKeys={[request.goodsId]}
+        selectionMode={type === 'read' ? 'none' : 'multiple'}
+        selectedKeys={request.map((item) => item.goodsId)}
         loading={loading}
-        handleChangeSelection={(value: string[]) =>
-          onchangeUserState({ goodsId: value.length > 0 ? value[0] : '' })
-        }
+        handleChangeSelection={(value: string[]) => {
+          let newList: RequestCreateResponse[] = []
+          value.forEach((select) => {
+            const thisF = request.find((da) => da.goodsId === select)
+            if (thisF) {
+              newList = [...newList, thisF]
+            } else {
+              newList = [
+                ...newList,
+                {
+                  goodsId: select,
+                  quantity: 1,
+                  applyPrice:
+                    result.data?.result.data.find((da) => da.goodsId === select)?.innerPrice || 0,
+                },
+              ]
+            }
+          })
+          onchangeUserState(newList)
+        }}
       >
         <>{null}</>
       </CustomTable>

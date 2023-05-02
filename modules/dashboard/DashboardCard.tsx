@@ -1,4 +1,4 @@
-import { themeValue } from '@/lib'
+import { VND, themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { DashboardResponse } from '@/types/dashboard'
 import { useSelector } from 'react-redux'
@@ -9,7 +9,7 @@ export const DashboardCard = ({ data }: { data: DashboardResponse }) => {
   const result = [
     {
       value: data.branchName,
-      unit: 'Branch name',
+      unit: '',
     },
     {
       value: data.revenue,
@@ -59,7 +59,7 @@ export const DashboardCard = ({ data }: { data: DashboardResponse }) => {
                   fontWeight: 700,
                 }}
               >
-                {item.value}
+                {item.unit === 'Revenue' ? VND.format(Number(item.value)) : item.value}
               </div>
               <div>{item.unit}</div>
             </div>

@@ -84,7 +84,7 @@ export const RequestManagement = () => {
       putMethod({
         pathName: apiRoute.request.approveRequest,
         token: cookies.token,
-        params: { requestsId: select[0] },
+        params: { requestId: select[0] },
       }),
     handleSuccess(message) {
       setLetCall(true)
@@ -102,7 +102,7 @@ export const RequestManagement = () => {
       putMethod({
         pathName: apiRoute.request.cancelRequest,
         token: cookies.token,
-        params: { requestsId: select[0], cancelReason: reason },
+        params: { requestId: select[0], cancelReason: reason },
       }),
     handleSuccess(message) {
       setReason('')

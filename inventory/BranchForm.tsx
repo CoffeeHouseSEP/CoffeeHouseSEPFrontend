@@ -49,7 +49,7 @@ export const BranchForm = ({
       getMethod({
         pathName: apiRoute.user.getListUser,
         token: cookies.token,
-        params: { page: String(page), role: 'BRANCH_MANAGER' },
+        params: { page: String(page), role: 'BRANCH_MANAGER', status: 1 },
       }),
     handleError(status, message) {
       if (status) {
