@@ -3,6 +3,7 @@ import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { inputStyles } from '@/inventory'
+import { VND } from '@/lib'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
@@ -123,7 +124,16 @@ export const RequestForm = ({ request, onchangeUserState, type, errorState }: IR
         idFiled="requestId"
         detailPath="admin/request/"
         header={dataField ?? []}
-        body={data?.result.data ? data?.result.data : []}
+        body={
+          data?.result.data
+            ? data?.result.data.map((item) => {
+                return {
+                  ...item,
+                  applyPrice: VND.format(item.applyPrice),
+                }
+              })
+            : []
+        }
       >
         <>{null}</>
       </CustomTable>
