@@ -30,11 +30,20 @@ export const GoodManagement = () => {
 
   const { breakPoint } = useSelector(ShareStoreSelector)
 
+  let params = {
+    page: String(page),
+    pageSize: '10',
+  }
+
+  if (cookies.role !== 'ADMIN') {
+    params = { ...params, isSold: '1' } as any
+  }
+
   const result = useApiCall<CommonListResultType<GoodsResponse>, String>({
     callApi: () =>
       getMethod({
         pathName: apiRoute.goods.getListGoodsByAuthorized,
-        params: { page: String(page), pageSize: '10', isSold: '1' },
+        params,
         token: cookies.token,
       }),
     handleError(status, message) {
