@@ -1,9 +1,10 @@
 import { Button, CustomTable, Loading, Pagination } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
-import { TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
+import { ROLE_COOKIE, TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { DefaultRequest } from '@/inventory'
 import { RequestBranchForm } from '@/inventory/RequestBranchForm'
+import { VND } from '@/lib'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, putMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
@@ -23,7 +24,7 @@ import { toast } from 'react-toastify'
 import { FloatTrayDetail } from './inventory/FloatTrailDetail'
 
 export const RequestBranchDetail = () => {
-  const [cookies] = useCookies([TOKEN_AUTHENTICATION, USER_ID])
+  const [cookies] = useCookies([TOKEN_AUTHENTICATION, ROLE_COOKIE])
   const router = useRouter()
   const translate = useTranslationFunction()
   const [type, setType] = useState<'read' | 'update'>('read')
@@ -182,7 +183,7 @@ export const RequestBranchDetail = () => {
     },
     {
       key: 'applyPrice',
-      label: 'applyPrice',
+      label: 'innerPrice',
     },
   ]
 
@@ -229,16 +230,24 @@ export const RequestBranchDetail = () => {
                 </>
               ) : (
                 <>
-                  <Button color="primary" onClick={callUpdate} disabled={completedResult.loading}>
-                    {viewResult.loading ? <Loading /> : <>{completeLabel}</>}
-                  </Button>
-                  <Button
-                    color="primary"
-                    onClick={() => setShowReason(true)}
-                    disabled={completedResult.loading}
-                  >
-                    {viewResult.loading ? <Loading /> : <>{cancelRequestLabel}</>}
-                  </Button>
+                  {cookies.role === 'ADMIN' && (
+                    <>
+                      <Button
+                        color="primary"
+                        onClick={callUpdate}
+                        disabled={completedResult.loading}
+                      >
+                        {viewResult.loading ? <Loading /> : <>{completeLabel}</>}
+                      </Button>
+                      <Button
+                        color="primary"
+                        onClick={() => setShowReason(true)}
+                        disabled={completedResult.loading}
+                      >
+                        {viewResult.loading ? <Loading /> : <>{cancelRequestLabel}</>}
+                      </Button>
+                    </>
+                  )}
                   <Button
                     color="primary"
                     onClick={callUpdateRequest}
@@ -513,7 +522,13 @@ export const RequestBranchDetail = () => {
             idFiled="requestId"
             detailPath="admin/request-branch/"
             header={dataField ?? []}
-            body={result.data?.result.data ? result.data?.result.data : []}
+            body={
+              result.data?.result.data
+                ? result.data?.result.data.map((item) => {
+                    return { ...item, applyPrice: VND.format(item.applyPrice) }
+                  })
+                : []
+            }
           >
             <>{null}</>
           </CustomTable>

@@ -32,10 +32,7 @@ export const GoodManagement = () => {
   const result = useApiCall<CommonListResultType<GoodsResponse>, String>({
     callApi: () =>
       getMethod({
-        pathName:
-          cookies.role === 'ADMIN'
-            ? apiRoute.goods.getListGoodsByAuthorized
-            : apiRoute.goods.getListGoodsBranch,
+        pathName: apiRoute.goods.getListGoodsByAuthorized,
         params: { page: String(page), pageSize: '10' },
         token: cookies.token,
       }),
@@ -171,14 +168,14 @@ export const GoodManagement = () => {
             disabled={select.length === 0}
             color="primary"
           >
-            Enable product
+            Bán sản phẩm
           </Button>
           <Button
             onClick={() => disable.setLetCall(true)}
             disabled={select.length === 0}
             color="warning"
           >
-            Disable product
+            Không bán sản phẩm
           </Button>
         </div>
       )}
@@ -201,6 +198,7 @@ export const GoodManagement = () => {
             : []
         }
         loading={loading}
+        listActions={cookies.role === 'ADMIN' ? undefined : []}
       >
         <>{null}</>
       </CustomTable>

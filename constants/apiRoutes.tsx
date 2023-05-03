@@ -9,6 +9,7 @@ export const apiRoute = {
     getListNews: '/news/get-list-news',
     createNews: '/news/add-new-news',
     updateNews: '/news/update-news',
+    getListAuthorized: '/news/get-list-news-authorized',
   },
   goods: {
     getListGoods: '/goods/get-list-goods',

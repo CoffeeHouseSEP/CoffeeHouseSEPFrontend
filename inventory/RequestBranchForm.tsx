@@ -235,7 +235,7 @@ export const RequestBranchForm = ({
             body={
               data
                 ? data.result.data.map((user) => {
-                    return { ...user, innerPrice: VND.format(user.applyPrice) }
+                    return { ...user, innerPrice: VND.format(user.innerPrice) }
                   })
                 : []
             }

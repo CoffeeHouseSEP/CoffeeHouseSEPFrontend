@@ -132,7 +132,7 @@ export const OrderManagement = () => {
         <h3>Hủy đơn hàng</h3>
         <Input
           underlined
-          label="Reason"
+          label="Lý do hủy đơn"
           value={reason}
           onChange={(e) => setReason(e.target.value)}
         />

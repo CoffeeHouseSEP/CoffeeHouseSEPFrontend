@@ -1,6 +1,7 @@
 import { Button, CustomTable, Pagination } from '@/components'
 import { FloatButton } from '@/components/button/FloatButton'
 import { apiRoute } from '@/constants/apiRoutes'
+import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod } from '@/services'
@@ -8,13 +9,14 @@ import { CommonListResultType, ViewPointType } from '@/types'
 import { CategoryResponse } from '@/types/category/category'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
 import { IoIosCreate } from 'react-icons/io'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 export const CateManagement = () => {
   const translate = useTranslationFunction()
-
+  const [cookies] = useCookies([TOKEN_AUTHENTICATION])
   const [page, setPage] = useState<number>(1)
 
   const router = useRouter()
@@ -27,6 +29,7 @@ export const CateManagement = () => {
     callApi: () =>
       getMethod({
         pathName: apiRoute.category.getListAuthorized,
+        token: cookies.token,
         params: { page: String(page) },
       }),
     handleError(status, message) {
