@@ -125,7 +125,7 @@ export const HomeContainer = () => {
             aspectRatio: '1/1',
           }}
         >
-          <Image layout="fill" objectFit="cover" src="/asset/store.jpg" />
+          <Image layout="fill" objectFit="cover" src="/asset/coffee-shop.jpg" />
           {numberOfStore && !loading && (
             <div
               style={{
