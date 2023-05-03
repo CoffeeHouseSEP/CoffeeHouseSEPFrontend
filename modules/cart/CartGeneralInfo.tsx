@@ -61,7 +61,7 @@ export const CartGeneralInfo = ({
         }}
         styleType="light"
       >
-        Cancel select address
+        Xóa địa chỉ đã chọn
       </Button>
       <Input
         label="Mô tả"

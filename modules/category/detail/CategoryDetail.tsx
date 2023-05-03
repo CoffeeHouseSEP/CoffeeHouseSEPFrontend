@@ -33,6 +33,7 @@ export const CateDetail = () => {
     callApi: () =>
       getMethod({
         pathName: apiRoute.category.getListAuthorized,
+        token: cookies.token,
         params: {
           categoryId: id ?? '1',
         },

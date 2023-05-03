@@ -49,7 +49,7 @@ export const GoodDetail = () => {
   const viewResult = useApiCall<CommonListResultType<GoodsResponse>, string>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.goods.getListGoods,
+        pathName: apiRoute.goods.getListGoodsByAuthorized,
         token: cookies.token,
         params: {
           goodsId: id ?? '1',
