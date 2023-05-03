@@ -106,6 +106,15 @@ export const ParseValueForTable = (): object & any => {
           case 'COMPLETED':
             status = <div style={{ color: 'green' }}>ĐÃ HOÀN THÀNH</div>
             break
+          case 'Đang hoạt động':
+            status = <div style={{ color: 'green' }}>Đang hoạt động</div>
+            break
+          case 'Không hoạt động':
+            status = <div style={{ color: 'red' }}>Không hoạt động</div>
+            break
+          case 'Hoạt động':
+            status = <div style={{ color: 'green' }}>Đang hoạt động</div>
+            break
           default:
             status = <>{value}</>
         }
