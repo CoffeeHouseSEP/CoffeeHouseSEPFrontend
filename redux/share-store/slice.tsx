@@ -18,7 +18,7 @@ const initialState: ShareStoreTypes = {
     BranchManagement: 'Branch Management',
     Dashboard: 'Dashboard',
     CategoryManagement: 'Category Management',
-    GoodManagement: 'Good Management',
+    GoodsManagement: 'Goods Management',
     createUserButton: 'Tạo tài khoản quản lý',
     loginName: 'Tên đăng nhập',
     phoneNumber: 'SĐT',
