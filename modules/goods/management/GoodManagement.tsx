@@ -64,7 +64,7 @@ export const GoodManagement = () => {
   let dataField: ViewPointType[] = [
     {
       key: 'name',
-      label: 'name',
+      label: 'goodsName',
     },
     {
       key: 'applyPrice',

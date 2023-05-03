@@ -98,7 +98,7 @@ export const Settings = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <h2>User Profile</h2>
+      <h2>Thông tin tài khoản</h2>
       <ProfileForm
         profile={profile}
         errorState={updateResult.error?.result}
@@ -111,7 +111,7 @@ export const Settings = () => {
         Cập nhật
       </Button>
 
-      <h2 style={{ marginTop: 50 }}>Password change</h2>
+      <h2 style={{ marginTop: 50 }}>Đổi mật khẩu</h2>
       <div style={{ maxWidth: 375 }}>
         <Input
           type="password"
