@@ -1,28 +1,25 @@
-import { Button, Modal } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { useApiCall } from '@/hooks'
 import { themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { getMethod } from '@/services'
 import { CommonListResultType } from '@/types'
-import { OrderRequest } from '@/types/order/order'
-import { useEffect, useState } from 'react'
-import { BsFillCartXFill } from 'react-icons/bs'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { ProductCart } from './ProductCart'
 
 export const HandleDisableGoods = ({
   cart,
   branchId,
   setReloadCart,
-  onChangeOrder,
+  setDisableOrder,
 }: {
   cart: { id: string; qty: number; size: 'M' | 'S' | 'L' }[]
   branchId: string
   setReloadCart: (val: boolean) => void
-  onChangeOrder: (value: Partial<OrderRequest>) => void
+  setDisableOrder: (val: boolean) => void
 }) => {
-  const [open, setOpen] = useState(false)
   const { darkTheme } = useSelector(GeneralSettingsSelector)
 
   const getDisableGoods = useApiCall<CommonListResultType<{ goodsId: string }>, string>({
@@ -42,8 +39,6 @@ export const HandleDisableGoods = ({
   useEffect(() => {
     if (cart && cart.length && branchId) {
       getDisableGoods.setLetCall(true)
-    } else {
-      setOpen(false)
     }
   }, [branchId, cart])
 
@@ -55,65 +50,62 @@ export const HandleDisableGoods = ({
   })
 
   useEffect(() => {
-    if (cart && cart.length && branchId && findDisable.length) {
-      setOpen(true)
+    if (findDisable.length > 0) {
+      setDisableOrder(true)
     } else {
-      setOpen(false)
+      setDisableOrder(false)
     }
   }, [findDisable])
 
-  const handleRemoveFromCart = (id: string) => {
-    if (id && typeof window !== 'undefined') {
-      const cart = localStorage.getItem('cart')
-      if (cart) {
-        const productList: {
-          id: string
-          qty: number
-          size: string
-        }[] = JSON.parse(cart)
-        const findItem = productList.find((itemLocal) => id === itemLocal.id)
-        if (findItem) {
-          const newList = productList.filter((thisItem) => thisItem.id !== id)
-          localStorage.setItem('cart', JSON.stringify(newList))
-        }
-      }
-      setReloadCart(true)
-    }
-  }
-
-  const handleRemoveDisable = () => {
-    findDisable.forEach((item) => {
-      handleRemoveFromCart(item.id)
-    })
-  }
-
-  const handleChangeBranch = () => {
-    onChangeOrder({
-      province: '',
-      district: '',
-      ward: '',
-      branchId: '',
-    })
-  }
-
   return (
-    <Modal open={open} preventClose>
-      <BsFillCartXFill size={80} color={themeValue[darkTheme].colors.redHighland} />
-      <div
-        style={{
-          marginTop: 30,
-          fontWeight: 600,
-          color: themeValue[darkTheme].colors.redHighland,
-        }}
-      >
-        SẢN PHẨM TRONG GIỎ HÀNG CỦA BẠN KHÔNG CÓ SẴN TẠI CHI NHÁNH ĐÃ CHỌN
-      </div>
-      <div
-        style={{ marginTop: 30, width: '100%', display: 'flex', justifyContent: 'space-between' }}
-      >
-        <Button onClick={handleChangeBranch}>Chọn chi nhánh khác</Button>
-        <Button onClick={handleRemoveDisable}>Bỏ sản phẩm</Button>
-      </div>
-    </Modal>
+    <>
+      {findDisable.length > 0 && (
+        <>
+          <div
+            style={{
+              marginTop: 30,
+              fontWeight: 600,
+              color: themeValue[darkTheme].colors.redHighland,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            SẢN PHẨM TRONG GIỎ HÀNG CỦA BẠN KHÔNG CÓ SẴN TẠI CHI NHÁNH ĐÃ CHỌN
+          </div>
+          <div style={{ marginTop: 10 }}>
+            Các sản phẩm không có sẵn:
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(8, minmax(0, 1fr))',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 10,
+                gap: 10,
+              }}
+            >
+              {findDisable.map((item) => (
+                <ProductCart item={item} setReloadCart={setReloadCart} />
+              ))}
+            </div>
+          </div>
+          <div
+            style={{
+              marginTop: 30,
+              fontWeight: 600,
+              color: themeValue[darkTheme].colors.redHighland,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            VUI LÒNG LOẠI BỎ SẢN PHẨM HOẶC CHỌN CHI NHÁNH KHÁC
+          </div>
+        </>
+      )}
+    </>
   )
 }

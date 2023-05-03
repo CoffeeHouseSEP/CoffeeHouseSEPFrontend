@@ -7,7 +7,7 @@ import { authenticationSelector } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { setReloadCrt } from '@/redux/share-store'
 import { getMethod, postMethod } from '@/services'
-import { CommonListResultType, ViewPointType } from '@/types'
+import { CommonListResultType, ProfileResponse, ViewPointType } from '@/types'
 import { BranchResponse } from '@/types/branch/branch'
 import { OrderFailure, OrderRequest } from '@/types/order/order'
 import { useRouter } from 'next/router'
@@ -26,7 +26,12 @@ export const CartContainer = () => {
   const [cart, setCart] = useState<{ id: string; qty: number; size: 'M' | 'S' | 'L' }[]>([])
   const [reloadCart, setReloadCart] = useState<boolean>(true)
   const { isLoggedIn } = useSelector(authenticationSelector)
-  const { darkTheme, accountInfo } = useSelector(GeneralSettingsSelector)
+  const { darkTheme } = useSelector(GeneralSettingsSelector)
+
+  const [cookies] = useCookies([TOKEN_AUTHENTICATION])
+
+  const [disableOrder, setDisableOrder] = useState(false)
+
   const [order, setOrder] = useState<OrderRequest>({
     branchId: '',
     address: '',
@@ -36,15 +41,32 @@ export const CartContainer = () => {
     couponId: '',
     description: '',
     listOrderDetail: [],
-    phoneNumber: accountInfo.phoneNumber,
+    phoneNumber: '',
   })
+
+  const viewResult = useApiCall<ProfileResponse, string>({
+    callApi: () =>
+      getMethod({
+        pathName: apiRoute.profile.getProfile,
+        token: cookies.token,
+      }),
+    handleError(status, message) {
+      if (status) {
+        toast.error(message)
+      }
+    },
+    handleSuccess(message, data) {
+      setOrder({ ...order, phoneNumber: data.phoneNumber })
+    },
+    preventLoadingGlobal: true,
+  })
+
   const [couponSelect, setCouponSelect] = useState<{ maxApply: number; value: number }>({
     maxApply: 0,
     value: 0,
   })
 
   const pixel = useResponsive()
-  const [cookies] = useCookies([TOKEN_AUTHENTICATION])
   const [orderSuccess, setOrderSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -170,7 +192,10 @@ export const CartContainer = () => {
   }
 
   useEffect(() => {
-    if (cart.length) getTotal()
+    if (cart.length) {
+      getTotal()
+      viewResult.setLetCall(true)
+    }
   }, [cart])
 
   const getTotalCart = () => {
@@ -320,12 +345,6 @@ export const CartContainer = () => {
               margin: pixel >= 1000 ? 'auto' : '10px 20px',
             }}
           >
-            <HandleDisableGoods
-              onChangeOrder={onChangeOrder}
-              setReloadCart={setReloadCart}
-              cart={cart}
-              branchId={order.branchId}
-            />
             <div style={{ gridColumn: 'span 1 / span 1', marginBottom: 10 }}>
               <h3>Sản phẩm</h3>
               <div
@@ -419,6 +438,12 @@ export const CartContainer = () => {
                   >
                     <>{null}</>
                   </CustomTable>
+                  <HandleDisableGoods
+                    setReloadCart={setReloadCart}
+                    cart={cart}
+                    branchId={order.branchId}
+                    setDisableOrder={setDisableOrder}
+                  />
                 </>
               )}
               {resultBranch.loading && <Loading />}
@@ -448,7 +473,7 @@ export const CartContainer = () => {
             }}
           >
             <Button
-              disabled={takeOrder.loading}
+              disabled={takeOrder.loading || disableOrder}
               style={{
                 width: 300,
                 justifyContent: 'center',

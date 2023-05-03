@@ -49,7 +49,7 @@ export const CartGeneralInfo = ({
         />
       </div>
       <Input
-        label="Address"
+        label="Chi tiết địa chỉ"
         value={order.address}
         onChange={(e) => onChangeOrder({ address: e.target.value })}
         {...inputStyles({ error: error?.address })}
@@ -64,13 +64,13 @@ export const CartGeneralInfo = ({
         Cancel select address
       </Button>
       <Input
-        label="Description"
+        label="Mô tả"
         value={order.description}
         onChange={(e) => onChangeOrder({ description: e.target.value })}
         {...inputStyles({ error: error?.description })}
       />
       <Input
-        label="Phone number"
+        label="SĐT"
         value={order.phoneNumber}
         onChange={(e) => onChangeOrder({ phoneNumber: e.target.value })}
         {...inputStyles({ error: error?.phoneNumber })}
