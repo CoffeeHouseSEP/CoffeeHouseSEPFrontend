@@ -121,7 +121,7 @@ export default function StoreDetail() {
                               marginTop: 4,
                             }}
                           >
-                            Address:
+                            Địa chỉ:
                           </div>{' '}
                           <div style={{ lineHeight: '23px', fontSize: '15px' }}>
                             {storeDetail?.province}, {storeDetail?.district}, {storeDetail?.ward},{' '}

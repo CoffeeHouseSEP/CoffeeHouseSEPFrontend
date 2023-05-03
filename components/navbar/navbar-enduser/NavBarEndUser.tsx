@@ -6,6 +6,7 @@ import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { ShareStoreSelector, setReloadCrt } from '@/redux/share-store'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Menu } from './Menu'
@@ -16,8 +17,12 @@ export const NavBarEndUser = () => {
   const { darkTheme } = useSelector(GeneralSettingsSelector)
   const { isLoggedIn } = useSelector(authenticationSelector)
   const { reloadCart } = useSelector(ShareStoreSelector)
-
+  const router = useRouter()
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setReloadCrt(true))
+  }, [router])
 
   const [cart, setCart] = useState<{ id: string; qty: number; size: 'M' | 'S' | 'L' }[]>([])
 

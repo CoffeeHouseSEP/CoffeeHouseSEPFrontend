@@ -64,9 +64,17 @@ export const CardGoodsHome = ({ menuItem }: { menuItem: GoodsResponse }) => {
             {name}
           </h5>
         </header>
-        <h4 style={{ color: themeValue.dark.colors.redHighland }}>
+        <div
+          style={{
+            color: themeValue.dark.colors.redHighland,
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '10px 10px',
+            fontWeight: 550,
+          }}
+        >
           {VND.format(Math.floor(applyPrice))}
-        </h4>
+        </div>
       </div>
       <div
         style={{

@@ -93,7 +93,7 @@ export default function DetailNew() {
 
       <div
         style={{
-          width: pixel <= 980 ? 'auto' : '50%',
+          width: pixel <= 980 ? 'auto' : '60%',
           height: pixel <= 980 ? 'auto' : '20%',
           margin: 'auto',
           marginTop: '10px',

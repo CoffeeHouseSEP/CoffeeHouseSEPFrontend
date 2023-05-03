@@ -51,7 +51,7 @@ const Categories = ({ filterItems, categoryId, category }: PropCategory) => {
           }}
           onClick={() => filterAllItems()}
         >
-          All
+          Tất cả
         </div>
         {category &&
           category.map((category) => {
