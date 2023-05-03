@@ -101,6 +101,11 @@ export const BranchForm = ({
     })
   }
 
+  const errorImage = () => {
+    const error = errorState?.image as any
+    return error.base64 as React.ReactNode
+  }
+
   return (
     <>
       <div
@@ -233,6 +238,9 @@ export const BranchForm = ({
             <Image layout="fill" src={`${branch.image.prefix}${branch.image.base64}`} />
           </div>
         )}
+        <div style={{ color: themeValue.dark.colors.redHighland, fontWeight: 500, padding: 10 }}>
+          {errorImage()}
+        </div>
       </div>
       <div
         style={{

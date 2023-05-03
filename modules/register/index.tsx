@@ -81,6 +81,7 @@ export const RegisterFrom = () => {
         ref={registerName}
         {...inputStyles({ error: error?.result.registerName })}
         label="Tên đăng nhập"
+        required
         clearable
       />
       <Input
@@ -90,6 +91,7 @@ export const RegisterFrom = () => {
         })}
         type="password"
         label="Mật khẩu"
+        required
         clearable
       />
       <Input
@@ -98,6 +100,7 @@ export const RegisterFrom = () => {
           error: error?.result.fullName,
         })}
         label="Tên đầy đủ"
+        required
         clearable
       />
       <Input
@@ -107,14 +110,16 @@ export const RegisterFrom = () => {
         })}
         label="Email"
         clearable
+        required
       />
       <Input
         ref={phoneRef}
         {...inputStyles({
           error: error?.result.phone,
         })}
-        label="Phone"
+        label="SĐT"
         clearable
+        required
       />
       <div
         style={{

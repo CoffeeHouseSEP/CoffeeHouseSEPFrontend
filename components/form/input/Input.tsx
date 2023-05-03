@@ -71,6 +71,7 @@ export const Input = forwardRef<HTMLInputElement, IInput>(
             htmlFor={id}
           >
             {label}
+            {rest.required && <span style={{ color: 'red' }}>*</span>}
           </label>
         ) : undefined}
         <label
