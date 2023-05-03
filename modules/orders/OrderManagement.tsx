@@ -49,6 +49,10 @@ export const OrderManagement = () => {
       label: 'customerName',
     },
     {
+      key: 'branchName',
+      label: 'branchName',
+    },
+    {
       key: 'createdDate',
       label: 'createdDate',
     },
