@@ -42,7 +42,10 @@ export const GoodManagement = () => {
   const result = useApiCall<CommonListResultType<GoodsResponse>, String>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.goods.getListGoodsByAuthorized,
+        pathName:
+          cookies.role === 'ADMIN'
+            ? apiRoute.goods.getListGoodsByAuthorized
+            : apiRoute.goods.getListGoodsBranch,
         params,
         token: cookies.token,
       }),
