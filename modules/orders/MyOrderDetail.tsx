@@ -170,7 +170,7 @@ export const MyOrderDetail = () => {
               <div style={{ overflow: 'hidden' }}>{orderDetail?.address}</div>
               <div style={{ color: themeValue.light.colors.redHighland }}>Lý do từ chối:</div>
               <div>{orderDetail?.reason}</div>
-              <div style={{ color: themeValue.light.colors.redHighland }}>Description:</div>
+              <div style={{ color: themeValue.light.colors.redHighland }}>Mô tả:</div>
               <div>{orderDetail?.description}</div>
             </div>
           </div>
