@@ -29,7 +29,6 @@ export const UserForm = ({
   const userFullName = useTranslation('userFullName')
   const userPhoneNumber = useTranslation('userPhoneNumber')
   const userEmail = useTranslation('userEmail')
-  const userAddress = useTranslation('userAddress')
 
   return (
     <div
@@ -96,21 +95,6 @@ export const UserForm = ({
           }}
           {...inputStyles({
             error: errorState?.email && translate(errorState.email),
-          })}
-        />
-      </div>
-      <div style={{ gridColumn: 'span 1 / span 1' }}>
-        <Input
-          readOnly={type === 'read' || isFormUpdate}
-          value={user.address}
-          label={userAddress}
-          onChange={(event) => {
-            onchangeUserState({
-              address: event.currentTarget.value,
-            })
-          }}
-          {...inputStyles({
-            error: errorState?.address && translate(errorState.address),
           })}
         />
       </div>

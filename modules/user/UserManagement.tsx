@@ -91,6 +91,7 @@ export const UserManagement = () => {
         token: cookies.token,
       }),
     handleSuccess(message) {
+      setLetCall(true)
       toast.success(message)
     },
     handleError(status, message) {
@@ -108,6 +109,7 @@ export const UserManagement = () => {
         token: cookies.token,
       }),
     handleSuccess(message) {
+      setLetCall(true)
       toast.success(message)
     },
     handleError(status, message) {
