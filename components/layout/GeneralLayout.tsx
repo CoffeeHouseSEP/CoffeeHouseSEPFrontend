@@ -1,5 +1,6 @@
 import { ROLE_COOKIE, TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useGetDarkMode } from '@/hooks'
+import { removeClassBody } from '@/lib'
 import { authenticationSelector, setIsLoggedIn } from '@/redux/authentication'
 import { GeneralSettingsSelector, setGeneralSettings } from '@/redux/general-settings'
 import { ShareStoreSelector } from '@/redux/share-store'
@@ -35,6 +36,10 @@ export const GeneralLayout = ({ children }: { children: React.ReactNode }) => {
       dispatch(setIsLoggedIn(false))
     }
   }, [])
+
+  useEffect(() => {
+    removeClassBody('overflow')
+  }, [router])
 
   useEffect(() => {
     if (!!isLoggedIn) {
