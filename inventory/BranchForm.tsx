@@ -103,6 +103,7 @@ export const BranchForm = ({
 
   const errorImage = () => {
     const error = errorState?.image as any
+    if (!error) return ''
     return error.base64 as React.ReactNode
   }
 

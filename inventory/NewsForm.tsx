@@ -35,6 +35,13 @@ export const NewsForm = ({ news, onchangeUserState, type, errorState }: INewForm
       },
     })
   }
+
+  const errorImage = () => {
+    const error = errorState?.image as any
+    if (!error) return ''
+    return error.base64 as React.ReactNode
+  }
+
   return (
     <>
       <div
@@ -81,6 +88,9 @@ export const NewsForm = ({ news, onchangeUserState, type, errorState }: INewForm
               <Image layout="fill" src={`${news.image.prefix}${news.image.base64}`} />
             </div>
           )}
+          <div style={{ color: themeValue.dark.colors.redHighland, fontWeight: 500, padding: 10 }}>
+            {errorImage()}
+          </div>
         </div>
       </div>
       <div
