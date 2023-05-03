@@ -138,7 +138,7 @@ export const ParseValueForTable = (): object & any => {
       return convertValueToLabel(value, genderList)
     },
     isDisabled: (value: number) => {
-      if (value) return <div style={{ color: 'green' }}>Không bán</div>
+      if (value) return <div style={{ color: 'red' }}>Không bán</div>
       return <div style={{ color: 'green' }}>Đang bán</div>
     },
   }

@@ -103,6 +103,7 @@ export const RequestBranchDetail = () => {
     handleSuccess(message) {
       toast.success(translate(message))
       viewResult.setLetCall(true)
+      result.setLetCall(true)
       setType('read')
     },
   })
