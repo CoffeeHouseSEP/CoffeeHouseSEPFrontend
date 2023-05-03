@@ -3,6 +3,7 @@ import { FloatButton } from '@/components/button/FloatButton'
 import { apiRoute } from '@/constants/apiRoutes'
 import { ROLE_COOKIE, TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall, useTranslation, useTranslationFunction } from '@/hooks'
+import { VND } from '@/lib'
 import { ShareStoreSelector } from '@/redux/share-store'
 import { getMethod, postMethod, putMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
@@ -193,6 +194,7 @@ export const GoodManagement = () => {
                   ...good,
                   status: good.status === 1 ? 'Hoạt động' : 'Không hoạt động',
                   isSold: good.isSold ? 'Đang bán' : 'Bán hết',
+                  applyPrice: VND.format(good.applyPrice),
                 }
               })
             : []
