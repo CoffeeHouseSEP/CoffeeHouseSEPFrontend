@@ -261,28 +261,6 @@ export const RequestBranchDetail = () => {
                       </Button>
                     </>
                   )}
-                  <Button onClick={() => setType('update')}>{editLabel}</Button>
-                  <Button
-                    color="warning"
-                    onClick={() => {
-                      router.push('/admin/request-branch/management')
-                    }}
-                  >
-                    {cancelLabel}
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    color="primary"
-                    onClick={callUpdateRequest}
-                    disabled={updateResult.loading}
-                  >
-                    {updateResult.loading ? <Loading /> : <>{saveLabel}</>}
-                  </Button>
-                  <Button color="warning" onClick={handleSetTypeRead} disabled={viewResult.loading}>
-                    {cancelLabel}
-                  </Button>
                   {showReason && (
                     <>
                       <div
@@ -397,6 +375,28 @@ export const RequestBranchDetail = () => {
                       </div>
                     </>
                   )}
+                  <Button onClick={() => setType('update')}>{editLabel}</Button>
+                  <Button
+                    color="warning"
+                    onClick={() => {
+                      router.push('/admin/request-branch/management')
+                    }}
+                  >
+                    {cancelLabel}
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    color="primary"
+                    onClick={callUpdateRequest}
+                    disabled={updateResult.loading}
+                  >
+                    {updateResult.loading ? <Loading /> : <>{saveLabel}</>}
+                  </Button>
+                  <Button color="warning" onClick={handleSetTypeRead} disabled={viewResult.loading}>
+                    {cancelLabel}
+                  </Button>
                 </>
               )}
             </div>

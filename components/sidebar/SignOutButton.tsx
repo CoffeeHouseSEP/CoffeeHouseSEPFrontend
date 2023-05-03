@@ -2,7 +2,7 @@ import { apiRoute } from '@/constants/apiRoutes'
 import { ROLE_COOKIE, TOKEN_AUTHENTICATION, USER_ID } from '@/constants/auth'
 import { useApiCall, useTranslationFunction } from '@/hooks'
 import { themeValue } from '@/lib'
-import { setIsLoggedIn } from '@/redux/authentication'
+import { authenticationSelector, setIsLoggedIn } from '@/redux/authentication'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { getMethod } from '@/services'
 import { useRouter } from 'next/router'
@@ -17,6 +17,7 @@ export const SignOutButton = ({ style }: { style?: object }) => {
   const [cookies, , removeCookie] = useCookies([TOKEN_AUTHENTICATION, USER_ID, ROLE_COOKIE])
   const router = useRouter()
   const translate = useTranslationFunction()
+  const { isLoggedIn } = useSelector(authenticationSelector)
 
   const dispatch = useDispatch()
 
@@ -31,6 +32,7 @@ export const SignOutButton = ({ style }: { style?: object }) => {
       removeCookie(TOKEN_AUTHENTICATION)
       removeCookie(USER_ID)
       removeCookie(ROLE_COOKIE)
+      dispatch(setIsLoggedIn(false))
     },
     handleError(status, message) {
       if (status) {
@@ -40,15 +42,14 @@ export const SignOutButton = ({ style }: { style?: object }) => {
   })
 
   useEffect(() => {
-    if (!cookies.token && !cookies.role) {
-      dispatch(setIsLoggedIn(false))
+    if (!isLoggedIn) {
       if (router.pathname.includes('admin')) {
         router.push('/admin')
       } else {
         router.push('/')
       }
     }
-  }, [cookies])
+  }, [isLoggedIn])
 
   return (
     <div

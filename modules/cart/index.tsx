@@ -194,7 +194,9 @@ export const CartContainer = () => {
   useEffect(() => {
     if (cart.length) {
       getTotal()
-      viewResult.setLetCall(true)
+      if (cookies.token) {
+        viewResult.setLetCall(true)
+      }
     }
   }, [cart])
 
