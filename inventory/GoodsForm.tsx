@@ -9,6 +9,7 @@ import { getMethod } from '@/services'
 import { CommonListResultType, UserResponseSuccess, ViewPointType } from '@/types'
 import { GoodsRequest, GoodsRequestFailure } from '@/types/goods/goods'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector } from 'react-redux'
@@ -112,6 +113,8 @@ export const GoodsForm = ({
       </div>
     )
   }, [goods])
+
+  const router = useRouter()
 
   return (
     <>
@@ -245,6 +248,19 @@ export const GoodsForm = ({
             Có sẵn
           </Checkbox>
         </div>
+        {router.query.id && (
+          <div style={{ gridColumn: 'span 1 / span 1' }}>
+            <Checkbox
+              isReadOnly={type === 'read'}
+              isSelected={goods.status === 1}
+              onChange={() => {
+                onchangeGoodsState({ status: goods.status === 1 ? 0 : 1 })
+              }}
+            >
+              Kích hoạt
+            </Checkbox>
+          </div>
+        )}
       </div>
       <div
         style={{

@@ -49,7 +49,7 @@ export const DetailNews = () => {
   const viewResult = useApiCall<CommonListResultType<NewsResponse>, string>({
     callApi: () =>
       getMethod({
-        pathName: apiRoute.news.getListNews,
+        pathName: apiRoute.news.getListAuthorized,
         token: cookies.token,
         params: {
           newsId: id ?? '1',
