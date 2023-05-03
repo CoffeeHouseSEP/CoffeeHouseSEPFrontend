@@ -2,7 +2,7 @@ import { CustomTable, Loading } from '@/components'
 import { apiRoute } from '@/constants/apiRoutes'
 import { TOKEN_AUTHENTICATION } from '@/constants/auth'
 import { useApiCall } from '@/hooks'
-import { formatDate, themeValue } from '@/lib'
+import { VND, formatDate, themeValue } from '@/lib'
 import { GeneralSettingsSelector } from '@/redux/general-settings'
 import { postMethod } from '@/services'
 import { CommonListResultType, ViewPointType } from '@/types'
@@ -103,8 +103,9 @@ export const CouponCart = ({
             body={getCoupon.data?.result.data.map((item) => {
               return {
                 ...item,
-                expiredDate: formatDate(item.expiredDate),
+                expiredDate: formatDate(new Date(item.expiredDate.split('-').reverse().join('-'))),
                 value: `${item.value}%`,
+                maxValuePromotion: VND.format(item.maxValuePromotion),
               }
             })}
             loading={getCoupon.loading}

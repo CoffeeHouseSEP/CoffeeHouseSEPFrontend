@@ -3,7 +3,7 @@ import { DropdownBase } from '@/components/dropdown/DropdownBase'
 import { addClassBody, removeClassBody } from '@/lib'
 import { HTMLAttributes, useEffect, useRef, useState } from 'react'
 import { Input } from '../input'
-import { DayModal, getDayString, MonthModal, YearModal } from './inventory'
+import { DayModal, MonthModal, YearModal, getDayString } from './inventory'
 
 interface IDatePicker {
   value?: Date | string
@@ -44,7 +44,11 @@ export const DatePicker = ({
 
   useEffect(() => {
     if (!value) {
-      onChange(getDayString(day, month, year))
+      if (typeof value === 'string') {
+        onChange(getDayString(day, month, year))
+      } else {
+        onChange(new Date(getDayString(day, month, year)))
+      }
     }
   }, [value])
 

@@ -96,6 +96,8 @@ const initialState: ShareStoreTypes = {
     maxValuePromotion: 'Giá trị giảm tối đa',
     categoryName: 'Tên danh mục',
     couponCode: 'Mã giảm giá',
+    appliedDateCoupon: 'Ngày áp dụng',
+    CouponManagement: 'Coupon Management',
   },
 }
 

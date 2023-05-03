@@ -99,15 +99,9 @@ export const RequestDetail = () => {
   const callUpdate = () => {
     approvedResult.setLetCall(true)
   }
-  const handleSetTypeRead = () => {
-    if (viewResult?.data?.result)
-      setRequest({ ...DefaultRequest, ...viewResult.data.result.data[0] })
-    approvedResult.handleReset()
-  }
+
   const approveLabel = useTranslation('ApproveRequest')
   const cancelRequestLabel = useTranslation('CancelRequest')
-
-  const cancelLabel = useTranslation('cancel')
 
   const requestIdLabel = useTranslation('requestId')
   const branchName = useTranslation('branchName')
@@ -145,9 +139,6 @@ export const RequestDetail = () => {
                 disabled={approvedResult.loading}
               >
                 {approvedResult.loading ? <Loading /> : <>{cancelRequestLabel}</>}
-              </Button>
-              <Button color="warning" onClick={handleSetTypeRead} disabled={approvedResult.loading}>
-                {cancelLabel}
               </Button>
               {showReason && (
                 <>
@@ -202,7 +193,7 @@ export const RequestDetail = () => {
                         />
 
                         <h2 style={{ textAlign: 'center', marginBottom: '30px', color: '#fff' }}>
-                          Please fill Reason
+                          Hãy điền lý do
                         </h2>
                         <div
                           style={{
@@ -219,7 +210,7 @@ export const RequestDetail = () => {
                               pointerEvents: 'none',
                             }}
                           >
-                            Reason for cancel request
+                            Lý do hủy yêu cầu
                           </label>
                           <input
                             required
@@ -318,7 +309,7 @@ export const RequestDetail = () => {
                       />
 
                       <h2 style={{ textAlign: 'center', marginBottom: '30px', color: '#fff' }}>
-                        Please fill Reason
+                        Hãy điền lý do
                       </h2>
                       <div
                         style={{
@@ -335,7 +326,7 @@ export const RequestDetail = () => {
                             pointerEvents: 'none',
                           }}
                         >
-                          Reason for cancel request
+                          Lý do hủy yêu cầu
                         </label>
                         <input
                           required

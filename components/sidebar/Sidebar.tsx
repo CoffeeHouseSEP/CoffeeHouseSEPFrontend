@@ -51,7 +51,9 @@ export const SideBar = ({ isOpenSideBar, setOpenSideBar, pixel }: ISideBar) => {
       {
         mainItem: { label: 'UserManagement', path: '/admin/user/management', icon: '' },
       },
-
+      {
+        mainItem: { label: 'CouponManagement', path: '/admin/coupon/management', icon: '' },
+      },
       {
         mainItem: { label: 'BranchManagement', path: '/admin/branch/management', icon: '' },
       },

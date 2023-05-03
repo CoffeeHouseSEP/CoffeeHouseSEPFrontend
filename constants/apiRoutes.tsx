@@ -74,6 +74,9 @@ export const apiRoute = {
   },
   coupon: {
     getCouponForCart: '/coupon/get-list-coupon-by-cart-info',
+    getList: '/coupon/get-list-coupon',
+    addNew: '/coupon/add-new-coupon',
+    updateCoupon: '/coupon/update-coupon',
   },
   disableGoodsBranch: {
     getListDisable: '/branch-goods-disable/get-list-goods-disable',
