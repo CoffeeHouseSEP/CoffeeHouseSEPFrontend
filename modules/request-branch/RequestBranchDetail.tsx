@@ -143,6 +143,24 @@ export const RequestBranchDetail = () => {
     },
   })
 
+  const sendResult = useApiCall<RequestCancel, RequestFailure>({
+    callApi: () =>
+      putMethod<RequestCancel>({
+        pathName: apiRoute.request.sendRequest,
+        token: cookies.token,
+        params: { requestId: id || '' },
+      }),
+    handleError(status, message) {
+      if (status) {
+        toast.error(translate(message))
+      }
+    },
+    handleSuccess(message) {
+      toast.success(translate(message))
+      viewResult.setLetCall(true)
+    },
+  })
+
   useEffect(() => {
     if (!!id) {
       result.setLetCall(true)
@@ -218,20 +236,15 @@ export const RequestBranchDetail = () => {
             <div style={{ display: 'flex', gap: 10 }}>
               {type === 'read' ? (
                 <>
-                  <Button onClick={() => setType('update')}>{editLabel}</Button>
-                  <Button
-                    color="warning"
-                    onClick={() => {
-                      router.push('/admin/request-branch/management')
-                    }}
-                  >
-                    {cancelLabel}
-                  </Button>
-                </>
-              ) : (
-                <>
-                  {cookies.role === 'ADMIN' && (
+                  {cookies.role === 'BRANCH_MANAGER' && (
                     <>
+                      <Button
+                        color="primary"
+                        onClick={() => sendResult.setLetCall(true)}
+                        disabled={sendResult.loading}
+                      >
+                        {viewResult.loading ? <Loading /> : <>Gửi yêu cầu</>}
+                      </Button>
                       <Button
                         color="primary"
                         onClick={callUpdate}
@@ -248,6 +261,18 @@ export const RequestBranchDetail = () => {
                       </Button>
                     </>
                   )}
+                  <Button onClick={() => setType('update')}>{editLabel}</Button>
+                  <Button
+                    color="warning"
+                    onClick={() => {
+                      router.push('/admin/request-branch/management')
+                    }}
+                  >
+                    {cancelLabel}
+                  </Button>
+                </>
+              ) : (
+                <>
                   <Button
                     color="primary"
                     onClick={callUpdateRequest}

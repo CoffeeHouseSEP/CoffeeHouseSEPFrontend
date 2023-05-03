@@ -34,7 +34,7 @@ export const GoodManagement = () => {
     callApi: () =>
       getMethod({
         pathName: apiRoute.goods.getListGoodsByAuthorized,
-        params: { page: String(page), pageSize: '10' },
+        params: { page: String(page), pageSize: '10', isSold: '1' },
         token: cookies.token,
       }),
     handleError(status, message) {
@@ -69,10 +69,6 @@ export const GoodManagement = () => {
     {
       key: 'goodsUnit',
       label: 'goodsUnit',
-    },
-    {
-      key: 'isSold',
-      label: 'isSold',
     },
   ]
 

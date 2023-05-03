@@ -6,7 +6,7 @@ const initialState: ShareStoreTypes = {
   breakPoint: 1,
   reloadCart: true,
   language: {
-    isDisabled: 'Hủy kích hoạt',
+    isDisabled: 'Trạng thái',
     userFullName: 'Tên đầy đủ',
     CategoryCreatePascal: 'Tạo danh mục',
     cancel: 'Hủy',

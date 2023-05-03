@@ -101,6 +101,10 @@ export const RequestBranchForm = ({
 
   const dataField: ViewPointType[] = [
     {
+      key: 'goodsUnit',
+      label: 'goodsUnit',
+    },
+    {
       key: 'name',
       label: 'goodsName',
     },
@@ -125,6 +129,21 @@ export const RequestBranchForm = ({
       >
         {!router.query.id && (
           <>
+            <div style={{ gridColumn: 'span 1 / span 1' }}>
+              <Input
+                readOnly
+                value={request.totalPrice}
+                label={totalPriceLabel}
+                onChange={(event) => {
+                  onchangeUserState({
+                    totalPrice: event.currentTarget.value,
+                  })
+                }}
+                {...inputStyles({
+                  error: errorState?.totalPrice && translate(errorState.totalPrice),
+                })}
+              />
+            </div>
             <div style={{ gridColumn: 'span 1 / span 1' }}>
               <Input
                 readOnly
@@ -172,21 +191,6 @@ export const RequestBranchForm = ({
             </div>
           </>
         )}
-        <div style={{ gridColumn: 'span 1 / span 1' }}>
-          <Input
-            readOnly={type === 'read'}
-            value={request.totalPrice}
-            label={totalPriceLabel}
-            onChange={(event) => {
-              onchangeUserState({
-                totalPrice: event.currentTarget.value,
-              })
-            }}
-            {...inputStyles({
-              error: errorState?.totalPrice && translate(errorState.totalPrice),
-            })}
-          />
-        </div>
         <div style={{ gridColumn: 'span 1 / span 1' }}>
           <Input
             readOnly
